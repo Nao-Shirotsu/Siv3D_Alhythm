@@ -406,6 +406,12 @@
     <ClCompile Include="src\Game_Object_ClickButton.cpp">
       <Filter>Game\Object</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game_Scene_Settings.cpp">
+      <Filter>Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game_Scene_Gameplay.cpp">
+      <Filter>Game\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -427,6 +433,12 @@
     </ClInclude>
     <ClInclude Include="src\Game_Object_ClickButton.h">
       <Filter>Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Scene_Settings.h">
+      <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Scene_Gameplay.h">
+      <Filter>Game\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

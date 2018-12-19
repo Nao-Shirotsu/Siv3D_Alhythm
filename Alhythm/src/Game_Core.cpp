@@ -1,4 +1,6 @@
-﻿#include <memory>
+﻿#define NO_S3D_USING
+
+#include <memory>
 
 #include <Siv3D.hpp>
 
@@ -11,15 +13,15 @@ Core::Core():
 	background( L"Resource/Title_resized.jpg" ){
 
 	sceneStack.push( std::make_unique<Scene::Title>() );
-	Window::SetTitle( L"Alhythm" );
-	Window::Resize( 1280, 800 );
+	s3d::Window::SetTitle( L"Alhythm" );
+	s3d::Window::Resize( 1280, 800 );
 }
 
 Core::~Core(){}
 
 bool Core::IsGameEnd() const{
 	 // Siv3Dの更新時にエラーがあったらfalseが返るためここで実行
-	return System::Update();
+	return s3d::System::Update();
 }
 
 void Core::Update(){

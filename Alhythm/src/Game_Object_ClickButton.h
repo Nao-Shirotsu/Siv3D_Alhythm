@@ -1,5 +1,6 @@
 ﻿#pragma once
-#pragma once
+
+#define NO_S3D_USING
 
 #include <Siv3D.hpp>
 
@@ -13,7 +14,7 @@ public:
 	ClickButton();
 
 	// デフォルト色のクリックボックスを生成する
-	ClickButton( int x_, int y_, const wchar* text_, const int fontsize );
+	ClickButton( int x_, int y_, const s3d::wchar* text_, const int fontsize );
 
 	void Draw() const;
 
@@ -22,12 +23,12 @@ public:
 
 private:
 	int x, y;
-	Rect rect;
-	Color colorRect;
-	Rect rectShade;
-	Color colorShade;
-	Font text;
-	const wchar* textStr;
+	s3d::Rect rect;
+	s3d::Color colorRect;
+	s3d::Rect rectShade;
+	s3d::Color colorShade;
+	s3d::Font text;
+	const s3d::wchar* textStr;
 };
 
 }// namespace Object

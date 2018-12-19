@@ -1,4 +1,5 @@
 ﻿#pragma once
+#define NO_S3D_USING
 
 #include <memory>
 #include <stack>
@@ -37,7 +38,7 @@ private:
 	std::stack<std::unique_ptr<Game::Scene::Base>> sceneStack;
 
 	// 常に表示する背景画像 1280x800 の 16:10
-	Texture background;
+	s3d::Texture background;
 };
 
 }// namespace Game
