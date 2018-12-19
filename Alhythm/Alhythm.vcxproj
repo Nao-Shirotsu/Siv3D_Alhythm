@@ -277,13 +277,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game_Core.cpp" />
+    <ClCompile Include="src\Game_Object_ClickButton.cpp" />
     <ClCompile Include="src\Game_Scene_Base.cpp" />
+    <ClCompile Include="src\Game_Scene_MusicSelect.cpp" />
     <ClCompile Include="src\Game_Scene_Title.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game_Core.h" />
+    <ClInclude Include="src\Game_Object_ClickButton.h" />
     <ClInclude Include="src\Game_Scene_Base.h" />
+    <ClInclude Include="src\Game_Scene_MusicSelect.h" />
     <ClInclude Include="src\Game_Scene_Title.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
