@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#define NO_S3D_USING
+
 #include <Siv3D.hpp>
 
 #include "Game_Scene_Base.h"
@@ -21,10 +23,15 @@ public:
 
 private:
 	// タイトル文字の画像
-	Texture titleStr;
+	s3d::Texture titleStr;
 
 	// ゲーム開始ボタンっぽいの
 	Game::Object::ClickButton gamestart;
+	Game::Object::ClickButton gameend;
+
+	// 音声ファイルオブジェクト
+	const s3d::Sound bgm;
+	bool isMusicPlaying;
 };
 
 }// namespace Scene
