@@ -76,6 +76,9 @@
     <Filter Include="Siv3D">
       <UniqueIdentifier>{d19bbd2b-d0ba-4c1f-8227-b55322efe18b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Object">
+      <UniqueIdentifier>{82ae12f0-2578-4e72-b2e0-22c4a74de812}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Engine\Splash.png">
@@ -397,6 +400,12 @@
     <ClCompile Include="src\Game_Scene_Title.cpp">
       <Filter>Game\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game_Scene_MusicSelect.cpp">
+      <Filter>Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game_Object_ClickButton.cpp">
+      <Filter>Game\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -412,6 +421,12 @@
     </ClInclude>
     <ClInclude Include="src\Game_Scene_Title.h">
       <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Scene_MusicSelect.h">
+      <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Object_ClickButton.h">
+      <Filter>Game\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
