@@ -3,15 +3,17 @@
 namespace Game{
 namespace Object{
 
+// プレイ画面で、どのレーンかを識別する列挙型
 enum class LaneID{
-	A = static_cast< int >( 'A' ),
-	S = static_cast< int >( 'S' ),
-	D = static_cast< int >( 'D' ),
-	F = static_cast< int >( 'F' ),
-	J = static_cast< int >( 'J' ),
-	K = static_cast< int >( 'K' ),
-	L = static_cast< int >( 'L' ),
-	Smcl = static_cast< int >( ';' ),
+	// 後々処理で使う(主にGame::Object::Note)ためs3d::wchar型を利用する
+	A = static_cast< int >( L'A' ),
+	S = static_cast< int >( L'S' ),
+	D = static_cast< int >( L'D' ),
+	F = static_cast< int >( L'F' ),
+	J = static_cast< int >( L'J' ),
+	K = static_cast< int >( L'K' ),
+	L = static_cast< int >( L'L' ),
+	Smcl = static_cast< int >( L';' ),
 };
 
 //enum class Difficulty{

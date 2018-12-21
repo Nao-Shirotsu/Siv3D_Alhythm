@@ -1,7 +1,7 @@
 #include "Game_Object_Track.h"
 
 Game::Object::Track::Track( s3d::wchar* filename, int bpm, int maxBar_ ) noexcept( false ):
-	beatSec( 60.0 / static_cast< double >( bpm ) ),
+	beatSec( 60.0 / static_cast<double>( bpm ) ),
 	curBar( 0 ),
 	curBaet( 0 ),
 	file( filename ),
@@ -11,18 +11,15 @@ Game::Object::Track::Track( s3d::wchar* filename, int bpm, int maxBar_ ) noexcep
 	}
 }
 
-Game::Object::Track::Track(){}
+Game::Object::Track::Track() = default;
 
-Game::Object::Track::~Track(){
-	// よばれてない？おかしい
-	file.stop();
-}
+Game::Object::Track::~Track() = default;
 
-double Game::Object::Track::SecOnBarBeat( int bar, int curBeat ) const noexcept{
+double Game::Object::Track::SecOnBarBeat( int bar, int beat ) const noexcept{
 	if( bar > maxBar ){
 		return 0; // 不正値として、ノーツを無効にするために0を返す
 	}
-	return 32.0 * ( beatSec * ( bar - 1 ) + 32.0 * curBaet );
+	return beatSec * ( static_cast<double>( 4 * bar ) + beat / 32.0 );
 }
 
 double Game::Object::Track::SecCur() const noexcept{

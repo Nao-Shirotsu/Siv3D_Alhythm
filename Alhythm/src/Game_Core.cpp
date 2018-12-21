@@ -10,7 +10,8 @@
 namespace Game{
 
 Core::Core():
-	background( L"Resource/Title_resized.jpg" ){
+	background( L"Resource/Title_resized.jpg" ),
+	testout( 20 ){
 
 	sceneStack.push( std::make_unique<Scene::Title>() );
 	s3d::Window::SetTitle( L"Alhythm" );
@@ -40,6 +41,7 @@ void Core::Update(){
 void Core::Draw() const{
 	background.draw( 0, 0 );
 	sceneStack.top()->Draw();
+	testout( s3d::Format( sceneStack.size() ) ).draw();
 }
 
 void Core::DestructAllSceneObjects(){

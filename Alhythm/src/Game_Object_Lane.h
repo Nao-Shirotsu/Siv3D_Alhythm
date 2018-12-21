@@ -21,7 +21,7 @@ public:
 	Lane();
 	~Lane();
 
-	void Update( double secCur );
+	void Update();
 
 	void Draw() const;
 
@@ -32,8 +32,10 @@ private:
 	// このレーンがどのキー(鍵盤)のレーンか
 	LaneID laneID;
 
-	// このレーンの矩形
+	// このレーンの矩形と判定ライン
 	s3d::Rect laneRect;
+	s3d::Line judgeLineL;
+	s3d::Line judgeLineR;
 };
 
 }

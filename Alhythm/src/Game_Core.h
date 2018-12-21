@@ -35,10 +35,14 @@ private:
 	// sceneStackに積まれているすべてのリソースを解放
 	void DestructAllSceneObjects();
 
+	// シーンスタック シーンのﾎﾟｲﾝﾀで多態させる
 	std::stack<std::unique_ptr<Game::Scene::Base>> sceneStack;
 
 	// 常に表示する背景画像 1280x800 の 16:10
 	s3d::Texture background;
+
+	// テスト
+	s3d::Font testout;
 };
 
 }// namespace Game

@@ -7,6 +7,10 @@
 namespace Game{
 namespace Scene{
 
+//----test----
+s3d::Sound Gameplay::test = s3d::Sound( L"Resource/decide.mp3" );
+//------------
+
 Gameplay::Gameplay():
 	returnToSelect( 20, 380, L"選曲へ", 20 ),
 	button( 20, 450, L"クリック", 20 ),
@@ -23,6 +27,14 @@ Gameplay::Gameplay():
 	lanes[LaneID::K] = Lane( LaneID::K );
 	lanes[LaneID::L] = Lane( LaneID::L );
 	lanes[LaneID::Smcl] = Lane( LaneID::Smcl );
+
+	lanes[LaneID::F].notes.emplace( 1, 1, LaneID::F, track );
+	lanes[LaneID::F].notes.emplace( 2, 1, LaneID::F, track );
+	lanes[LaneID::F].notes.emplace( 3, 1, LaneID::F, track );
+	lanes[LaneID::F].notes.emplace( 4, 1, LaneID::F, track );
+	lanes[LaneID::F].notes.emplace( 5, 1, LaneID::F, track );
+	lanes[LaneID::F].notes.emplace( 6, 1, LaneID::F, track );
+	lanes[LaneID::F].notes.emplace( 7, 1, LaneID::F, track );
 }
 
 Gameplay::~Gameplay(){}
@@ -36,6 +48,10 @@ void Gameplay::Update(){
 	}
 	if( button.WasClicked() ){
 		str = s3d::Format( track->SecCur() );
+	}
+
+	for( auto& lane : lanes ){
+		lane.second.Update();
 	}
 }
 
@@ -56,6 +72,7 @@ bool Gameplay::NeedsTransition(){
 }
 
 std::unique_ptr<Base> Gameplay::TransitionToNext(){
+	track->Stop();
 	return nullptr;
 }
 

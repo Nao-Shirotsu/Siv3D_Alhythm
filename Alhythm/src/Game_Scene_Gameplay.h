@@ -41,6 +41,9 @@ private:
 
 	// ƒŒ[ƒ“
 	std::unordered_map<Game::Object::LaneID, Game::Object::Lane> lanes;
+
+	//test
+	static s3d::Sound test;
 };
 
 }// namespace Scene

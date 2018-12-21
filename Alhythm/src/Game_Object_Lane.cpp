@@ -5,10 +5,16 @@ namespace{
 constexpr int LANE_WIDTH = 80;
 constexpr int LANE_HEIGHT = 800;
 
+constexpr s3d::Color BG_COLOR{ 64, 64, 64, 224 };
+constexpr s3d::Color FRAME_COLOR{ 128, 128, 128 };
+constexpr s3d::Color JUDGE_COLOR{ 224, 224, 224 };
+
 }
 
 Game::Object::Lane::Lane( LaneID laneID_ ):
-	laneID( laneID_ ){
+	laneID( laneID_ ),
+	judgeLineL( 280, 680, 575, 680 ),
+	judgeLineR( 705, 680, 1000, 680 ){
 	switch( laneID_ ){
 	case LaneID::A:
 		laneRect = s3d::Rect( 275, 0, LANE_WIDTH, LANE_HEIGHT );
@@ -52,9 +58,19 @@ Game::Object::Lane::Lane() = default;
 
 Game::Object::Lane::~Lane() = default;
 
-void Game::Object::Lane::Update( double secCur ){}
+void Game::Object::Lane::Update(){
+	if( notes.empty() ){
+		return;
+	}
+	if( notes.front().Passed() ){
+		notes.pop();
+	}
+	notes.front().Update();
+}
 
 void Game::Object::Lane::Draw() const{
-	laneRect.draw( s3d::Color( 64, 64, 64, 224 ) );
-	laneRect.drawFrame( 5, 0, s3d::Color( 128, 128, 128 ) );
+	laneRect.draw( BG_COLOR );
+	laneRect.drawFrame( 5, 0, FRAME_COLOR );
+	judgeLineL.draw( JUDGE_COLOR );
+	judgeLineR.draw( JUDGE_COLOR );
 }
