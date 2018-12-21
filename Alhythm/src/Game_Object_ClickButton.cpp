@@ -1,5 +1,7 @@
 ﻿#define NO_S3D_USING
 
+#include <exception>
+
 #include <Siv3D.hpp>
 
 #include "Game_Object_ClickButton.h"
@@ -14,9 +16,12 @@ ClickButton::ClickButton( int x_, int y_, const s3d::wchar* text_, const int fon
 	y( y_ ),
 	textStr( text_ ),
 	colorRect( 20, 20, 40 ),
-	colorShade( 5, 5, 15 ),
-	text( fontsize_, s3d::Typeface::Medium, s3d::FontStyle::Outline ){
+	text( fontsize_, s3d::Typeface::Medium, s3d::FontStyle::Outline ),
+	decideSound( L"Resource/decide.mp3" ){
 	using namespace s3d;
+	if( !decideSound ){
+		throw std::runtime_error( "sound file read error" );
+	}
 	text.changeOutlineStyle( TextOutlineStyle( TextOutlineStyle( Color( 80, 80, 130 ), Color( 100, 100, 150 ), 2.0 ) ) );
 	Rect tmp = text( text_ ).region( x, y );
 	rect = Rect( tmp.x - 10, tmp.y - 5, tmp.w + 20, tmp.h + 10 );
@@ -24,7 +29,7 @@ ClickButton::ClickButton( int x_, int y_, const s3d::wchar* text_, const int fon
 }
 
 void ClickButton::Draw() const{
-	rectShade.draw( colorShade );
+	rect.drawShadow( { 6, 4 }, 13, 7 );
 	rect.draw( colorRect );
 	text( textStr ).draw( x, y );
 }
@@ -33,9 +38,10 @@ bool ClickButton::WasClicked() const{
 	using namespace s3d;
 	const Point cursolPos = Mouse::Pos();
 	if( rect.x <= cursolPos.x && cursolPos.x <= rect.x + rect.w && 
-		rect.y <= cursolPos.y && cursolPos.y <= rect.y + rect.h ){
-
-		return Input::MouseL.clicked;
+		rect.y <= cursolPos.y && cursolPos.y <= rect.y + rect.h &&
+		Input::MouseL.clicked ){
+		decideSound.play();
+		return true;
 	}
 	return false;
 }
