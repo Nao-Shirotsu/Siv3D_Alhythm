@@ -2,9 +2,11 @@
 
 #define NO_S3D_USING
 
-#include <Siv3D.hpp>
-
 #include <queue>
+#include <array>
+#include <unordered_map>
+
+#include <Siv3D.hpp>
 
 #include "Game_Object_Enum.h"
 #include "Game_Object_Note.h"
@@ -15,25 +17,31 @@ namespace Object{
 // 音ゲープレイ画面に出るレーンの1列
 class Lane{
 public:
-	Lane( LaneID laneID_ );
+	Lane( std::shared_ptr<Track>& track_ );
 
 	// 何もしない
 	Lane();
 	~Lane();
 
-	void Update( double secCur );
+	void Update();
 
 	void Draw() const;
 
-	// 1曲中にこのレーンに流れてくるノーツを全て格納する
-	std::queue<Note> notes;
+	// 楽曲のノーツデータを追加する
+	// どのレーンの何小節何拍目かを指定
+	void AddNote( LaneID laneID, int bar, int beat );
 
 private:
-	// このレーンがどのキー(鍵盤)のレーンか
-	LaneID laneID;
+	// 8レーンの矩形と判定ライン
+	std::array<s3d::Rect, 8> laneRects;
+	s3d::Line judgeLineL;
+	s3d::Line judgeLineR;
 
-	// このレーンの矩形
-	s3d::Rect laneRect;
+	// 1曲中各レーンに流れてくるノーツを全て格納する
+	std::unordered_map<LaneID, std::queue<Note>> notesQueue;
+
+	// 各Noteに渡すために保管
+	std::shared_ptr<Track> track;
 };
 
 }

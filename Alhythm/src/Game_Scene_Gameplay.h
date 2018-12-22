@@ -32,15 +32,16 @@ private:
 
 	// デバッグ用ボタンと文字列
 	Game::Object::ClickButton button;
+	Game::Object::ClickButton playMusic;
 	s3d::Font text;
 	s3d::String str;
 
-	// 音声ファイルオブジェクト
+	// 音声ファイルオブジェクト musicBeganで再生済か否か判定する
 	std::shared_ptr<Game::Object::Track> track;
 	bool musicBegan;
 
 	// レーン
-	std::unordered_map<Game::Object::LaneID, Game::Object::Lane> lanes;
+	Game::Object::Lane lanes;
 };
 
 }// namespace Scene

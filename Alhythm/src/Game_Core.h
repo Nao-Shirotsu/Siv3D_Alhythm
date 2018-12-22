@@ -28,13 +28,14 @@ public:
 	// Coreインスタンスは複数存在しないほうがよいため、使用しない
 	Core( const Core& core ) = delete;
 	Core& operator=( const Core& core ) = delete;
-	Core( const Core&& core ) = delete;
-	Core& operator=( const Core&& core ) = delete;
+	Core( Core&& core ) = delete;
+	Core& operator=( Core&& core ) = delete;
 
 private:
 	// sceneStackに積まれているすべてのリソースを解放
 	void DestructAllSceneObjects();
 
+	// シーンスタック  シーンのﾎﾟｲﾝﾀで多態させる
 	std::stack<std::unique_ptr<Game::Scene::Base>> sceneStack;
 
 	// 常に表示する背景画像 1280x800 の 16:10

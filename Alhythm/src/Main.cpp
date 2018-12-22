@@ -1,5 +1,7 @@
 ﻿#include "Game_Core.h"
 
+// そのうちシングルトンにしとけ
+
 void Main(){
 	Game::Core gamecore;
 

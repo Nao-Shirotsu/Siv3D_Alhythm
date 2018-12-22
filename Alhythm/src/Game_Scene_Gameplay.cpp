@@ -8,46 +8,54 @@ namespace Game{
 namespace Scene{
 
 Gameplay::Gameplay():
+	track( std::make_shared<Game::Object::Track>( static_cast< s3d::wchar* >( L"Resource/senkou.mp3" ), 210, 133 ) ),
+	lanes( track ),
 	returnToSelect( 20, 380, L"選曲へ", 20 ),
+	playMusic( 20, 310, L"再生する", 20 ),
 	button( 20, 450, L"クリック", 20 ),
-	track( std::make_shared<Game::Object::Track>( static_cast<s3d::wchar*>( L"Resource/senkou.mp3"), 210, 133 ) ),
-	text( 30 ),
-	str( L"initial" ),
 	musicBegan( false ){
 	using namespace Game::Object;
-	lanes[LaneID::A] = Lane( LaneID::A );
-	lanes[LaneID::S] = Lane( LaneID::S );
-	lanes[LaneID::D] = Lane( LaneID::D );
-	lanes[LaneID::F] = Lane( LaneID::F );
-	lanes[LaneID::J] = Lane( LaneID::J );
-	lanes[LaneID::K] = Lane( LaneID::K );
-	lanes[LaneID::L] = Lane( LaneID::L );
-	lanes[LaneID::Smcl] = Lane( LaneID::Smcl );
+	lanes.AddNote( LaneID::D, 3, 1 );
+	lanes.AddNote( LaneID::F, 3, 9 );
+	lanes.AddNote( LaneID::D, 3, 17 );
+	lanes.AddNote( LaneID::F, 3, 25 );
+
+	lanes.AddNote( LaneID::D, 4, 1 );
+	lanes.AddNote( LaneID::F, 4, 9 );
+	lanes.AddNote( LaneID::D, 4, 17 );
+	lanes.AddNote( LaneID::F, 4, 25 );
+
+	lanes.AddNote( LaneID::D, 5, 1 );
+	lanes.AddNote( LaneID::F, 5, 9 );
+	lanes.AddNote( LaneID::D, 5, 17 );
+	lanes.AddNote( LaneID::F, 5, 25 );
+
+	lanes.AddNote( LaneID::D, 6, 1 );
+	lanes.AddNote( LaneID::F, 6, 9 );
+	lanes.AddNote( LaneID::D, 6, 17 );
+	lanes.AddNote( LaneID::F, 6, 25 );
 }
 
 Gameplay::~Gameplay(){}
 
 void Gameplay::Update(){
 	if( !musicBegan ){
-		if( s3d::Input::KeyEnter.clicked ){
+		if( playMusic.WasClicked() ){
 			musicBegan = true;
 			track->Play();
 		}
 	}
-	if( button.WasClicked() ){
-		str = s3d::Format( track->SecCur() );
-	}
+
+	lanes.Update();
 }
 
 void Gameplay::Draw() const{
 	returnToSelect.Draw();
-	for( const auto& lane : lanes ){
-		lane.second.Draw();
-	}
+	lanes.Draw();
 	
 	//----debug----
 	button.Draw();
-	text( str ).draw( 20, 470 );
+	playMusic.Draw();
 	//-------------
 }
 
