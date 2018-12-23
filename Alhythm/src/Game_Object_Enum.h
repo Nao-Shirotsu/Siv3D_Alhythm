@@ -1,19 +1,21 @@
-#pragma once
+ï»¿#pragma once
+
+#include <Siv3D.hpp>
 
 namespace Game{
 namespace Object{
 
-// ƒvƒŒƒC‰æ–Ê‚ÅA‚Ç‚ÌƒŒ[ƒ“‚©‚ğ¯•Ê‚·‚é—ñ‹“Œ^
-enum class LaneID{
-	// ŒãXˆ—‚Åg‚¤(å‚ÉGame::Object::Note)‚½‚ßs3d::wcharŒ^‚ğ—˜—p‚·‚é
-	A = static_cast< int >( L'A' ),
-	S = static_cast< int >( L'S' ),
-	D = static_cast< int >( L'D' ),
-	F = static_cast< int >( L'F' ),
-	J = static_cast< int >( L'J' ),
-	K = static_cast< int >( L'K' ),
-	L = static_cast< int >( L'L' ),
-	Smcl = static_cast< int >( L';' ),
+// ãƒ—ãƒ¬ã‚¤ç”»é¢ã§ã€ã©ã®ãƒ¬ãƒ¼ãƒ³ã‹ã‚’è­˜åˆ¥ã™ã‚‹åˆ—æŒ™å‹
+enum class LaneID : wchar_t{
+	// å¾Œã€…å‡¦ç†ã§ä½¿ã†(ä¸»ã«Game::Object::Note)ãŸã‚s3d::wcharå‹ã‚’åˆ©ç”¨ã™ã‚‹
+	A = L'A',
+	S = L'S',
+	D = L'D',
+	F = L'F',
+	J = L'J',
+	K = L'K',
+	L = L'L',
+	Smcl = L';',
 };
 
 //enum class Difficulty{

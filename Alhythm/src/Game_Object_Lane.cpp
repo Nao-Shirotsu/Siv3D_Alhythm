@@ -1,4 +1,5 @@
-#include "Game_Object_Lane.h"
+ï»¿#include "Game_Object_Lane.h"
+#include "Game_Util_Functions.h"
 
 namespace{
 
@@ -6,18 +7,27 @@ constexpr int LANE_WIDTH{ 80 };
 constexpr int LANE_HEIGHT{ 800 };
 
 constexpr s3d::Color BG_COLOR{ 64, 64, 64, 224 };
+constexpr s3d::Color BG_COLOR_PUSHED{ 96, 96, 96, 224 };
 constexpr s3d::Color FRAME_COLOR{ 128, 128, 128 };
 constexpr s3d::Color JUDGE_COLOR{ 224, 224, 224 };
+constexpr s3d::Color LETTER_COLOR{ 85, 85, 85, 224 };
 
 }
 
 Game::Object::Lane::Lane( std::shared_ptr<Track>& track_ ):
 	track( track_ ),
 	judgeLineL( 475, 680, 770, 680 ),
-	judgeLineR( 900, 680, 1195, 680 ){
-	
+	judgeLineR( 900, 680, 1195, 680 ),
+	letterA( 35 ),
+	letterS( 35 ),
+	letterD( 35 ),
+	letterF( 35 ),
+	letterJ( 35 ),
+	letterK( 35 ),
+	letterL( 35 ),
+	letterSmcl( 35 ){
+	// mapã®å®Ÿä½“ã‚’ä½œã‚‹
 	using namespace Game::Object;
-	// queue‚ÌÀ‘Ì‚¾‚¯ì‚Á‚Ä‚¨‚­
 	notesQueue[LaneID::A];
 	notesQueue[LaneID::S];
 	notesQueue[LaneID::D];
@@ -27,15 +37,14 @@ Game::Object::Lane::Lane( std::shared_ptr<Track>& track_ ):
 	notesQueue[LaneID::L];
 	notesQueue[LaneID::Smcl];
 
-	// ƒŒ[ƒ“‚Ì•`‰æ—p‹éŒ`‚ÌêŠ‚ğw’è
-	laneRects[0] = s3d::Rect( 470, 0, 80, 800 );
-	laneRects[1] = s3d::Rect( 545, 0, 80, 800 );
-	laneRects[2] = s3d::Rect( 620, 0, 80, 800 );
-	laneRects[3] = s3d::Rect( 695, 0, 80, 800 );
-	laneRects[4] = s3d::Rect( 895, 0, 80, 800 );
-	laneRects[5] = s3d::Rect( 970, 0, 80, 800 );
-	laneRects[6] = s3d::Rect( 1045, 0, 80, 800 );
-	laneRects[7] = s3d::Rect( 1120, 0, 80, 800 );
+	laneRects[LaneID::A] = s3d::Rect( 470, 0, 80, 800 );
+	laneRects[LaneID::S] = s3d::Rect( 545, 0, 80, 800 );
+	laneRects[LaneID::D] = s3d::Rect( 620, 0, 80, 800 );
+	laneRects[LaneID::F] = s3d::Rect( 695, 0, 80, 800 );
+	laneRects[LaneID::J] = s3d::Rect( 895, 0, 80, 800 );
+	laneRects[LaneID::K] = s3d::Rect( 970, 0, 80, 800 );
+	laneRects[LaneID::L] = s3d::Rect( 1045, 0, 80, 800 );
+	laneRects[LaneID::Smcl] = s3d::Rect( 1120, 0, 80, 800 );
 }
 
 Game::Object::Lane::Lane() = default;
@@ -50,30 +59,43 @@ void Game::Object::Lane::Update(){
 
 	for( auto& notes : notesQueue ){
 		// ----debug----
-		s3d::Println( s3d::Format( L"[ ", static_cast< s3d::wchar >( notes.first ), L" ] c ", notes.second.size() ) );
+		s3d::Println( s3d::Format( L"[ ", static_cast<s3d::wchar>( notes.first ), L" ] æ®‹ ", notes.second.size() ) );
 		// -------------
 
-		if( notes.second.empty() ){ // ƒm[ƒc‚Ìqueue‚ª‹ó‚È‚ç‰½‚à‚µ‚È‚¢
+		if( notes.second.empty() ){ // ãƒãƒ¼ãƒ„ã®queueãŒç©ºãªã‚‰ä½•ã‚‚ã—ãªã„
 			continue;
 		}
-		if( notes.second.front().Passed() ){ // ƒm[ƒc‚Ìqueue‚Ìæ“ª‚ªˆ—Œã‚¾‚Á‚½‚çƒ|ƒbƒv‚¾‚¯‚µ‚ÄŸ‚Ö
+		if( notes.second.front().Passed() ){ // ãƒãƒ¼ãƒ„ã®queueã®å…ˆé ­ãŒå‡¦ç†å¾Œã ã£ãŸã‚‰ãƒãƒƒãƒ—ã ã‘ã—ã¦æ¬¡ã¸
 			notes.second.pop();
 			continue;
 		}
-		notes.second.front().Update(); // ƒm[ƒc‚Ìqueue‚Ìæ“ª‚ª–¢ˆ—‚¾‚Á‚½‚çUpdate
+		notes.second.front().Update(); // ãƒãƒ¼ãƒ„ã®queueã®å…ˆé ­ãŒæœªå‡¦ç†ã ã£ãŸã‚‰Update
 	}
 }
 
 void Game::Object::Lane::Draw() const{
-	// ƒŒ[ƒ“‚ğ•`‚­
+	// ãƒ¬ãƒ¼ãƒ³ã‚’æã
 	for( const auto& laneRect : laneRects ){
-		laneRect.draw( BG_COLOR );
-		laneRect.drawFrame( 5, 0, FRAME_COLOR );
+		if( Game::Util::LaneKeyPressed( static_cast<wchar_t>( laneRect.first ) ) ){
+			laneRect.second.draw( BG_COLOR_PUSHED );
+		}
+		else{
+			laneRect.second.draw( BG_COLOR );
+		}
+		laneRect.second.drawFrame( 5, 0, FRAME_COLOR );
 	}
 	judgeLineL.draw( JUDGE_COLOR );
 	judgeLineR.draw( JUDGE_COLOR );
+	letterA( L'A' ).draw( 495, 710, LETTER_COLOR );
+	letterS( L'S' ).draw( 575, 710, LETTER_COLOR );
+	letterD( L'D' ).draw( 645, 710, LETTER_COLOR );
+	letterF( L'F' ).draw( 725, 710, LETTER_COLOR );
+	letterJ( L'J' ).draw( 920, 710, LETTER_COLOR );
+	letterK( L'K' ).draw( 1000, 710, LETTER_COLOR );
+	letterL( L'L' ).draw( 1075, 710, LETTER_COLOR );
+	letterSmcl( L';' ).draw( 1150, 710, LETTER_COLOR );
 
-	// —‚¿‚Ä‚­‚éƒm[ƒc‚ğ•`‚­
+	// è½ã¡ã¦ãã‚‹ãƒãƒ¼ãƒ„ã‚’æã
 	for( const auto& notes : notesQueue ){
 		if( !notes.second.empty() ){
 			notes.second.front().Draw();

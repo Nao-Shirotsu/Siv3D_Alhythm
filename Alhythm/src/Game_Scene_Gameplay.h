@@ -30,11 +30,9 @@ private:
 	// 戻るボタン
 	Game::Object::ClickButton returnToSelect;
 
-	// デバッグ用ボタンと文字列
+	// デバッグ用ボタン
 	Game::Object::ClickButton button;
 	Game::Object::ClickButton playMusic;
-	s3d::Font text;
-	s3d::String str;
 
 	// 音声ファイルオブジェクト musicBeganで再生済か否か判定する
 	std::shared_ptr<Game::Object::Track> track;

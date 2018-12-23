@@ -1,19 +1,20 @@
-#include <unordered_map>
+ï»¿#include <unordered_map>
 
 #include "Game_Object_Note.h"
+#include "Game_Util_Functions.h"
 
 namespace{
 
-// ƒm[ƒc‚ğ’@‚¢‚½‚Ì”»’è—p
+// ãƒãƒ¼ãƒ„ã‚’å©ã„ãŸæ™‚ã®åˆ¤å®šç”¨
 constexpr double GOOD_TIME{ 0.25 };
 constexpr double GREAT_TIME{ 0.125 };
 constexpr double PERFECT_TIME{ 0.0625 };
 
-// ƒm[ƒc‚ÌŒ©‚½–Ú‚Ì•
+// ãƒãƒ¼ãƒ„ã®è¦‹ãŸç›®ã®å¹…
 constexpr int NOTE_WIDTH{ 70 };
 constexpr int NOTE_HEIGHT{ 22 };
 
-// ƒm[ƒc‚ª‚Ç‚ÌƒŒ[ƒ“‚©‚É‚æ‚Á‚ÄˆÊ’u‚ğ•Ï‚¦‚é‚½‚ß
+// ãƒãƒ¼ãƒ„ãŒã©ã®ãƒ¬ãƒ¼ãƒ³ã‹ã«ã‚ˆã£ã¦ä½ç½®ã‚’å¤‰ãˆã‚‹ãŸã‚
 constexpr int POS_A{ 475 };
 constexpr int POS_S{ 550 };
 constexpr int POS_D{ 625 };
@@ -23,10 +24,10 @@ constexpr int POS_K{ 975 };
 constexpr int POS_L{ 1050 };
 constexpr int POS_Smcl{ 1125 };
 
-// ƒm[ƒc‚ÌF
+// ãƒãƒ¼ãƒ„ã®è‰²
 constexpr s3d::Color NOTE_COLOR{ 200, 200, 200 };
 
-// ƒm[ƒc‚ªƒŒ[ƒ“ã‚É•\¦‚³‚ê‚éŠÔ
+// ãƒãƒ¼ãƒ„ãŒãƒ¬ãƒ¼ãƒ³ä¸Šã«è¡¨ç¤ºã•ã‚Œã‚‹æ™‚é–“
 constexpr double INDICATE_TIME{ 5.0 };
 
 constexpr int LANE_HEIGHT{ 800 };
@@ -40,7 +41,7 @@ Game::Object::Note::Note( int barNum_, int beatNum_, LaneID lane_, const std::sh
 	isPushable( false ){
 	secOnMusic = track->SecOnBarBeat( barNum_, beatNum_ );
 
-	// ƒm[ƒc‚ÌˆÊ’uŒˆ‚ßˆ— —¬Î‚ÉƒNƒ\ƒR[ƒh‚È‚Ì‚Å•ÏX‚·‚×‚«
+	// ãƒãƒ¼ãƒ„ã®ä½ç½®æ±ºã‚å‡¦ç† æµçŸ³ã«ã‚¯ã‚½ã‚³ãƒ¼ãƒ‰ãªã®ã§å¤‰æ›´ã™ã¹ã
 	switch( lane_ ){
 	case LaneID::A:
 		rectPosX = POS_A;
@@ -75,7 +76,7 @@ Game::Object::Note::Note( int barNum_, int beatNum_, LaneID lane_, const std::sh
 		break;
 
 	default:
-		rectPosX = 0; // •s³’l
+		rectPosX = 0; // ä¸æ­£å€¤
 		break;
 	}
 	noteRect = s3d::RoundRect( rectPosX, 0, NOTE_WIDTH, NOTE_HEIGHT, 4 );
@@ -91,16 +92,16 @@ void Game::Object::Note::Update(){
 		noteRect.setPos( { rectPosX, LANE_HEIGHT - static_cast<int>( LANE_HEIGHT * timeDiff ) } );
 	}
 
-	// ‚±‚Ìƒm[ƒc‚ª’Ê‚è‰ß‚¬‚Ä‚È‚¢&&”»’è‚³‚ê‚é•b”“à‚È‚ç‚Î
+	// ã“ã®ãƒãƒ¼ãƒ„ãŒé€šã‚Šéãã¦ãªã„&&åˆ¤å®šã•ã‚Œã‚‹ç§’æ•°å†…ãªã‚‰ã°
 	if( !passed && secOnMusic - GOOD_TIME < track->CurSec() && track->CurSec() < secOnMusic + GOOD_TIME ){
 		isPushable = true;
-		if( s3d::Key( lane ).clicked ){
+		if( Game::Util::LaneKeyClicked( static_cast<wchar_t>( lane ) ) ){
 			passed = true;
 			track->PlayNote();
 		}
 	}
 
-	else if( isPushable ){ // ƒm[ƒc‚ª‰Ÿ‚³‚ê‚È‚©‚Á‚½‚ª’Ê‚è‰ß‚¬‚½
+	else if( isPushable ){ // ãƒãƒ¼ãƒ„ãŒæŠ¼ã•ã‚Œãªã‹ã£ãŸãŒé€šã‚ŠéããŸ
 		passed = true;
 	}
 }

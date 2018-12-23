@@ -418,6 +418,9 @@
     <ClCompile Include="src\Game_Object_Lane.cpp">
       <Filter>Game\Object</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game_Util_Functions.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -457,6 +460,9 @@
     </ClInclude>
     <ClInclude Include="src\Game_Object_Enum.h">
       <Filter>Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Util_Functions.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
