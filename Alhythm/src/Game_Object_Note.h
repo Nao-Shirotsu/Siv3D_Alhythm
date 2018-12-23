@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #define NO_S3D_USING
 
@@ -12,44 +12,44 @@
 namespace Game{
 namespace Object{
 
-// ���Q�[�v���C��ʂŎg���m�[�c�I�u�W�F�N�g�̍\����
+// 音ゲープレイ画面で使うノーツオブジェクトの構造体
 class Note{
 public:
 	explicit Note( int barNum_, int beatNum_, LaneID lane_, const std::shared_ptr<Track>& track_ );
 
-	// �������Ȃ� STL�R���e�i�̂��ߗp��
+	// 何もしない STLコンテナのため用意
 	Note();
 	~Note();
 
 	void Update();
 	void Draw() const;
 
-	// �m�[�c�����ꂽ�Ȃ�true
-	bool Passed();
+	// ノーツの判定を返す
+	NoteJudge Result();
 
 private:
-	// ���̃m�[�g���Ȓ��ŗL���ɂȂ�b��(�ʒu)
+	// このノートが曲中で有効になる秒数(位置)
 	double secOnMusic;
 
-	// �m�[�g�̕\�����Ԃ̌v�Z�ɗ��p
+	// ノートの表示時間の計算に利用
 	double timeDiff;
 
-	// �\�����̂ƈʒu
+	// 表示実体と位置
 	int rectPosX;
 	s3d::RoundRect noteRect;
 
-	// �F�X�ƃg���b�N�̏����g������DI�œ��Ċi�[
+	// 色々とトラックの情報を使うためDIで得て格納
 	std::shared_ptr<Track> track;
 
-	// �{����LaneID�̂܂܂��悢���A��������Ɖ��x���L���X�g����K�v�����邽��s3d::wchar
+	// 本当はLaneIDのままがよいが、そうすると何度もキャストする必要があるためs3d::wchar
 	s3d::wchar lane;
 
-	// ���̃m�[�g�����[���𗬂�؂�����Ȃ�true
-	bool passed;
+	// このノートのタップ判定値 Good, Fineなど
+	NoteJudge tapResult;
 
-	// ����L���ɂȂ������ǂ���
-	// ���ꂪtrue�Ȃ�Δ��胉�C���ɋ߂Â�����ł���A
-	// �{�^���������Ȃ��Ă����Ԍo�߂ŏ����Ȃ���΂Ȃ�Ȃ����ߌ̕ϐ����g��
+	// 判定有効になったかどうか
+	// これがtrueならば判定ラインに近づいた後であり、
+	// ボタンを押さなくても時間経過で消さなければならないため個の変数を使う
 	bool isPushable;
 };
 

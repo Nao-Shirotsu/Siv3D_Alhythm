@@ -24,8 +24,7 @@ public:
 private:
 	int x, y;
 	s3d::Rect rect;
-	s3d::Color colorRect;
-	s3d::Rect rectShade;
+	s3d::Color rectColor;
 	s3d::Font text;
 	const s3d::wchar* textStr;
 	const s3d::Sound decideSound;

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #define NO_S3D_USING
 
@@ -15,7 +15,7 @@
 namespace Game{
 namespace Scene{
 
-// ƒV[ƒ“FŠy‹ÈƒvƒŒƒC‰æ–Ê
+// ã‚·ãƒ¼ãƒ³ï¼šæ¥½æ›²ãƒ—ãƒ¬ã‚¤ç”»é¢
 class Gameplay: public Base{
 public:
 	Gameplay();
@@ -27,18 +27,19 @@ public:
 	std::unique_ptr<Base> TransitionToNext() override;
 
 private:
-	// –ß‚éƒ{ƒ^ƒ“
+	// æˆ»ã‚‹ãƒœã‚¿ãƒ³
 	Game::Object::ClickButton returnToSelect;
 
-	// ƒfƒoƒbƒO—pƒ{ƒ^ƒ“
+	// ãƒ‡ãƒãƒƒã‚°ç”¨ãƒœã‚¿ãƒ³
 	Game::Object::ClickButton button;
 	Game::Object::ClickButton playMusic;
 
-	// ‰¹ºƒtƒ@ƒCƒ‹ƒIƒuƒWƒFƒNƒg musicBegan‚ÅÄ¶Ï‚©”Û‚©”»’è‚·‚é
 	std::shared_ptr<Game::Object::Track> track;
+
+	// éŸ³å£°ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ musicBeganã§å†ç”Ÿæ¸ˆã‹å¦ã‹åˆ¤å®šã™ã‚‹
 	bool musicBegan;
 
-	// ƒŒ[ƒ“
+	// ãƒ¬ãƒ¼ãƒ³
 	Game::Object::Lane lanes;
 };
 
