@@ -8,7 +8,7 @@ namespace Game{
 namespace Scene{
 
 Gameplay::Gameplay():
-	track( std::make_shared<Game::Object::Track>( static_cast< s3d::wchar* >( L"Resource/senkou.mp3" ), 210, 133 ) ),
+	track( std::make_shared<Game::Object::Track>( static_cast<s3d::wchar*>( L"Resource/senkou.mp3" ), 210, 133 ) ),
 	lanes( track ),
 	returnToSelect( 20, 380, L"選曲へ", 20 ),
 	playMusic( 20, 310, L"再生する", 20 ),
@@ -34,26 +34,6 @@ Gameplay::Gameplay():
 	lanes.AddNote( LaneID::F, 6, 9 );
 	lanes.AddNote( LaneID::D, 6, 17 );
 	lanes.AddNote( LaneID::F, 6, 25 );
-
-	lanes.AddNote( LaneID::L, 3, 1 );
-	lanes.AddNote( LaneID::Smcl, 3, 9 );
-	lanes.AddNote( LaneID::L, 3, 17 );
-	lanes.AddNote( LaneID::Smcl, 3, 25 );
-
-	lanes.AddNote( LaneID::L, 4, 1 );
-	lanes.AddNote( LaneID::Smcl, 4, 9 );
-	lanes.AddNote( LaneID::L, 4, 17 );
-	lanes.AddNote( LaneID::Smcl, 4, 25 );
-
-	lanes.AddNote( LaneID::L, 5, 1 );
-	lanes.AddNote( LaneID::Smcl, 5, 9 );
-	lanes.AddNote( LaneID::L, 5, 17 );
-	lanes.AddNote( LaneID::Smcl, 5, 25 );
-
-	lanes.AddNote( LaneID::L, 6, 1 );
-	lanes.AddNote( LaneID::Smcl, 6, 9 );
-	lanes.AddNote( LaneID::L, 6, 17 );
-	lanes.AddNote( LaneID::Smcl, 6, 25 );
 }
 
 Gameplay::~Gameplay(){}
@@ -72,7 +52,7 @@ void Gameplay::Update(){
 void Gameplay::Draw() const{
 	returnToSelect.Draw();
 	lanes.Draw();
-	
+
 	//----debug----
 	button.Draw();
 	playMusic.Draw();

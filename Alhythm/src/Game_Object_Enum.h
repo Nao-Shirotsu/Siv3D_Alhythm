@@ -18,11 +18,13 @@ enum class LaneID : wchar_t{
 	Smcl = L';',
 };
 
-//enum class Difficulty{
-//	Easy,
-//	Medium,
-//	Expert,
-//};
+enum class NoteJudge{
+	Undone,
+	Miss,
+	Good,
+	Fine,
+	Just
+};
 
 }// namespace Game
 }// namespace Object

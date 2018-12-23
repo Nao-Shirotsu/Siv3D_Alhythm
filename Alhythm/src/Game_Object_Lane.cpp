@@ -1,5 +1,8 @@
-﻿#include "Game_Object_Lane.h"
+﻿#include <chrono>
+
+#include "Game_Object_Lane.h"
 #include "Game_Util_Functions.h"
+#include "Game_Object_Enum.h"
 
 namespace{
 
@@ -12,12 +15,18 @@ constexpr s3d::Color FRAME_COLOR{ 128, 128, 128 };
 constexpr s3d::Color JUDGE_COLOR{ 224, 224, 224 };
 constexpr s3d::Color LETTER_COLOR{ 85, 85, 85, 224 };
 
+constexpr s3d::Color MISS_COLOR{ 48, 48, 48, 224 };
+
+constexpr s3d::Color GOOD_COLOR{ 128, 224, 224, 224 };
+constexpr s3d::Color FINE_COLOR{ 224, 224, 32, 224 };
+constexpr s3d::Color JUST_COLOR{ 255, 160, 0, 224 };
+
 }
 
 Game::Object::Lane::Lane( std::shared_ptr<Track>& track_ ):
 	track( track_ ),
-	judgeLineL( 475, 680, 770, 680 ),
-	judgeLineR( 900, 680, 1195, 680 ),
+	judgeLineL( 475, 690, 770, 690 ),
+	judgeLineR( 900, 690, 1195, 690 ),
 	letterA( 35 ),
 	letterS( 35 ),
 	letterD( 35 ),
@@ -25,7 +34,13 @@ Game::Object::Lane::Lane( std::shared_ptr<Track>& track_ ):
 	letterJ( 35 ),
 	letterK( 35 ),
 	letterL( 35 ),
-	letterSmcl( 35 ){
+	letterSmcl( 35 ),
+	comboText( 20 ),
+	comboNumText( 40 ),
+	combo( 0 ),
+	noteJudgeText( 55, s3d::Typeface::Heavy, s3d::FontStyle::Outline ),
+	noteJudgeStr( L"" ),
+	noteJudge( NoteJudge::Undone ){
 	// mapの実体を作る
 	using namespace Game::Object;
 	notesQueue[LaneID::A];
@@ -52,6 +67,7 @@ Game::Object::Lane::Lane() = default;
 Game::Object::Lane::~Lane() = default;
 
 void Game::Object::Lane::Update(){
+	using namespace std::chrono;
 
 	// ----debug----
 	s3d::ClearPrint();
@@ -59,22 +75,55 @@ void Game::Object::Lane::Update(){
 
 	for( auto& notes : notesQueue ){
 		// ----debug----
-		s3d::Println( s3d::Format( L"[ ", static_cast<s3d::wchar>( notes.first ), L" ] 残 ", notes.second.size() ) );
+		s3d::Println( s3d::Format( L"[ ", static_cast< s3d::wchar >( notes.first ), L" ] 残 ", notes.second.size() ) );
 		// -------------
 
 		if( notes.second.empty() ){ // ノーツのqueueが空なら何もしない
 			continue;
 		}
-		if( notes.second.front().Passed() ){ // ノーツのqueueの先頭が処理後だったらポップだけして次へ
+
+		NoteJudge res = notes.second.front().Result();
+		if( res != NoteJudge::Undone ){ // ノーツのqueueの先頭が処理後だったらポップして次へ
+			// 判定更新とコンボ加算
+			noteJudge = res;
+			switch( noteJudge ){
+			case NoteJudge::Miss:
+				noteJudgeStr = L"MISS";
+				break;
+
+			case NoteJudge::Good:
+				noteJudgeStr = L"GOOD";
+				break;
+
+			case NoteJudge::Fine:
+				noteJudgeStr = L"FINE";
+				break;
+
+			case NoteJudge::Just:
+				noteJudgeStr = L"JUST";
+				break;
+
+			default:
+				noteJudgeStr = L"";
+				break;
+			}
+
+			if( noteJudge != NoteJudge::Miss ){
+				combo += 1;
+			}
+			else{ // ミスでコンボ0
+				combo = 0;
+			}
 			notes.second.pop();
 			continue;
 		}
+
 		notes.second.front().Update(); // ノーツのqueueの先頭が未処理だったらUpdate
 	}
 }
 
 void Game::Object::Lane::Draw() const{
-	// レーンを描く
+	// レーンを描く==================
 	for( const auto& laneRect : laneRects ){
 		if( Game::Util::LaneKeyPressed( static_cast<wchar_t>( laneRect.first ) ) ){
 			laneRect.second.draw( BG_COLOR_PUSHED );
@@ -94,13 +143,43 @@ void Game::Object::Lane::Draw() const{
 	letterK( L'K' ).draw( 1000, 710, LETTER_COLOR );
 	letterL( L'L' ).draw( 1075, 710, LETTER_COLOR );
 	letterSmcl( L';' ).draw( 1150, 710, LETTER_COLOR );
+	// ===========================
 
-	// 落ちてくるノーツを描く
+	// 落ちてくるノーツを描く=========
 	for( const auto& notes : notesQueue ){
 		if( !notes.second.empty() ){
 			notes.second.front().Draw();
 		}
 	}
+	// ============================
+
+	// コンボ周りを描く===============
+	comboText( L"COMBO" ).drawCenter( 835, 290 );
+	comboNumText( s3d::Format( combo ) ).drawCenter( 835, 340 );
+	// =============================
+
+	// 判定文字を描く=================
+	switch( noteJudge ){
+	case NoteJudge::Miss:
+		noteJudgeText( noteJudgeStr ).drawCenter( 835, 400, MISS_COLOR );
+		break;
+
+	case NoteJudge::Good:
+		noteJudgeText( noteJudgeStr ).drawCenter( 835, 400, GOOD_COLOR );
+		break;
+
+	case NoteJudge::Fine:
+		noteJudgeText( noteJudgeStr ).drawCenter( 835, 400, FINE_COLOR );
+		break;
+
+	case NoteJudge::Just:
+		noteJudgeText( noteJudgeStr ).drawCenter( 835, 400, JUST_COLOR );
+		break;
+
+	default:
+		break;
+	}
+	// =============================
 }
 
 void Game::Object::Lane::AddNote( LaneID laneID, int bar, int beat ){

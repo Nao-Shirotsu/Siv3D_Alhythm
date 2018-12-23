@@ -1,4 +1,5 @@
 ﻿#include <unordered_map>
+#include <cmath>
 
 #include "Game_Object_Note.h"
 #include "Game_Util_Functions.h"
@@ -7,8 +8,8 @@ namespace{
 
 // ノーツを叩いた時の判定用
 constexpr double GOOD_TIME{ 0.25 };
-constexpr double GREAT_TIME{ 0.125 };
-constexpr double PERFECT_TIME{ 0.0625 };
+constexpr double FINE_TIME{ 0.125 };
+constexpr double Just_TIME{ 0.0625 };
 
 // ノーツの見た目の幅
 constexpr int NOTE_WIDTH{ 70 };
@@ -28,16 +29,17 @@ constexpr int POS_Smcl{ 1125 };
 constexpr s3d::Color NOTE_COLOR{ 200, 200, 200 };
 
 // ノーツがレーン上に表示される時間
-constexpr double INDICATE_TIME{ 5.0 };
+constexpr double INDICATE_TIME{ 3.0 };
 
 constexpr int LANE_HEIGHT{ 800 };
+constexpr int JUDGELINE_HEGHT{ 680 };
 
 }
 
 Game::Object::Note::Note( int barNum_, int beatNum_, LaneID lane_, const std::shared_ptr<Track>& track_ ):
 	lane( static_cast<s3d::wchar>( lane_ ) ),
 	track( track_ ),
-	passed( false ),
+	tapResult( NoteJudge::Undone ),
 	isPushable( false ){
 	secOnMusic = track->SecOnBarBeat( barNum_, beatNum_ );
 
@@ -87,22 +89,42 @@ Game::Object::Note::Note(){}
 Game::Object::Note::~Note(){}
 
 void Game::Object::Note::Update(){
+	// ノーツの位置更新
 	timeDiff = secOnMusic - track->CurSec();
-	if( 0.0 < timeDiff && timeDiff < INDICATE_TIME  ){
-		noteRect.setPos( { rectPosX, LANE_HEIGHT - static_cast<int>( LANE_HEIGHT * timeDiff ) } );
+	if( 0.0 < timeDiff && timeDiff < INDICATE_TIME + 1.0 ){
+		noteRect.setPos( { rectPosX, JUDGELINE_HEGHT - static_cast<int>( ( timeDiff / INDICATE_TIME ) * JUDGELINE_HEGHT ) } );
 	}
 
 	// このノーツが通り過ぎてない&&判定される秒数内ならば
-	if( !passed && secOnMusic - GOOD_TIME < track->CurSec() && track->CurSec() < secOnMusic + GOOD_TIME ){
+	if( tapResult == NoteJudge::Undone && secOnMusic - GOOD_TIME < track->CurSec() && track->CurSec() < secOnMusic + GOOD_TIME ){
 		isPushable = true;
+		// 判定が有効な時
 		if( Game::Util::LaneKeyClicked( static_cast<wchar_t>( lane ) ) ){
-			passed = true;
-			track->PlayNote();
+			// timeDiffによって判定結果を算出してtapResultに格納
+			if( std::fabs( timeDiff ) < Just_TIME ){
+				tapResult = NoteJudge::Just;
+				track->PlayNote();
+				return;
+			}
+			else if( std::fabs( timeDiff ) < FINE_TIME ){
+				tapResult = NoteJudge::Fine;
+				track->PlayNote();
+				return;
+			}
+			else if( std::fabs( timeDiff ) < GOOD_TIME ){
+				tapResult = NoteJudge::Good;
+				track->PlayNote();
+				return;
+			}
+			else{
+				tapResult = NoteJudge::Miss;
+				track->PlayNote();
+				return;
+			}
 		}
 	}
-
-	else if( isPushable ){ // ノーツが押されなかったが通り過ぎた
-		passed = true;
+	else if( isPushable && timeDiff < -0.25 ){ // ノーツが押されなかったが通り過ぎた
+		tapResult = NoteJudge::Miss;
 	}
 }
 
@@ -113,6 +135,6 @@ void Game::Object::Note::Draw() const{
 	}
 }
 
-bool Game::Object::Note::Passed(){
-	return passed;
+Game::Object::NoteJudge Game::Object::Note::Result(){
+	return tapResult;
 }

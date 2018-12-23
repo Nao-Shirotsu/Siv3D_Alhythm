@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #define NO_S3D_USING
 
@@ -13,12 +13,12 @@
 namespace Game{
 namespace Object{
 
-// ‰¹ƒQ[ƒvƒŒƒC‰æ–Ê‚Éo‚éƒŒ[ƒ“‚Ì1—ñ
+// éŸ³ã‚²ãƒ¼ãƒ—ãƒ¬ã‚¤ç”»é¢ã«å‡ºã‚‹ãƒ¬ãƒ¼ãƒ³ã®1åˆ—
 class Lane{
 public:
 	Lane( std::shared_ptr<Track>& track_ );
 
-	// ‰½‚à‚µ‚È‚¢
+	// ä½•ã‚‚ã—ãªã„
 	Lane();
 	~Lane();
 
@@ -26,15 +26,15 @@ public:
 
 	void Draw() const;
 
-	// Šy‹È‚Ìƒm[ƒcƒf[ƒ^‚ğ’Ç‰Á‚·‚é
-	// ‚Ç‚ÌƒŒ[ƒ“‚Ì‰½¬ß‰½”–Ú‚©‚ğw’è
+	// æ¥½æ›²ã®ãƒãƒ¼ãƒ„ãƒ‡ãƒ¼ã‚¿ã‚’è¿½åŠ ã™ã‚‹
+	// ã©ã®ãƒ¬ãƒ¼ãƒ³ã®ä½•å°ç¯€ä½•æ‹ç›®ã‹ã‚’æŒ‡å®š
 	void AddNote( LaneID laneID, int bar, int beat );
 
 private:
-	// ŠeNote‚É“n‚·‚½‚ß‚É•ÛŠÇ
+	// å„Noteã«æ¸¡ã™ãŸã‚ã«ä¿ç®¡
 	std::shared_ptr<Track> track;
 
-	// 8ƒŒ[ƒ“‚Ì‹éŒ`A”»’èƒ‰ƒCƒ“AƒŒ[ƒ“ID•¶š
+	// 8ãƒ¬ãƒ¼ãƒ³ã®çŸ©å½¢ã€åˆ¤å®šãƒ©ã‚¤ãƒ³ã€ãƒ¬ãƒ¼ãƒ³IDæ–‡å­—
 	std::unordered_map<LaneID, s3d::Rect> laneRects;
 	s3d::Line judgeLineL;
 	s3d::Line judgeLineR;
@@ -47,7 +47,21 @@ private:
 	s3d::Font letterL;
 	s3d::Font letterSmcl;
 
-	// 1‹È’†ŠeƒŒ[ƒ“‚É—¬‚ê‚Ä‚­‚éƒm[ƒc‚ğ‘S‚ÄŠi”[‚·‚é
+	// ã‚³ãƒ³ãƒœæ•°è¡¨ç¤º
+	s3d::Font comboText;
+	s3d::Font comboNumText;
+
+	// ã‚³ãƒ³ãƒœæ•°
+	int combo;
+
+	// åˆ¤å®šå€¤è¡¨ç¤º
+	s3d::Font noteJudgeText;
+	s3d::String noteJudgeStr;
+
+	// æœ€ã‚‚ç›´è¿‘ã«å‡¦ç†ã•ã‚ŒãŸãƒãƒ¼ãƒ„ã®åˆ¤å®šå€¤
+	Game::Object::NoteJudge noteJudge;
+
+	// 1æ›²ä¸­å„ãƒ¬ãƒ¼ãƒ³ã«æµã‚Œã¦ãã‚‹ãƒãƒ¼ãƒ„ã‚’å…¨ã¦æ ¼ç´ã™ã‚‹
 	std::unordered_map<LaneID, std::queue<Note>> notesQueue;
 };
 
