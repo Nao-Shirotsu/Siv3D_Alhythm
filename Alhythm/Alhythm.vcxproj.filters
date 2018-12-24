@@ -421,6 +421,9 @@
     <ClCompile Include="src\Game_Util_Functions.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game_Util_TimeDuration.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -462,6 +465,9 @@
       <Filter>Game\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\Game_Util_Functions.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Util_TimeDuration.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>

@@ -31,7 +31,6 @@ private:
 	Game::Object::ClickButton returnToSelect;
 
 	// デバッグ用ボタン
-	Game::Object::ClickButton button;
 	Game::Object::ClickButton playMusic;
 
 	std::shared_ptr<Game::Object::Track> track;

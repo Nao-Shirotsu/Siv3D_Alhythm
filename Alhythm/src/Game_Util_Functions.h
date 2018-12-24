@@ -10,5 +10,5 @@ namespace Util{
 bool LaneKeyClicked( s3d::wchar keycode );
 bool LaneKeyPressed( s3d::wchar keycode );
 
-}
-}
+}// namespace Util
+}// namespace Game

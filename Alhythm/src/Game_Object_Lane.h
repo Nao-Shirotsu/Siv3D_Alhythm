@@ -9,6 +9,7 @@
 
 #include "Game_Object_Enum.h"
 #include "Game_Object_Note.h"
+#include "Game_Util_TimeDuration.h"
 
 namespace Game{
 namespace Object{
@@ -60,6 +61,9 @@ private:
 
 	// 最も直近に処理されたノーツの判定値
 	Game::Object::NoteJudge noteJudge;
+
+	// 処理で利用するストップウォッチ
+	Game::Util::TimeDuration stopwatch;
 
 	// 1曲中各レーンに流れてくるノーツを全て格納する
 	std::unordered_map<LaneID, std::queue<Note>> notesQueue;
