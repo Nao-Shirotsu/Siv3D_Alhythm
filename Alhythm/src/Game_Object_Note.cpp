@@ -7,9 +7,10 @@
 namespace{
 
 // ノーツを叩いた時の判定用
-constexpr double GOOD_TIME{ 0.25 };
-constexpr double FINE_TIME{ 0.125 };
-constexpr double Just_TIME{ 0.0625 };
+constexpr double MISS_TIME{ 0.125 };    // 0b0.001
+constexpr double GOOD_TIME{ 0.09375 };  // 0b0.00011
+constexpr double FINE_TIME{ 0.046875 }; // 0b0.000011
+constexpr double Just_TIME{ 0.0234375 };// 0b0.0000011
 
 // ノーツの見た目の幅
 constexpr int NOTE_WIDTH{ 70 };
@@ -29,7 +30,7 @@ constexpr int POS_Smcl{ 1125 };
 constexpr s3d::Color NOTE_COLOR{ 200, 200, 200 };
 
 // ノーツがレーン上に表示される時間
-constexpr double INDICATE_TIME{ 3.0 };
+constexpr double INDICATE_TIME{ 1.5 };
 
 constexpr int LANE_HEIGHT{ 800 };
 constexpr int JUDGELINE_HEGHT{ 680 };
@@ -96,29 +97,26 @@ void Game::Object::Note::Update(){
 	}
 
 	// このノーツが通り過ぎてない&&判定される秒数内ならば
-	if( tapResult == NoteJudge::Undone && secOnMusic - GOOD_TIME < track->CurSec() && track->CurSec() < secOnMusic + GOOD_TIME ){
+	if( tapResult == NoteJudge::Undone && secOnMusic - MISS_TIME < track->CurSec() && track->CurSec() < secOnMusic + MISS_TIME ){
 		isPushable = true;
 		// 判定が有効な時
 		if( Game::Util::LaneKeyClicked( static_cast<wchar_t>( lane ) ) ){
 			// timeDiffによって判定結果を算出してtapResultに格納
+			track->PlayNote();
 			if( std::fabs( timeDiff ) < Just_TIME ){
 				tapResult = NoteJudge::Just;
-				track->PlayNote();
 				return;
 			}
 			else if( std::fabs( timeDiff ) < FINE_TIME ){
 				tapResult = NoteJudge::Fine;
-				track->PlayNote();
 				return;
 			}
 			else if( std::fabs( timeDiff ) < GOOD_TIME ){
 				tapResult = NoteJudge::Good;
-				track->PlayNote();
 				return;
 			}
 			else{
 				tapResult = NoteJudge::Miss;
-				track->PlayNote();
 				return;
 			}
 		}

@@ -9,5 +9,5 @@ void Game::Util::TimeDuration::Start() noexcept{
 
 int Game::Util::TimeDuration::MilliDur() const noexcept{
 	using namespace std::chrono;
-	return duration_cast<milliseconds>( system_clock::now() - start ).count();
+	return static_cast<int>( duration_cast<milliseconds>( system_clock::now() - start ).count() );
 }

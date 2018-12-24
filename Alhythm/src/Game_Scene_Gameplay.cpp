@@ -9,30 +9,33 @@ namespace Scene{
 
 Gameplay::Gameplay():
 	track( std::make_shared<Game::Object::Track>( static_cast<s3d::wchar*>( L"Resource/senkou.mp3" ), 210, 133 ) ),
-	lanes( track ),
+	ui( track ),
 	returnToSelect( 20, 380, L"選曲へ", 20 ),
 	playMusic( 20, 310, L"再生する", 20 ),
 	musicBegan( false ){
 	using namespace Game::Object;
-	lanes.AddNote( LaneID::D, 3, 1 );
-	lanes.AddNote( LaneID::F, 3, 9 );
-	lanes.AddNote( LaneID::D, 3, 17 );
-	lanes.AddNote( LaneID::F, 3, 25 );
 
-	lanes.AddNote( LaneID::D, 4, 1 );
-	lanes.AddNote( LaneID::F, 4, 9 );
-	lanes.AddNote( LaneID::D, 4, 17 );
-	lanes.AddNote( LaneID::F, 4, 25 );
+	// --------debug--------
+	ui.AddNoteToLane( LaneID::D, 3, 1 );
+	ui.AddNoteToLane( LaneID::F, 3, 9 );
+	ui.AddNoteToLane( LaneID::D, 3, 17 );
+	ui.AddNoteToLane( LaneID::F, 3, 25 );
 
-	lanes.AddNote( LaneID::D, 5, 1 );
-	lanes.AddNote( LaneID::F, 5, 9 );
-	lanes.AddNote( LaneID::D, 5, 17 );
-	lanes.AddNote( LaneID::F, 5, 25 );
+	ui.AddNoteToLane( LaneID::D, 4, 1 );
+	ui.AddNoteToLane( LaneID::F, 4, 9 );
+	ui.AddNoteToLane( LaneID::D, 4, 17 );
+	ui.AddNoteToLane( LaneID::F, 4, 25 );
 
-	lanes.AddNote( LaneID::D, 6, 1 );
-	lanes.AddNote( LaneID::F, 6, 9 );
-	lanes.AddNote( LaneID::D, 6, 17 );
-	lanes.AddNote( LaneID::F, 6, 25 );
+	ui.AddNoteToLane( LaneID::D, 5, 1 );
+	ui.AddNoteToLane( LaneID::F, 5, 9 );
+	ui.AddNoteToLane( LaneID::D, 5, 17 );
+	ui.AddNoteToLane( LaneID::F, 5, 25 );
+
+	ui.AddNoteToLane( LaneID::D, 6, 1 );
+	ui.AddNoteToLane( LaneID::F, 6, 9 );
+	ui.AddNoteToLane( LaneID::D, 6, 17 );
+	ui.AddNoteToLane( LaneID::F, 6, 25 );
+	// --------debug--------
 }
 
 Gameplay::~Gameplay(){}
@@ -45,12 +48,12 @@ void Gameplay::Update(){
 		}
 	}
 
-	lanes.Update();
+	ui.Update();
 }
 
 void Gameplay::Draw() const{
 	returnToSelect.Draw();
-	lanes.Draw();
+	ui.Draw();
 
 	//----debug----
 	playMusic.Draw();
