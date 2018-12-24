@@ -10,7 +10,7 @@
 #include "Game_Scene_Base.h"
 #include "Game_Object_ClickButton.h"
 #include "Game_Object_Track.h"
-#include "Game_Object_Lane.h"
+#include "Game_Object_UI.h"
 
 namespace Game{
 namespace Scene{
@@ -39,7 +39,7 @@ private:
 	bool musicBegan;
 
 	// レーン
-	Game::Object::Lane lanes;
+	Game::Object::UI ui;
 };
 
 }// namespace Scene

@@ -9,19 +9,20 @@
 
 #include "Game_Object_Enum.h"
 #include "Game_Object_Note.h"
+#include "Game_Object_Gauge.h"
 #include "Game_Util_TimeDuration.h"
 
 namespace Game{
 namespace Object{
 
-// 音ゲープレイ画面に出るレーンの1列
-class Lane{
+// 音ゲープレイ画面に出るUIとそのための処理をするクラス
+class UI{
 public:
-	Lane( std::shared_ptr<Track>& track_ );
+	UI( std::shared_ptr<Track>& track_ );
 
 	// 何もしない
-	Lane();
-	~Lane();
+	UI();
+	~UI();
 
 	void Update();
 
@@ -29,9 +30,12 @@ public:
 
 	// 楽曲のノーツデータを追加する
 	// どのレーンの何小節何拍目かを指定
-	void AddNote( LaneID laneID, int bar, int beat );
+	void AddNoteToLane( LaneID laneID, int bar, int beat );
 
 private:
+	// Noteから受け取った判定値をクリアゲージ加算値に変換
+	double JudgeToGaugeVal( NoteJudge judgeVal );
+
 	// 各Noteに渡すために保管
 	std::shared_ptr<Track> track;
 
@@ -54,6 +58,7 @@ private:
 
 	// コンボ数
 	int combo;
+	int fullCombo;
 
 	// 判定値表示
 	s3d::Font noteJudgeText;
@@ -67,7 +72,10 @@ private:
 
 	// 1曲中各レーンに流れてくるノーツを全て格納する
 	std::unordered_map<LaneID, std::queue<Note>> notesQueue;
+
+	// クリアゲージ
+	Game::Object::Gauge gauge;
 };
 
-}
-}
+}// namespace Object
+}// namespace Game

@@ -1,6 +1,6 @@
 ﻿#include <chrono>
 
-#include "Game_Object_Lane.h"
+#include "Game_Object_UI.h"
 #include "Game_Util_Functions.h"
 #include "Game_Object_Enum.h"
 
@@ -15,18 +15,17 @@ constexpr s3d::Color FRAME_COLOR{ 128, 128, 128 };
 constexpr s3d::Color JUDGE_COLOR{ 224, 224, 224 };
 constexpr s3d::Color LETTER_COLOR{ 85, 85, 85, 224 };
 
-constexpr s3d::Color MISS_COLOR{ 48, 48, 48, 224 };
-
-constexpr s3d::Color GOOD_COLOR{ 128, 224, 224, 224 };
-constexpr s3d::Color FINE_COLOR{ 224, 224, 32, 224 };
-constexpr s3d::Color JUST_COLOR{ 255, 160, 0, 224 };
+constexpr s3d::Color MISS_COLOR{ 48, 48, 48, 192 };
+constexpr s3d::Color GOOD_COLOR{ 128, 224, 224, 192 };
+constexpr s3d::Color FINE_COLOR{ 224, 224, 32, 192 };
+constexpr s3d::Color JUST_COLOR{ 255, 160, 0, 192 };
 
 }
 
-Game::Object::Lane::Lane( std::shared_ptr<Track>& track_ ):
+Game::Object::UI::UI( std::shared_ptr<Track>& track_ ):
 	track( track_ ),
-	judgeLineL( 475, 690, 770, 690 ),
-	judgeLineR( 900, 690, 1195, 690 ),
+	judgeLineL( 475, 680, 770, 680 ),
+	judgeLineR( 900, 680, 1195, 680 ),
 	letterA( 35 ),
 	letterS( 35 ),
 	letterD( 35 ),
@@ -41,7 +40,8 @@ Game::Object::Lane::Lane( std::shared_ptr<Track>& track_ ):
 	noteJudgeText( 55, s3d::Typeface::Heavy, s3d::FontStyle::Outline ),
 	noteJudgeStr( L"" ),
 	noteJudge( NoteJudge::Undone ),
-	stopwatch(){
+	stopwatch(),
+	gauge(){
 	// mapの実体を作る
 	using namespace Game::Object;
 	notesQueue[LaneID::A];
@@ -63,11 +63,11 @@ Game::Object::Lane::Lane( std::shared_ptr<Track>& track_ ):
 	laneRects[LaneID::Smcl] = s3d::Rect( 1120, 0, 80, 800 );
 }
 
-Game::Object::Lane::Lane() = default;
+Game::Object::UI::UI() = default;
 
-Game::Object::Lane::~Lane() = default;
+Game::Object::UI::~UI() = default;
 
-void Game::Object::Lane::Update(){
+void Game::Object::UI::Update(){
 	using namespace std::chrono;
 
 	// ----debug----
@@ -85,7 +85,7 @@ void Game::Object::Lane::Update(){
 
 		NoteJudge res = notes.second.front().Result();
 		if( res != NoteJudge::Undone ){ // ノーツのqueueの先頭が処理後だったらポップして次へ
-			// 表示する判定文字の更新とコンボ加算
+			// 表示する判定文字の更新
 			noteJudge = res;
 			switch( noteJudge ){
 			case NoteJudge::Miss:
@@ -109,6 +109,7 @@ void Game::Object::Lane::Update(){
 				break;
 			}
 
+			// コンボ加算
 			if( noteJudge != NoteJudge::Miss ){
 				combo += 1;
 			}
@@ -130,9 +131,11 @@ void Game::Object::Lane::Update(){
 		stopwatch.Start();
 		noteJudgeStr = L"";
 	}
+
+	gauge.Update( 0.1 );
 }
 
-void Game::Object::Lane::Draw() const{
+void Game::Object::UI::Draw() const{
 	// レーンを描く==================
 	for( const auto& laneRect : laneRects ){
 		if( Game::Util::LaneKeyPressed( static_cast<wchar_t>( laneRect.first ) ) ){
@@ -152,7 +155,7 @@ void Game::Object::Lane::Draw() const{
 	letterJ( L'J' ).draw( 920, 710, LETTER_COLOR );
 	letterK( L'K' ).draw( 1000, 710, LETTER_COLOR );
 	letterL( L'L' ).draw( 1075, 710, LETTER_COLOR );
-	letterSmcl( L';' ).draw( 1160, 710, LETTER_COLOR );
+	letterSmcl( L';' ).draw( 1152, 710, LETTER_COLOR );
 	// ===========================
 
 	// 落ちてくるノーツを描く=========
@@ -162,6 +165,8 @@ void Game::Object::Lane::Draw() const{
 		}
 	}
 	// ============================
+
+	gauge.Draw();
 
 	// コンボ周りを描く===============
 	comboText( L"COMBO" ).drawCenter( 835, 290 );
@@ -192,6 +197,6 @@ void Game::Object::Lane::Draw() const{
 	// =============================
 }
 
-void Game::Object::Lane::AddNote( LaneID laneID, int bar, int beat ){
+void Game::Object::UI::AddNoteToLane( LaneID laneID, int bar, int beat ){
 	notesQueue[laneID].emplace( bar, beat, laneID, track );
 }

@@ -18,6 +18,7 @@ ClickButton::ClickButton( int x_, int y_, const s3d::wchar* text_, const int fon
 	text( fontsize_, s3d::Typeface::Medium, s3d::FontStyle::Outline ),
 	textStr( text_ ),
 	decideSound( L"Resource/decide.mp3" ){
+
 	using namespace s3d;
 	if( !decideSound ){
 		throw std::runtime_error( "sound file read error" );

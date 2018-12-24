@@ -415,14 +415,17 @@
     <ClCompile Include="src\Game_Object_Note.cpp">
       <Filter>Game\Object</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game_Object_Lane.cpp">
-      <Filter>Game\Object</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game_Util_Functions.cpp">
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="src\Game_Util_TimeDuration.cpp">
       <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game_Object_Gauge.cpp">
+      <Filter>Game\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game_Object_UI.cpp">
+      <Filter>Game\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -452,9 +455,6 @@
     <ClInclude Include="src\Game_Scene_Gameplay.h">
       <Filter>Game\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="src\Game_Object_Lane.h">
-      <Filter>Game\Object</Filter>
-    </ClInclude>
     <ClInclude Include="src\Game_Object_Track.h">
       <Filter>Game\Object</Filter>
     </ClInclude>
@@ -469,6 +469,12 @@
     </ClInclude>
     <ClInclude Include="src\Game_Util_TimeDuration.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Object_Gauge.h">
+      <Filter>Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Object_UI.h">
+      <Filter>Game\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
