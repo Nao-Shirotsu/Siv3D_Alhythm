@@ -12,7 +12,6 @@ Gameplay::Gameplay():
 	lanes( track ),
 	returnToSelect( 20, 380, L"選曲へ", 20 ),
 	playMusic( 20, 310, L"再生する", 20 ),
-	button( 20, 450, L"クリック", 20 ),
 	musicBegan( false ){
 	using namespace Game::Object;
 	lanes.AddNote( LaneID::D, 3, 1 );
@@ -54,7 +53,6 @@ void Gameplay::Draw() const{
 	lanes.Draw();
 
 	//----debug----
-	button.Draw();
 	playMusic.Draw();
 	//-------------
 }

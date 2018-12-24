@@ -40,7 +40,8 @@ Game::Object::Lane::Lane( std::shared_ptr<Track>& track_ ):
 	combo( 0 ),
 	noteJudgeText( 55, s3d::Typeface::Heavy, s3d::FontStyle::Outline ),
 	noteJudgeStr( L"" ),
-	noteJudge( NoteJudge::Undone ){
+	noteJudge( NoteJudge::Undone ),
+	stopwatch(){
 	// mapの実体を作る
 	using namespace Game::Object;
 	notesQueue[LaneID::A];
@@ -84,7 +85,7 @@ void Game::Object::Lane::Update(){
 
 		NoteJudge res = notes.second.front().Result();
 		if( res != NoteJudge::Undone ){ // ノーツのqueueの先頭が処理後だったらポップして次へ
-			// 判定更新とコンボ加算
+			// 表示する判定文字の更新とコンボ加算
 			noteJudge = res;
 			switch( noteJudge ){
 			case NoteJudge::Miss:
@@ -115,10 +116,19 @@ void Game::Object::Lane::Update(){
 				combo = 0;
 			}
 			notes.second.pop();
+			stopwatch.Start();
 			continue;
 		}
 
-		notes.second.front().Update(); // ノーツのqueueの先頭が未処理だったらUpdate
+		// ノーツのqueueの先頭が未処理だったらUpdate
+		notes.second.front().Update();
+	}
+
+	// ノーツが2.5秒間無い時判定文字を消す
+	if( stopwatch.MilliDur() > 2500 ){
+		// 何もない区間で何度も代入を避けるためstart
+		stopwatch.Start();
+		noteJudgeStr = L"";
 	}
 }
 
@@ -142,7 +152,7 @@ void Game::Object::Lane::Draw() const{
 	letterJ( L'J' ).draw( 920, 710, LETTER_COLOR );
 	letterK( L'K' ).draw( 1000, 710, LETTER_COLOR );
 	letterL( L'L' ).draw( 1075, 710, LETTER_COLOR );
-	letterSmcl( L';' ).draw( 1150, 710, LETTER_COLOR );
+	letterSmcl( L';' ).draw( 1160, 710, LETTER_COLOR );
 	// ===========================
 
 	// 落ちてくるノーツを描く=========
