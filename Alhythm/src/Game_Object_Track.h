@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #define NO_S3D_USING
 
@@ -7,39 +7,39 @@
 namespace Game{
 namespace Object{
 
-// ���Q�[�v���C��ʂŎg���ȃI�u�W�F�N�g
-// ���ߐ��┏���Ȃǂ�ێ����ď�������
+// 音ゲープレイ画面で使う曲オブジェクト
+// 小節数や拍数などを保持して処理する
 class Track{
 public:
-	explicit Track( s3d::wchar* filename, int bpm, int maxBar_ ) noexcept(false);
+	explicit Track( const s3d::String& filename, int bpm, int maxBar_ ) noexcept(false);
 
-	// �������Ȃ� STL�R���e�i�̂��ߗp��
+	// 何もしない STLコンテナのため用意
 	Track();
 	~Track();
 
-	// ���ߐ��A�������󂯎��b����Ԃ�
+	// 小節数、拍数を受け取り秒数を返す
 	double SecOnBarBeat( int bar, int beat ) const noexcept;
 
-	// �Đ����̋Ȃ̌��݂̕b����Ԃ�
+	// 再生中の曲の現在の秒数を返す
 	double CurSec() const noexcept;
 
-	// �y�ȍĐ�
+	// 楽曲再生
 	void Play();
 
-	// �m�[�c�^�b�v���Đ�
+	// ノーツタップ音再生
 	void PlayNote();
 
 private:
 	/*
-	�b���ł̃m�[�c����ɂ��Aint���Ƒ�ʂɃL���X�g���邱�ƂɂȂ邽�߁A���߂���double�ŕێ����ď������y������B
-	���̃N���X�̃C���X�^���X�̌��͔��ɏ��Ȃ��Ȃ�͂��Ȃ̂ŁA���������\�[�X��double�ł����ɂȂ�Ȃ��B
+	秒数でのノーツ判定につき、intだと大量にキャストすることになるため、初めからdoubleで保持して処理を軽くする。
+	このクラスのインスタンスの個数は非常に少なくなるはずなので、メモリリソースはdoubleでも問題にならない。
 	*/
-	double beatSec; // 1���Ōo�߂���b�� = 60/BPM
-	double curBar;  // ���݂̏��ߐ� 1-origin
-	double curBaet; // ���݂̏��ߓ��̔��� 1-origin 32�������ŕ\�� 5/32�Ȃ�
-	s3d::Sound file; // �y��
-	s3d::Sound tapSound; // �^�b�v��
-	int maxBar; // ���̃g���b�N�̍ŏI���ߔԍ�
+	double beatSec; // 1拍で経過する秒数 = 60/BPM
+	double curBar;  // 現在の小節数 1-origin
+	double curBaet; // 現在の小節内の拍数 1-origin 32分音符で表現 5/32など
+	s3d::Sound file; // 楽曲
+	s3d::Sound tapSound; // タップ音
+	int maxBar; // このトラックの最終小節番号
 };
 
 }

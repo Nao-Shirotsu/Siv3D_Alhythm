@@ -1,6 +1,10 @@
-﻿#include "Game_Util_Functions.h"
+﻿#define NO_S3D_USING
 
-bool Game::Util::LaneKeyClicked( s3d::wchar keycode ){
+#include <Siv3D.hpp>
+
+#include "Game_Util_Functions.h"
+
+bool Game::Util::LaneKeyClicked( wchar_t keycode ){
 	if( s3d::IsAlnum( keycode ) ){
 		return s3d::Key( keycode ).clicked;
 	}
@@ -10,7 +14,7 @@ bool Game::Util::LaneKeyClicked( s3d::wchar keycode ){
 	return false;
 }
 
-bool Game::Util::LaneKeyPressed( s3d::wchar keycode ){
+bool Game::Util::LaneKeyPressed( wchar_t keycode ){
 	if( s3d::IsAlnum( keycode ) ){
 		return s3d::Key( keycode ).pressed;
 	}
