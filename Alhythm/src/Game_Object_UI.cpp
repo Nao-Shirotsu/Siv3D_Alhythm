@@ -44,14 +44,14 @@ Game::Object::UI::UI( std::shared_ptr<Track>& track_ ):
 	gauge(){
 	// mapの実体を作る
 	using namespace Game::Object;
-	notesQueue[LaneID::A];
-	notesQueue[LaneID::S];
-	notesQueue[LaneID::D];
-	notesQueue[LaneID::F];
-	notesQueue[LaneID::J];
-	notesQueue[LaneID::K];
-	notesQueue[LaneID::L];
-	notesQueue[LaneID::Smcl];
+	notesLaneDeque[LaneID::A];
+	notesLaneDeque[LaneID::S];
+	notesLaneDeque[LaneID::D];
+	notesLaneDeque[LaneID::F];
+	notesLaneDeque[LaneID::J];
+	notesLaneDeque[LaneID::K];
+	notesLaneDeque[LaneID::L];
+	notesLaneDeque[LaneID::Smcl];
 
 	laneRects[LaneID::A] = s3d::Rect( 470, 0, 80, 800 );
 	laneRects[LaneID::S] = s3d::Rect( 545, 0, 80, 800 );
@@ -74,17 +74,24 @@ void Game::Object::UI::Update(){
 	s3d::ClearPrint();
 	// -------------
 
-	for( auto& notes : notesQueue ){
+	for( auto& lane : notesLaneDeque ){
 		// ----debug----
-		s3d::Println( s3d::Format( L"[ ", static_cast< s3d::wchar >( notes.first ), L" ] 残 ", notes.second.size() ) );
+		s3d::Println( s3d::Format( L"[ ", static_cast< s3d::wchar >( lane.first ), L" ] 残 ", lane.second.size() ) );
 		// -------------
 
-		if( notes.second.empty() ){ // ノーツのqueueが空なら何もしない
+		if( lane.second.empty() ){ // ノーツのdequeが空なら何もしない
 			continue;
 		}
 
-		NoteJudge res = notes.second.front().Result();
-		if( res != NoteJudge::Undone ){ // ノーツのqueueの先頭が処理後だったらポップして次へ
+		for( auto& note : lane.second ){
+			if( !note.IsValidtoIndicate() ){
+				break;
+			}
+			note.Update();
+		}
+
+		NoteJudge res = lane.second.front().Result();
+		if( res != NoteJudge::Undone ){ // ノーツのdequeの先頭が処理後だったらポップして次へ
 			// 表示する判定文字の更新
 			noteJudge = res;
 			switch( noteJudge ){
@@ -116,13 +123,13 @@ void Game::Object::UI::Update(){
 			else{ // ミスでコンボ0
 				combo = 0;
 			}
-			notes.second.pop();
+			lane.second.pop_front();
 			stopwatch.Start();
 			continue;
 		}
 
 		// ノーツのqueueの先頭が未処理だったらUpdate
-		notes.second.front().Update();
+		//lane.second.front().Update();
 	}
 
 	// ノーツが2.5秒間無い時判定文字を消す
@@ -155,13 +162,18 @@ void Game::Object::UI::Draw() const{
 	letterJ( L'J' ).draw( 920, 710, LETTER_COLOR );
 	letterK( L'K' ).draw( 1000, 710, LETTER_COLOR );
 	letterL( L'L' ).draw( 1075, 710, LETTER_COLOR );
-	letterSmcl( L';' ).draw( 1152, 710, LETTER_COLOR );
+	letterSmcl( L';' ).draw( 1150, 710, LETTER_COLOR );
 	// ===========================
 
 	// 落ちてくるノーツを描く=========
-	for( const auto& notes : notesQueue ){
-		if( !notes.second.empty() ){
-			notes.second.front().Draw();
+	for( const auto& lane : notesLaneDeque ){
+		if( !lane.second.empty() ){
+			for( const auto& note : lane.second ){
+				if( !note.IsValidtoIndicate() ){
+					break;
+				}
+				note.Draw();
+			}
 		}
 	}
 	// ============================
@@ -198,5 +210,17 @@ void Game::Object::UI::Draw() const{
 }
 
 void Game::Object::UI::AddNoteToLane( LaneID laneID, int bar, int beat ){
-	notesQueue[laneID].emplace( bar, beat, laneID, track );
+	notesLaneDeque[laneID].emplace_back( bar, beat, laneID, track );
 }
+
+//int Game::Object::UI::RestNotesNum(){
+//	int count = 0;
+//	for( const auto& lane : notesLaneDeque ){
+//		count += lane.second.size();
+//	}
+//	return count;
+//}
+//
+//double Game::Object::UI::JudgeToGaugeVal( Game::Object::NoteJudge judgeVal ){
+//
+//}

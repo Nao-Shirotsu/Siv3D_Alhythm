@@ -27,6 +27,9 @@ public:
 	// ノーツの判定を返す
 	NoteJudge Result();
 
+	// レーンに表示される期間内か否か返す
+	bool IsValidtoIndicate() const noexcept;
+
 private:
 	// このノートが曲中で有効になる秒数(位置)
 	double secOnMusic;
