@@ -9,6 +9,9 @@ namespace{
 constexpr int LANE_WIDTH{ 80 };
 constexpr int LANE_HEIGHT{ 800 };
 
+constexpr int SCORE_TEXT_POS_X{ 110 };
+constexpr int SCORE_TEXT_POS_Y{ 700 };
+
 constexpr s3d::Color BG_COLOR{ 64, 64, 64, 224 };
 constexpr s3d::Color BG_COLOR_PUSHED{ 96, 96, 96, 224 };
 constexpr s3d::Color FRAME_COLOR{ 128, 128, 128 };
@@ -24,8 +27,8 @@ constexpr s3d::Color JUST_COLOR{ 255, 160, 0, 192 };
 
 Game::Object::UI::UI( std::shared_ptr<Track>& track_, const s3d::String& trackName ):
 	track( track_ ),
-	judgeLineL( 475, 680, 770, 680 ),
-	judgeLineR( 900, 680, 1195, 680 ),
+	judgeLineL( 475, 676, 770, 676 ),
+	judgeLineR( 900, 676, 1195, 676 ),
 	letterA( 35 ),
 	letterS( 35 ),
 	letterD( 35 ),
@@ -37,10 +40,18 @@ Game::Object::UI::UI( std::shared_ptr<Track>& track_, const s3d::String& trackNa
 	comboText( 20 ),
 	comboNumText( 40 ),
 	combo( 0 ),
+	score( 0 ),
+	scoreRect( 30, 35, s3d::Font( 28 )( L"1234567" ).region().w, s3d::Font( 32 )( L"1" ).region().h, 5 ),
+	scoreText( 20 ),
+	scoreNumText( 28, 196, 48 ),
 	noteJudgeText( 55, s3d::Typeface::Heavy, s3d::FontStyle::Outline ),
 	noteJudgeStr( L"" ),
 	noteJudge( NoteJudge::Undone ),
 	stopwatch(),
+	cleared( false ),
+	clearText( 40 ),
+	clearStr( L"" ),
+	clearColor( 0, 0, 0 ),
 	gauge(){
 	// mapの実体を作る
 	using namespace Game::Object;
@@ -72,15 +83,7 @@ Game::Object::UI::~UI() = default;
 void Game::Object::UI::Update(){
 	using namespace std::chrono;
 
-	// ----debug----
-	s3d::ClearPrint();
-	// -------------
-
 	for( auto& lane : notesLaneDeque ){
-		// ----debug----
-		s3d::Println( s3d::Format( L"[ ", static_cast< s3d::wchar >( lane.first ), L" ] 残 ", lane.second.size() ) );
-		// -------------
-
 		if( lane.second.empty() ){ // ノーツのdequeが空なら何もしない
 			continue;
 		}
@@ -128,6 +131,7 @@ void Game::Object::UI::Update(){
 
 			// ゲージ増減処理
 			gauge.Update( JudgeToGaugeVal( res ) );
+			score += JudgeToScore( res );
 
 			// 処理終わったノーツをポップ
 			lane.second.pop_front();
@@ -136,9 +140,6 @@ void Game::Object::UI::Update(){
 			stopwatch.Start();
 			continue;
 		}
-
-		// ノーツのqueueの先頭が未処理だったらUpdate
-		//lane.second.front().Update();
 	}
 
 	// ノーツが2.5秒間無い時判定文字を消す
@@ -146,6 +147,11 @@ void Game::Object::UI::Update(){
 		// 何もない区間で何度も代入を避けるためstart
 		stopwatch.Start();
 		noteJudgeStr = L"";
+	}
+
+	if( !cleared && track->IsEnd() ){
+		cleared = true;
+		UpdateClearInfo();
 	}
 }
 
@@ -214,6 +220,18 @@ void Game::Object::UI::Draw() const{
 		break;
 	}
 	// =============================
+
+	// スコアを描く===================
+	scoreText( L"SCORE" ).draw( 30, 0 );
+	scoreRect.draw( s3d::Palette::Midnightblue );
+	scoreNumText.Draw( s3d::Format( score ) );
+	// =============================
+
+	// クリア後の文字を描く============
+	if( cleared ){
+		clearText( clearStr ).drawCenter( 835, 420, clearColor );
+	}
+	// =============================
 }
 
 void Game::Object::UI::AddNoteToLane( LaneID laneID, int bar, int beat ){
@@ -232,14 +250,6 @@ void Game::Object::UI::LoadNotesInfoFile( const s3d::String& trackName ) noexcep
 	}
 }
 
-//int Game::Object::UI::RestNotesNum(){
-//	int count = 0;
-//	for( const auto& lane : notesLaneDeque ){
-//		count += lane.second.size();
-//	}
-//	return count;
-//}
-//
 double Game::Object::UI::JudgeToGaugeVal( Game::Object::NoteJudge judgeVal ){
 	switch( judgeVal ){
 	case NoteJudge::Just:
@@ -256,5 +266,39 @@ double Game::Object::UI::JudgeToGaugeVal( Game::Object::NoteJudge judgeVal ){
 
 	default:
 		return 0.0;
+	}
+}
+
+int Game::Object::UI::JudgeToScore( Game::Object::NoteJudge judgeVal ){
+	switch( judgeVal ){
+	case NoteJudge::Just:
+		return static_cast<int>( 100000.0 /fullCombo );
+
+	case NoteJudge::Fine:
+		return static_cast< int >( 50000.0 / fullCombo );
+
+	case NoteJudge::Good:
+		return static_cast< int >( 25000.0 / fullCombo );
+
+	case NoteJudge::Miss:
+		return 0;
+
+	default:
+		return 0;
+	}
+}
+
+void Game::Object::UI::UpdateClearInfo(){
+	if( gauge.IsOverClearPersent() && combo == fullCombo ){
+		clearStr = L"FULL COMBO";
+		clearColor = s3d::Palette::Mediumvioletred;
+	}
+	else if( gauge.IsOverClearPersent() ){
+		clearStr = L"CLEARED";
+		clearColor = s3d::Palette::Orangered;
+	}
+	else{
+		clearStr = L"FAILED";
+		clearColor = s3d::Palette::Darkslateblue;
 	}
 }

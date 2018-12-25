@@ -1,8 +1,4 @@
-﻿#define NO_S3D_USING
-
-#include <Siv3D.hpp>
-
-#include "Game_Util_Functions.h"
+﻿#include "Game_Util_Functions.h"
 
 bool Game::Util::LaneKeyClicked( wchar_t keycode ){
 	if( s3d::IsAlnum( keycode ) ){
@@ -22,4 +18,20 @@ bool Game::Util::LaneKeyPressed( wchar_t keycode ){
 		return s3d::Input::KeySemicolon.pressed;
 	}
 	return false;
+}
+
+s3d::String Game::Util::FullTrackName( const s3d::String& trackName ){
+	if( trackName == L"senkou" ){
+		return L"閃光の足跡";
+	}
+
+	if( trackName == L"orion" ){
+		return L"Orion";
+	}
+
+	if( trackName == L"cassi" ){
+		return L"Cassiopeia";
+	}
+
+	return L"";
 }

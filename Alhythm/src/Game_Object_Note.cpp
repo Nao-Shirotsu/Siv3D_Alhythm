@@ -30,7 +30,7 @@ constexpr int POS_Smcl{ 1125 };
 constexpr s3d::Color NOTE_COLOR{ 200, 200, 200 };
 
 // ノーツがレーン上に表示される時間
-constexpr double INDICATE_TIME{ 1.5 };
+constexpr double INDICATE_TIME{ 1.3 };
 
 constexpr int LANE_HEIGHT{ 800 };
 constexpr int JUDGELINE_HEGHT{ 680 };
@@ -78,8 +78,8 @@ Game::Object::Note::Note( int barNum_, int beatNum_, LaneID lane_, const std::sh
 		rectPosX = POS_Smcl;
 		break;
 
-	default:
-		rectPosX = 0; // 不正値
+	default: // 不正値
+		throw std::runtime_error( "csvファイルのノーツ情報が不正です。" );
 		break;
 	}
 	noteRect = s3d::RoundRect( rectPosX, 0, NOTE_WIDTH, NOTE_HEIGHT, 4 );

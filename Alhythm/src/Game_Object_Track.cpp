@@ -22,7 +22,7 @@ double Game::Object::Track::SecOnBarBeat( int bar, int beat ) const noexcept{
 	if( bar > maxBar ){
 		return 0; // 不正値として、ノーツを無効にするために0を返す
 	}
-	return beatSec * static_cast<double>( 4 * ( bar - 1 ) + beat / 8 );
+	return beatSec * static_cast<double>( 4 * ( bar - 1 ) + beat / 8.0 );
 }
 
 double Game::Object::Track::CurSec() const noexcept{
@@ -35,4 +35,8 @@ void Game::Object::Track::Play(){
 
 void Game::Object::Track::PlayNote(){
 	tapSound.playMulti();
+}
+
+bool Game::Object::Track::IsEnd(){
+	return !file.isPlaying();
 }

@@ -11,6 +11,7 @@
 #include "Game_Object_ClickButton.h"
 #include "Game_Object_Track.h"
 #include "Game_Object_UI.h"
+#include "Game_Util_TimeDuration.h"
 
 namespace Game{
 namespace Scene{
@@ -32,17 +33,19 @@ private:
 	// 戻るボタン
 	Game::Object::ClickButton returnToSelect;
 
-	// デバッグ用ボタン
-	Game::Object::ClickButton playMusic;
-
-	// 楽曲情報と曲名の一部
+	// プレイ楽曲オブジェクト
 	std::shared_ptr<Game::Object::Track> track;
-	s3d::String trackName;
 
-	// 音声ファイルオブジェクト musicBeganで再生済か否か判定する
-	bool musicBegan;
+	// 楽曲名表示用フォントとString
+	s3d::Font trackNameText;
+	s3d::String trackNameStr;
+	bool musicPlaying;
+	bool isReady;
 
-	// レーン
+	// 処理に使うストップウォッチ
+	Game::Util::TimeDuration stopwatch;
+
+	// UIとその内部処理
 	Game::Object::UI ui;
 };
 

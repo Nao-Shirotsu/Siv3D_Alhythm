@@ -11,6 +11,7 @@
 #include "Game_Object_Note.h"
 #include "Game_Object_Gauge.h"
 #include "Game_Util_TimeDuration.h"
+#include "Game_Object_RightAlignedFont.h"
 
 namespace Game{
 namespace Object{
@@ -39,6 +40,12 @@ private:
 	// Noteから受け取った判定値をクリアゲージ加算値に変換
 	double JudgeToGaugeVal( NoteJudge judgeVal );
 
+	// Noteから受け取った判定値をスコアに変換
+	int JudgeToScore( NoteJudge judgeVal );
+
+	// クリア後に表示する文字を更新
+	void UpdateClearInfo();
+
 	// 各Noteに渡すために保管
 	std::shared_ptr<Track> track;
 
@@ -63,6 +70,12 @@ private:
 	int combo;
 	int fullCombo;
 
+	// スコア full = 100000
+	int score;
+	s3d::RoundRect scoreRect;
+	s3d::Font scoreText;
+	Game::Object::RightAlignedFont scoreNumText;
+
 	// 判定値表示
 	s3d::Font noteJudgeText;
 	s3d::String noteJudgeStr;
@@ -72,6 +85,12 @@ private:
 
 	// 処理で利用するストップウォッチ
 	Game::Util::TimeDuration stopwatch;
+
+	// プレイ終了後のClear, failed等の表示
+	bool cleared;
+	s3d::Font clearText;
+	s3d::String clearStr;
+	s3d::Color clearColor;
 
 	// 1曲中各レーンに流れてくるノーツを全て格納する
 	std::unordered_map<LaneID, std::deque<Note>> notesLaneDeque;

@@ -24,7 +24,7 @@ Game::Object::Gauge::Gauge():
 	height( 0 ),
 	posY( POS_Y + MAX_HEIGHT ),
 	persentage( 0.0 ),
-	persentText( 25, s3d::Typeface::Medium ),
+	persentText( 25 ),
 	persentStr( L"" ),
 	clearLine( POS_X, POS_Y + MAX_HEIGHT * 0.31, POS_X + WIDTH, POS_Y + MAX_HEIGHT * 0.31 ),
 	backGaugeRect( POS_X - 5, POS_Y - 5, 55, 600, 35 ),
