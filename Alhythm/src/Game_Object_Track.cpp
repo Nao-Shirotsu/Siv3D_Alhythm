@@ -1,6 +1,6 @@
 ﻿#include "Game_Object_Track.h"
 
-Game::Object::Track::Track( s3d::wchar* filename, int bpm, int maxBar_ ) noexcept( false ):
+Game::Object::Track::Track( const s3d::String& filename, int bpm, int maxBar_ ) noexcept( false ):
 	beatSec( 60.0 / static_cast<double>( bpm ) ),
 	curBar( 0 ),
 	curBaet( 0 ),

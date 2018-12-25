@@ -18,6 +18,8 @@ namespace Scene{
 // シーン：楽曲プレイ画面
 class Gameplay: public Base{
 public:
+	Gameplay( const s3d::String& trackName_, int bpm, int maxBar );
+
 	Gameplay();
 	~Gameplay();
 
@@ -33,7 +35,9 @@ private:
 	// デバッグ用ボタン
 	Game::Object::ClickButton playMusic;
 
+	// 楽曲情報と曲名の一部
 	std::shared_ptr<Game::Object::Track> track;
+	s3d::String trackName;
 
 	// 音声ファイルオブジェクト musicBeganで再生済か否か判定する
 	bool musicBegan;

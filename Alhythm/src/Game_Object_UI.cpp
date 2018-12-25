@@ -22,7 +22,7 @@ constexpr s3d::Color JUST_COLOR{ 255, 160, 0, 192 };
 
 }
 
-Game::Object::UI::UI( std::shared_ptr<Track>& track_ ):
+Game::Object::UI::UI( std::shared_ptr<Track>& track_, const s3d::String& trackName ):
 	track( track_ ),
 	judgeLineL( 475, 680, 770, 680 ),
 	judgeLineR( 900, 680, 1195, 680 ),
@@ -61,6 +61,8 @@ Game::Object::UI::UI( std::shared_ptr<Track>& track_ ):
 	laneRects[LaneID::K] = s3d::Rect( 970, 0, 80, 800 );
 	laneRects[LaneID::L] = s3d::Rect( 1045, 0, 80, 800 );
 	laneRects[LaneID::Smcl] = s3d::Rect( 1120, 0, 80, 800 );
+
+	LoadNotesInfoFile( trackName );
 }
 
 Game::Object::UI::UI() = default;
@@ -123,7 +125,14 @@ void Game::Object::UI::Update(){
 			else{ // ミスでコンボ0
 				combo = 0;
 			}
+
+			// ゲージ増減処理
+			gauge.Update( JudgeToGaugeVal( res ) );
+
+			// 処理終わったノーツをポップ
 			lane.second.pop_front();
+
+			// 判定文字を消す計測開始
 			stopwatch.Start();
 			continue;
 		}
@@ -138,8 +147,6 @@ void Game::Object::UI::Update(){
 		stopwatch.Start();
 		noteJudgeStr = L"";
 	}
-
-	gauge.Update( 0.1 );
 }
 
 void Game::Object::UI::Draw() const{
@@ -213,6 +220,18 @@ void Game::Object::UI::AddNoteToLane( LaneID laneID, int bar, int beat ){
 	notesLaneDeque[laneID].emplace_back( bar, beat, laneID, track );
 }
 
+void Game::Object::UI::LoadNotesInfoFile( const s3d::String& trackName ) noexcept( false ){
+	const s3d::CSVReader csv( L"NotesInfo/" + trackName + L".csv" );
+	if( !csv || csv.isEmpty() ){
+		throw std::runtime_error( "notesinfo file read error" );
+	}
+	
+	fullCombo = static_cast<int>( csv._get_rows() );
+	for( int i = 0; i < fullCombo; ++i ){
+		AddNoteToLane( static_cast<LaneID>( csv.get<wchar_t>( i, 0 ) ), csv.get<int>( i, 1 ), csv.get<int>( i, 2 ) );
+	}
+}
+
 //int Game::Object::UI::RestNotesNum(){
 //	int count = 0;
 //	for( const auto& lane : notesLaneDeque ){
@@ -221,6 +240,21 @@ void Game::Object::UI::AddNoteToLane( LaneID laneID, int bar, int beat ){
 //	return count;
 //}
 //
-//double Game::Object::UI::JudgeToGaugeVal( Game::Object::NoteJudge judgeVal ){
-//
-//}
+double Game::Object::UI::JudgeToGaugeVal( Game::Object::NoteJudge judgeVal ){
+	switch( judgeVal ){
+	case NoteJudge::Just:
+		return  200.0 / static_cast<double>( fullCombo );
+
+	case NoteJudge::Fine:
+		return 100.0 / static_cast< double >( fullCombo );
+
+	case NoteJudge::Good:
+		return 50.0 / static_cast< double >( fullCombo );
+
+	case NoteJudge::Miss:
+		return -3.0;
+
+	default:
+		return 0.0;
+	}
+}
