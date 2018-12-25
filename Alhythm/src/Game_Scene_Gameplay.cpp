@@ -3,80 +3,49 @@
 
 #include "Game_Scene_Gameplay.h"
 #include "Game_Scene_Gameplay.h"
+#include "Game_Util_Functions.h"
 
 namespace Game{
 namespace Scene{
 
-Gameplay::Gameplay():
-	track( std::make_shared<Game::Object::Track>( static_cast< s3d::wchar* >( L"Resource/senkou.mp3" ), 210, 133 ) ),
-	lanes( track ),
+Gameplay::Gameplay( const s3d::String& trackName_, int bpm, int maxBar ):
 	returnToSelect( 20, 380, L"選曲へ", 20 ),
-	playMusic( 20, 310, L"再生する", 20 ),
-	button( 20, 450, L"クリック", 20 ),
-	musicBegan( false ){
-	using namespace Game::Object;
-	lanes.AddNote( LaneID::D, 3, 1 );
-	lanes.AddNote( LaneID::F, 3, 9 );
-	lanes.AddNote( LaneID::D, 3, 17 );
-	lanes.AddNote( LaneID::F, 3, 25 );
-
-	lanes.AddNote( LaneID::D, 4, 1 );
-	lanes.AddNote( LaneID::F, 4, 9 );
-	lanes.AddNote( LaneID::D, 4, 17 );
-	lanes.AddNote( LaneID::F, 4, 25 );
-
-	lanes.AddNote( LaneID::D, 5, 1 );
-	lanes.AddNote( LaneID::F, 5, 9 );
-	lanes.AddNote( LaneID::D, 5, 17 );
-	lanes.AddNote( LaneID::F, 5, 25 );
-
-	lanes.AddNote( LaneID::D, 6, 1 );
-	lanes.AddNote( LaneID::F, 6, 9 );
-	lanes.AddNote( LaneID::D, 6, 17 );
-	lanes.AddNote( LaneID::F, 6, 25 );
-
-	lanes.AddNote( LaneID::L, 3, 1 );
-	lanes.AddNote( LaneID::Smcl, 3, 9 );
-	lanes.AddNote( LaneID::L, 3, 17 );
-	lanes.AddNote( LaneID::Smcl, 3, 25 );
-
-	lanes.AddNote( LaneID::L, 4, 1 );
-	lanes.AddNote( LaneID::Smcl, 4, 9 );
-	lanes.AddNote( LaneID::L, 4, 17 );
-	lanes.AddNote( LaneID::Smcl, 4, 25 );
-
-	lanes.AddNote( LaneID::L, 5, 1 );
-	lanes.AddNote( LaneID::Smcl, 5, 9 );
-	lanes.AddNote( LaneID::L, 5, 17 );
-	lanes.AddNote( LaneID::Smcl, 5, 25 );
-
-	lanes.AddNote( LaneID::L, 6, 1 );
-	lanes.AddNote( LaneID::Smcl, 6, 9 );
-	lanes.AddNote( LaneID::L, 6, 17 );
-	lanes.AddNote( LaneID::Smcl, 6, 25 );
+	track( std::make_shared<Game::Object::Track>( L"Resource/" + trackName_ + L".mp3", bpm, maxBar ) ),
+	trackNameText( 60, s3d::Typeface::Default, s3d::FontStyle::Italic ),
+	trackNameStr( Util::FullTrackName( trackName_ ) ),
+	musicPlaying( false ),
+	isReady( false ),
+	stopwatch(),
+	ui( track, trackName_ ){
+	stopwatch.Start();
 }
+
+Gameplay::Gameplay(){}
 
 Gameplay::~Gameplay(){}
 
 void Gameplay::Update(){
-	if( !musicBegan ){
-		if( playMusic.WasClicked() ){
-			musicBegan = true;
-			track->Play();
-		}
+	if( !isReady && stopwatch.MilliDur() > 3000 ){
+		isReady = true;
+		trackNameStr = L"Ready?";
 	}
 
-	lanes.Update();
+	if( !musicPlaying && stopwatch.MilliDur() > 5500 ){
+		musicPlaying = true;
+		track->Play();
+	}
+
+	if( musicPlaying ){
+		ui.Update();
+	}
 }
 
 void Gameplay::Draw() const{
+	ui.Draw();
+	if( !musicPlaying ){
+		trackNameText( trackNameStr ).drawCenter( 835, 420 );
+	}
 	returnToSelect.Draw();
-	lanes.Draw();
-	
-	//----debug----
-	button.Draw();
-	playMusic.Draw();
-	//-------------
 }
 
 bool Gameplay::NeedsTransition(){

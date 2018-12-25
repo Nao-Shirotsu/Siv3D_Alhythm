@@ -76,6 +76,9 @@
     <Filter Include="Game\Object">
       <UniqueIdentifier>{82ae12f0-2578-4e72-b2e0-22c4a74de812}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Util">
+      <UniqueIdentifier>{412c72ce-d1f5-4fee-bf26-4bc14562c4dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Engine\Splash.png">
@@ -406,20 +409,29 @@
     <ClCompile Include="src\Game_Scene_Settings.cpp">
       <Filter>Game\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game_Scene_Gameplay.cpp">
-      <Filter>Game\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game_Object_Track.cpp">
       <Filter>Game\Object</Filter>
     </ClCompile>
     <ClCompile Include="src\Game_Object_Note.cpp">
       <Filter>Game\Object</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game_Object_Lane.cpp">
+    <ClCompile Include="src\Game_Object_Gauge.cpp">
+      <Filter>Game\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game_Object_UI.cpp">
       <Filter>Game\Object</Filter>
     </ClCompile>
     <ClCompile Include="src\Game_Util_Functions.cpp">
-      <Filter>Game</Filter>
+      <Filter>Game\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game_Util_TimeDuration.cpp">
+      <Filter>Game\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game_Scene_Gameplay.cpp">
+      <Filter>Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game_Object_RightAlignedFont.cpp">
+      <Filter>Game\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -446,12 +458,6 @@
     <ClInclude Include="src\Game_Scene_Settings.h">
       <Filter>Game\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="src\Game_Scene_Gameplay.h">
-      <Filter>Game\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Game_Object_Lane.h">
-      <Filter>Game\Object</Filter>
-    </ClInclude>
     <ClInclude Include="src\Game_Object_Track.h">
       <Filter>Game\Object</Filter>
     </ClInclude>
@@ -461,8 +467,23 @@
     <ClInclude Include="src\Game_Object_Enum.h">
       <Filter>Game\Object</Filter>
     </ClInclude>
+    <ClInclude Include="src\Game_Object_Gauge.h">
+      <Filter>Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Object_UI.h">
+      <Filter>Game\Object</Filter>
+    </ClInclude>
     <ClInclude Include="src\Game_Util_Functions.h">
-      <Filter>Game</Filter>
+      <Filter>Game\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Util_TimeDuration.h">
+      <Filter>Game\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Scene_Gameplay.h">
+      <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Object_RightAlignedFont.h">
+      <Filter>Game\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

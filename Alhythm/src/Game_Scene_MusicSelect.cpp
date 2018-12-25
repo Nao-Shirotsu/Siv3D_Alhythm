@@ -10,7 +10,8 @@ namespace Scene{
 MusicSelect::MusicSelect():
 	returnToTitle( 1050, 700, L"タイトルへ戻る", 20 ),
 	goToSettings( 600, 700, L"ゲームプレイ設定", 20 ),
-	goToGameplay( 650, 200, L"閃光の足跡          ", 40 ), // 長さ自動調節したいね
+	trackName( L""),
+	goToSenkou( 650, 200, L"閃光の足跡          ", 40 ), // 長さ自動調節したいね
 	bgm( L"Resource/bgm_select.mp3" ),
 	isMusicPlaying( true ),
 	nextSceneID( SceneID::Gameplay ){
@@ -32,7 +33,7 @@ void MusicSelect::Update(){
 void MusicSelect::Draw() const{
 	returnToTitle.Draw();
 	goToSettings.Draw();
-	goToGameplay.Draw();
+	goToSenkou.Draw();
 }
 
 bool MusicSelect::NeedsTransition(){
@@ -41,8 +42,11 @@ bool MusicSelect::NeedsTransition(){
 		return true;
 	}
 
-	if( goToGameplay.WasClicked() ){
+	if( goToSenkou.WasClicked() ){
 		nextSceneID = SceneID::Gameplay;
+		trackName = L"senkou";
+		trackBPM = 210;
+		trackMaxBar = 133;
 		return true;
 	}
 	if( returnToTitle.WasClicked() ){
@@ -61,7 +65,7 @@ std::unique_ptr<Base> MusicSelect::TransitionToNext(){
 	case SceneID::Gameplay:
 		bgm.stop();
 		isMusicPlaying = false;
-		return std::make_unique<Gameplay>();
+		return std::make_unique<Gameplay>( trackName, trackBPM, trackMaxBar );
 
 	default: // ここエラーハンドリングした方がいい
 		bgm.stop();

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #define NO_S3D_USING
 
@@ -10,14 +10,17 @@
 #include "Game_Scene_Base.h"
 #include "Game_Object_ClickButton.h"
 #include "Game_Object_Track.h"
-#include "Game_Object_Lane.h"
+#include "Game_Object_UI.h"
+#include "Game_Util_TimeDuration.h"
 
 namespace Game{
 namespace Scene{
 
-// ƒV[ƒ“FŠy‹ÈƒvƒŒƒC‰æ–Ê
+// ã‚·ãƒ¼ãƒ³ï¼šæ¥½æ›²ãƒ—ãƒ¬ã‚¤ç”»é¢
 class Gameplay: public Base{
 public:
+	Gameplay( const s3d::String& trackName_, int bpm, int maxBar );
+
 	Gameplay();
 	~Gameplay();
 
@@ -27,19 +30,23 @@ public:
 	std::unique_ptr<Base> TransitionToNext() override;
 
 private:
-	// –ß‚éƒ{ƒ^ƒ“
+	// æˆ»ã‚‹ãƒœã‚¿ãƒ³
 	Game::Object::ClickButton returnToSelect;
 
-	// ƒfƒoƒbƒO—pƒ{ƒ^ƒ“
-	Game::Object::ClickButton button;
-	Game::Object::ClickButton playMusic;
-
-	// ‰¹ºƒtƒ@ƒCƒ‹ƒIƒuƒWƒFƒNƒg musicBegan‚ÅÄ¶Ï‚©”Û‚©”»’è‚·‚é
+	// ãƒ—ãƒ¬ã‚¤æ¥½æ›²ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	std::shared_ptr<Game::Object::Track> track;
-	bool musicBegan;
 
-	// ƒŒ[ƒ“
-	Game::Object::Lane lanes;
+	// æ¥½æ›²åè¡¨ç¤ºç”¨ãƒ•ã‚©ãƒ³ãƒˆã¨String
+	s3d::Font trackNameText;
+	s3d::String trackNameStr;
+	bool musicPlaying;
+	bool isReady;
+
+	// å‡¦ç†ã«ä½¿ã†ã‚¹ãƒˆãƒƒãƒ—ã‚¦ã‚©ãƒƒãƒ
+	Game::Util::TimeDuration stopwatch;
+
+	// UIã¨ãã®å†…éƒ¨å‡¦ç†
+	Game::Object::UI ui;
 };
 
 }// namespace Scene

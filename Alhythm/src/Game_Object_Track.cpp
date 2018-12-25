@@ -1,6 +1,6 @@
-#include "Game_Object_Track.h"
+ï»¿#include "Game_Object_Track.h"
 
-Game::Object::Track::Track( s3d::wchar* filename, int bpm, int maxBar_ ) noexcept( false ):
+Game::Object::Track::Track( const s3d::String& filename, int bpm, int maxBar_ ) noexcept( false ):
 	beatSec( 60.0 / static_cast<double>( bpm ) ),
 	curBar( 0 ),
 	curBaet( 0 ),
@@ -20,9 +20,9 @@ Game::Object::Track::~Track(){
 
 double Game::Object::Track::SecOnBarBeat( int bar, int beat ) const noexcept{
 	if( bar > maxBar ){
-		return 0; // •s³’l‚Æ‚µ‚ÄAƒm[ƒc‚ğ–³Œø‚É‚·‚é‚½‚ß‚É0‚ğ•Ô‚·
+		return 0; // ä¸æ­£å€¤ã¨ã—ã¦ã€ãƒãƒ¼ãƒ„ã‚’ç„¡åŠ¹ã«ã™ã‚‹ãŸã‚ã«0ã‚’è¿”ã™
 	}
-	return beatSec * static_cast<double>( 4 * ( bar - 1 ) + beat / 8 );
+	return beatSec * static_cast<double>( 4 * ( bar - 1 ) + beat / 8.0 );
 }
 
 double Game::Object::Track::CurSec() const noexcept{
@@ -35,4 +35,8 @@ void Game::Object::Track::Play(){
 
 void Game::Object::Track::PlayNote(){
 	tapSound.playMulti();
+}
+
+bool Game::Object::Track::IsEnd(){
+	return !file.isPlaying();
 }
