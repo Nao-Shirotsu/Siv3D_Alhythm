@@ -73,9 +73,6 @@
     <Filter Include="Game\Scene">
       <UniqueIdentifier>{7e6eaec1-a5a0-4070-8027-84235b76cc07}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Siv3D">
-      <UniqueIdentifier>{d19bbd2b-d0ba-4c1f-8227-b55322efe18b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\Object">
       <UniqueIdentifier>{82ae12f0-2578-4e72-b2e0-22c4a74de812}</UniqueIdentifier>
     </Filter>
@@ -412,6 +409,18 @@
     <ClCompile Include="src\Game_Scene_Gameplay.cpp">
       <Filter>Game\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game_Object_Track.cpp">
+      <Filter>Game\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game_Object_Note.cpp">
+      <Filter>Game\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game_Object_Lane.cpp">
+      <Filter>Game\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game_Util_Functions.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -439,6 +448,21 @@
     </ClInclude>
     <ClInclude Include="src\Game_Scene_Gameplay.h">
       <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Object_Lane.h">
+      <Filter>Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Object_Track.h">
+      <Filter>Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Object_Note.h">
+      <Filter>Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Object_Enum.h">
+      <Filter>Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Util_Functions.h">
+      <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

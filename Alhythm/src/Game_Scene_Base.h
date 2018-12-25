@@ -8,7 +8,7 @@ namespace Scene{
 // 全てのSceneクラスの基底クラス
 class Base{
 public:
-	~Base();
+	virtual ~Base();
 
 	// メンバ変数等の状態のアップデート
 	virtual void Update() = 0;

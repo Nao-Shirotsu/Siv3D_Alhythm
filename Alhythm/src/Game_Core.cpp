@@ -11,21 +11,23 @@ namespace Game{
 
 Core::Core():
 	background( L"Resource/Title_resized.jpg" ){
-
 	sceneStack.push( std::make_unique<Scene::Title>() );
 	s3d::Window::SetTitle( L"Alhythm" );
 	s3d::Window::Resize( 1280, 800 );
 }
 
-Core::~Core(){}
+Core::~Core(){
+	DestructAllSceneObjects();
+}
 
 bool Core::IsGameEnd() const{
-	 // Siv3Dの更新時にエラーがあったらfalseが返るためここで実行
+	 // Siv3Dの更新時にエラーがあったらfalseが返るためここでUpdateを実行
 	return s3d::System::Update();
 }
 
 void Core::Update(){
 	if( sceneStack.top()->NeedsTransition() ){
+		// auto&&ではなくautoで良いか？ 要検証
 		auto&& nextScene = sceneStack.top()->TransitionToNext();
 		if( nextScene ){
 			sceneStack.push( std::move( nextScene ) );

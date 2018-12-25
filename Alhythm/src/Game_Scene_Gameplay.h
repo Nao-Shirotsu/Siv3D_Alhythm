@@ -2,10 +2,15 @@
 
 #define NO_S3D_USING
 
+#include <memory>
+#include <unordered_map>
+
 #include <Siv3D.hpp>
 
 #include "Game_Scene_Base.h"
 #include "Game_Object_ClickButton.h"
+#include "Game_Object_Track.h"
+#include "Game_Object_Lane.h"
 
 namespace Game{
 namespace Scene{
@@ -25,9 +30,16 @@ private:
 	// 戻るボタン
 	Game::Object::ClickButton returnToSelect;
 
-	// 音声ファイルオブジェクト
-	const s3d::Sound track;
+	// デバッグ用ボタン
+	Game::Object::ClickButton button;
+	Game::Object::ClickButton playMusic;
+
+	// 音声ファイルオブジェクト musicBeganで再生済か否か判定する
+	std::shared_ptr<Game::Object::Track> track;
 	bool musicBegan;
+
+	// レーン
+	Game::Object::Lane lanes;
 };
 
 }// namespace Scene

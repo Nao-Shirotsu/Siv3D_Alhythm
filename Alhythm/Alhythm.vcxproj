@@ -278,21 +278,30 @@
   <ItemGroup>
     <ClCompile Include="src\Game_Core.cpp" />
     <ClCompile Include="src\Game_Object_ClickButton.cpp" />
+    <ClCompile Include="src\Game_Object_Lane.cpp" />
+    <ClCompile Include="src\Game_Object_Note.cpp" />
+    <ClCompile Include="src\Game_Object_Track.cpp" />
     <ClCompile Include="src\Game_Scene_Base.cpp" />
     <ClCompile Include="src\Game_Scene_Gameplay.cpp" />
     <ClCompile Include="src\Game_Scene_MusicSelect.cpp" />
     <ClCompile Include="src\Game_Scene_Settings.cpp" />
     <ClCompile Include="src\Game_Scene_Title.cpp" />
+    <ClCompile Include="src\Game_Util_Functions.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game_Core.h" />
     <ClInclude Include="src\Game_Object_ClickButton.h" />
+    <ClInclude Include="src\Game_Object_Enum.h" />
+    <ClInclude Include="src\Game_Object_Lane.h" />
+    <ClInclude Include="src\Game_Object_Note.h" />
+    <ClInclude Include="src\Game_Object_Track.h" />
     <ClInclude Include="src\Game_Scene_Base.h" />
     <ClInclude Include="src\Game_Scene_Gameplay.h" />
     <ClInclude Include="src\Game_Scene_MusicSelect.h" />
     <ClInclude Include="src\Game_Scene_Settings.h" />
     <ClInclude Include="src\Game_Scene_Title.h" />
+    <ClInclude Include="src\Game_Util_Functions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

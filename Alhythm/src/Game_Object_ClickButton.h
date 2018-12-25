@@ -26,9 +26,9 @@ private:
 	s3d::Rect rect;
 	s3d::Color colorRect;
 	s3d::Rect rectShade;
-	s3d::Color colorShade;
 	s3d::Font text;
 	const s3d::wchar* textStr;
+	const s3d::Sound decideSound;
 };
 
 }// namespace Object
