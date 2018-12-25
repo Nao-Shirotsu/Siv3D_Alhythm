@@ -2,7 +2,7 @@
 
 #define NO_S3D_USING
 
-#include <queue>
+#include <deque>
 #include <unordered_map>
 
 #include <Siv3D.hpp>
@@ -33,8 +33,11 @@ public:
 	void AddNoteToLane( LaneID laneID, int bar, int beat );
 
 private:
+	// レーンdequeに残っているノーツ数を得る
+	//int RestNotesNum();
+
 	// Noteから受け取った判定値をクリアゲージ加算値に変換
-	double JudgeToGaugeVal( NoteJudge judgeVal );
+	//double JudgeToGaugeVal( NoteJudge judgeVal );
 
 	// 各Noteに渡すために保管
 	std::shared_ptr<Track> track;
@@ -71,7 +74,7 @@ private:
 	Game::Util::TimeDuration stopwatch;
 
 	// 1曲中各レーンに流れてくるノーツを全て格納する
-	std::unordered_map<LaneID, std::queue<Note>> notesQueue;
+	std::unordered_map<LaneID, std::deque<Note>> notesLaneDeque;
 
 	// クリアゲージ
 	Game::Object::Gauge gauge;

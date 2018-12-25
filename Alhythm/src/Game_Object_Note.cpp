@@ -10,7 +10,7 @@ namespace{
 constexpr double MISS_TIME{ 0.125 };    // 0b0.001
 constexpr double GOOD_TIME{ 0.09375 };  // 0b0.00011
 constexpr double FINE_TIME{ 0.046875 }; // 0b0.000011
-constexpr double Just_TIME{ 0.0234375 };// 0b0.0000011
+constexpr double JUST_TIME{ 0.0234375 };// 0b0.0000011
 
 // ノーツの見た目の幅
 constexpr int NOTE_WIDTH{ 70 };
@@ -103,7 +103,7 @@ void Game::Object::Note::Update(){
 		if( Game::Util::LaneKeyClicked( static_cast<wchar_t>( lane ) ) ){
 			// timeDiffによって判定結果を算出してtapResultに格納
 			track->PlayNote();
-			if( std::fabs( timeDiff ) < Just_TIME ){
+			if( std::fabs( timeDiff ) < JUST_TIME ){
 				tapResult = NoteJudge::Just;
 				return;
 			}
@@ -135,4 +135,8 @@ void Game::Object::Note::Draw() const{
 
 Game::Object::NoteJudge Game::Object::Note::Result(){
 	return tapResult;
+}
+
+bool Game::Object::Note::IsValidtoIndicate() const noexcept{
+	return secOnMusic - track->CurSec() < INDICATE_TIME;
 }
