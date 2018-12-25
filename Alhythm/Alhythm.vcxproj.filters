@@ -430,6 +430,9 @@
     <ClCompile Include="src\Game_Scene_Gameplay.cpp">
       <Filter>Game\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game_Object_RightAlignedFont.cpp">
+      <Filter>Game\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -478,6 +481,9 @@
     </ClInclude>
     <ClInclude Include="src\Game_Scene_Gameplay.h">
       <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Object_RightAlignedFont.h">
+      <Filter>Game\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,39 +3,49 @@
 
 #include "Game_Scene_Gameplay.h"
 #include "Game_Scene_Gameplay.h"
+#include "Game_Util_Functions.h"
 
 namespace Game{
 namespace Scene{
 
 Gameplay::Gameplay( const s3d::String& trackName_, int bpm, int maxBar ):
-	track( std::make_shared<Game::Object::Track>( L"Resource/" + trackName_ + L".mp3", bpm, maxBar ) ),
-	ui( track, trackName_ ),
 	returnToSelect( 20, 380, L"選曲へ", 20 ),
-	playMusic( 20, 310, L"再生する", 20 ),
-	musicBegan( false ){}
+	track( std::make_shared<Game::Object::Track>( L"Resource/" + trackName_ + L".mp3", bpm, maxBar ) ),
+	trackNameText( 60, s3d::Typeface::Default, s3d::FontStyle::Italic ),
+	trackNameStr( Util::FullTrackName( trackName_ ) ),
+	musicPlaying( false ),
+	isReady( false ),
+	stopwatch(),
+	ui( track, trackName_ ){
+	stopwatch.Start();
+}
 
 Gameplay::Gameplay(){}
 
 Gameplay::~Gameplay(){}
 
 void Gameplay::Update(){
-	if( !musicBegan ){
-		if( playMusic.WasClicked() ){
-			musicBegan = true;
-			track->Play();
-		}
+	if( !isReady && stopwatch.MilliDur() > 3000 ){
+		isReady = true;
+		trackNameStr = L"Ready?";
 	}
 
-	ui.Update();
+	if( !musicPlaying && stopwatch.MilliDur() > 5500 ){
+		musicPlaying = true;
+		track->Play();
+	}
+
+	if( musicPlaying ){
+		ui.Update();
+	}
 }
 
 void Gameplay::Draw() const{
-	returnToSelect.Draw();
 	ui.Draw();
-
-	//----debug----
-	playMusic.Draw();
-	//-------------
+	if( !musicPlaying ){
+		trackNameText( trackNameStr ).drawCenter( 835, 420 );
+	}
+	returnToSelect.Draw();
 }
 
 bool Gameplay::NeedsTransition(){

@@ -29,6 +29,9 @@ public:
 	// ノーツタップ音再生
 	void PlayNote();
 
+	// 曲が終わったかどうか
+	bool IsEnd();
+
 private:
 	/*
 	秒数でのノーツ判定につき、intだと大量にキャストすることになるため、初めからdoubleで保持して処理を軽くする。
