@@ -3,19 +3,21 @@
 #include "Game_Object_UI.h"
 #include "Game_Util_Functions.h"
 #include "Game_Object_Enum.h"
+#include "Game_Object_Constant.h"
 
 namespace{
 
-constexpr int LANE_WIDTH{ 80 };
-constexpr int LANE_HEIGHT{ 800 };
+// スコア関連の表示位置
+constexpr int SCORE_TEXT_POS_X{ 30 };
+constexpr int SCORE_TEXT_POS_Y{ 0 };
 
-constexpr int SCORE_TEXT_POS_X{ 110 };
-constexpr int SCORE_TEXT_POS_Y{ 700 };
+// レーン下部に表示するASDFなどの文字の大きさ
+constexpr int LANE_LETTER_SIZE{ 35 };
 
 constexpr s3d::Color BG_COLOR{ 64, 64, 64, 224 };
 constexpr s3d::Color BG_COLOR_PUSHED{ 96, 96, 96, 224 };
 constexpr s3d::Color FRAME_COLOR{ 128, 128, 128 };
-constexpr s3d::Color JUDGE_COLOR{ 224, 224, 224 };
+constexpr s3d::Color JUDGELINE_COLOR{ 224, 224, 224, 128 };
 constexpr s3d::Color LETTER_COLOR{ 85, 85, 85, 224 };
 
 constexpr s3d::Color MISS_COLOR{ 48, 48, 48, 192 };
@@ -27,21 +29,21 @@ constexpr s3d::Color JUST_COLOR{ 255, 160, 0, 192 };
 
 Game::Object::UI::UI( std::shared_ptr<Track>& track_, const s3d::String& trackName ):
 	track( track_ ),
-	judgeLineL( 475, 676, 770, 676 ),
-	judgeLineR( 900, 676, 1195, 676 ),
-	letterA( 35 ),
-	letterS( 35 ),
-	letterD( 35 ),
-	letterF( 35 ),
-	letterJ( 35 ),
-	letterK( 35 ),
-	letterL( 35 ),
-	letterSmcl( 35 ),
+	judgeLineL( 475, JUDGELINE_HEGHT - NOTE_HEIGHT / 2, LANE_WIDTH * 4 - 25, NOTE_HEIGHT ),
+	judgeLineR( 900, JUDGELINE_HEGHT - NOTE_HEIGHT / 2, LANE_WIDTH * 4 - 25, NOTE_HEIGHT ),
+	letterA( LANE_LETTER_SIZE ),
+	letterS( LANE_LETTER_SIZE ),
+	letterD( LANE_LETTER_SIZE ),
+	letterF( LANE_LETTER_SIZE ),
+	letterJ( LANE_LETTER_SIZE ),
+	letterK( LANE_LETTER_SIZE ),
+	letterL( LANE_LETTER_SIZE ),
+	letterSmcl( LANE_LETTER_SIZE ),
 	comboText( 20 ),
 	comboNumText( 40 ),
 	combo( 0 ),
 	score( 0 ),
-	scoreRect( 30, 35, s3d::Font( 28 )( L"1234567" ).region().w, s3d::Font( 32 )( L"1" ).region().h, 5 ),
+	scoreRect( SCORE_TEXT_POS_X, SCORE_TEXT_POS_Y + 35, s3d::Font( 28 )( L"1234567" ).region().w, s3d::Font( 32 )( L"1" ).region().h, 5 ),
 	scoreText( 20 ),
 	scoreNumText( 28, 196, 48 ),
 	noteJudgeText( 55, s3d::Typeface::Heavy, s3d::FontStyle::Outline ),
@@ -166,8 +168,8 @@ void Game::Object::UI::Draw() const{
 		}
 		laneRect.second.drawFrame( 5, 0, FRAME_COLOR );
 	}
-	judgeLineL.draw( JUDGE_COLOR );
-	judgeLineR.draw( JUDGE_COLOR );
+	judgeLineL.draw( JUDGELINE_COLOR );
+	judgeLineR.draw( JUDGELINE_COLOR );
 	letterA( L'A' ).draw( 495, 710, LETTER_COLOR );
 	letterS( L'S' ).draw( 575, 710, LETTER_COLOR );
 	letterD( L'D' ).draw( 645, 710, LETTER_COLOR );
@@ -222,7 +224,7 @@ void Game::Object::UI::Draw() const{
 	// =============================
 
 	// スコアを描く===================
-	scoreText( L"SCORE" ).draw( 30, 0 );
+	scoreText( L"SCORE" ).draw( SCORE_TEXT_POS_X, SCORE_TEXT_POS_Y );
 	scoreRect.draw( s3d::Palette::Midnightblue );
 	scoreNumText.Draw( s3d::Format( score ) );
 	// =============================

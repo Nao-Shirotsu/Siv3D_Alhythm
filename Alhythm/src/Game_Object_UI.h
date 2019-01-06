@@ -51,8 +51,8 @@ private:
 
 	// 8レーンの矩形、判定ライン、レーンID文字
 	std::unordered_map<LaneID, s3d::Rect> laneRects;
-	s3d::Line judgeLineL;
-	s3d::Line judgeLineR;
+	s3d::Rect judgeLineL;
+	s3d::Rect judgeLineR;
 	s3d::Font letterA;
 	s3d::Font letterS;
 	s3d::Font letterD;
