@@ -2,8 +2,8 @@
 
 Game::Object::Track::Track( const s3d::String& filename, int bpm, int maxBar_ ) noexcept( false ):
 	beatSec( 60.0 / static_cast<double>( bpm ) ),
-	curBar( 0 ),
-	curBaet( 0 ),
+	//curBar( 0 ),
+	//curBaet( 0 ),
 	file( filename ),
 	tapSound( L"Resource/note_sound.mp3" ),
 	maxBar( maxBar_ ){
@@ -20,8 +20,9 @@ Game::Object::Track::~Track(){
 
 double Game::Object::Track::SecOnBarBeat( int bar, int beat ) const noexcept{
 	if( bar > maxBar ){
-		return 0; // 不正値として、ノーツを無効にするために0を返す
+		return -1; // 不正値として、ノーツを無効にするために-1を返す  クソなのでoptionalにしろ
 	}
+	//return file.lengthSec() * static_cast<double>( bar - 1 ) / ( maxBar - 1 ) + beatSec * static_cast<double>( beat - 1 );
 	return beatSec * static_cast<double>( 4 * ( bar - 1 ) + beat / 8.0 );
 }
 

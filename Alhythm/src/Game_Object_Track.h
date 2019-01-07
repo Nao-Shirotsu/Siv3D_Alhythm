@@ -2,7 +2,7 @@
 
 #define NO_S3D_USING
 
-#include <Siv3D.hpp>
+#include <Siv3D.hpp>//beat*N=113.428571  whole*N/134=
 
 namespace Game{
 namespace Object{
@@ -17,7 +17,7 @@ public:
 	Track();
 	~Track();
 
-	// 小節数、拍数を受け取り秒数を返す
+	// 小節数と拍数を受け取り、トラック中での秒数を返す
 	double SecOnBarBeat( int bar, int beat ) const noexcept;
 
 	// 再生中の曲の現在の秒数を返す
@@ -38,8 +38,8 @@ private:
 	このクラスのインスタンスの個数は非常に少なくなるはずなので、メモリリソースはdoubleでも問題にならない。
 	*/
 	double beatSec; // 1拍で経過する秒数 = 60/BPM
-	double curBar;  // 現在の小節数 1-origin
-	double curBaet; // 現在の小節内の拍数 1-origin 32分音符で表現 5/32など
+	//double curBar;  // 現在の小節数 1-origin
+	//double curBaet; // 現在の小節内の拍数 1-origin 32分音符で表現 5/32など
 	s3d::Sound file; // 楽曲
 	s3d::Sound tapSound; // タップ音
 	int maxBar; // このトラックの最終小節番号
