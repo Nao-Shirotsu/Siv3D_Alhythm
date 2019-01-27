@@ -20,6 +20,7 @@ enum class LaneID : wchar_t{
 
 enum class NoteJudge{
 	Undone,
+	Passed,
 	Miss,
 	Good,
 	Fine,

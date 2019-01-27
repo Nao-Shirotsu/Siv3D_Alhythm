@@ -1,6 +1,4 @@
-﻿#include <Siv3D.hpp>
-
-#include "Game_Core.h"
+﻿#include "Game_Core.h"
 
 void Main(){
 	Game::Core gamecore;

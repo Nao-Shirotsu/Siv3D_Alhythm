@@ -1,4 +1,5 @@
 ﻿#pragma once
+#pragma once
 
 #define NO_S3D_USING
 
@@ -30,11 +31,20 @@ public:
 	void Draw() const;
 
 private:
+	// 描画処理の分割
+	void DrawLaneSegment() const;
+	void DrawNotesSegment() const;
+	void DrawGaugeSegment() const;
+	void DrawComboSegment() const;
+	void DrawJudgeSegment() const;
+	void DrawScoreSegment() const;
+	void DrawClearedSegemnt() const;
+
 	// 楽曲のノーツデータを追加する
 	// どのレーンの何小節何拍目かを指定
 	void AddNoteToLane( LaneID laneID, int bar, int beat );
 
-	// トラックの譜面情報(ノーツ配置)が載ったファイルを読んで処理する 
+	// トラックの譜面情報(ノーツ配置)が載ったファイルを読みこむ 
 	void LoadNotesInfoFile( const s3d::String& trackName ) noexcept(false);
 
 	// Noteから受け取った判定値をクリアゲージ加算値に変換
@@ -93,10 +103,17 @@ private:
 	s3d::Color clearColor;
 
 	// 1曲中各レーンに流れてくるノーツを全て格納する
-	std::unordered_map<LaneID, std::deque<Note>> notesLaneDeque;
+	std::unordered_map<LaneID, std::deque<Note>> notesLanes;
 
 	// クリアゲージ
 	Game::Object::Gauge gauge;
+
+	// スコア満点÷fullcomboな値
+	double scorePerNote;
+
+	// ゲージマックス÷fullcomboな値
+	double gaugeValPerNote;
+
 };
 
 }// namespace Object
