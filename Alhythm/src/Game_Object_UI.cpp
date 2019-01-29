@@ -8,8 +8,8 @@
 namespace{
 
 // レーン枠の色など
-constexpr s3d::Color BG_COLOR{ 64, 64, 64, 224 };
-constexpr s3d::Color BG_COLOR_PUSHED{ 96, 96, 96, 224 };
+constexpr s3d::Color LANE_BG_COLOR{ 64, 64, 64, 224 };
+constexpr s3d::Color LANE_BG_COLOR_PUSHED{ 96, 96, 96, 224 };
 constexpr s3d::Color FRAME_COLOR{ 128, 128, 128 };
 constexpr s3d::Color JUDGELINE_COLOR{ 224, 224, 224, 128 };
 
@@ -25,13 +25,11 @@ constexpr int LANE_Smcl_POS_X{ 1120 };
 constexpr int LANE_POS_Y{ 0 };
 
 // レーン枠の幅
-constexpr int LANE_WIDTH{ 80 };
-constexpr int LANE_HEIGHT{ 800 };
 constexpr int LANE_FRAME_WIDTH{ 5 };
 
 // レーン下部に表示するASDFなどの値
 constexpr int LANE_LETTER_SIZE{ 35 };
-constexpr int LANE_LETTER_POS_Y{ 710 };
+constexpr int LANE_LETTER_POS_Y{ Game::Object::LANE_HEIGHT - 90 };
 constexpr int LANE_LETTER_A_POS_X{ LANE_A_POS_X + 25 };
 constexpr int LANE_LETTER_S_POS_X{ LANE_S_POS_X + 30 };
 constexpr int LANE_LETTER_D_POS_X{ LANE_D_POS_X + 30 };
@@ -74,6 +72,9 @@ constexpr int COMBO_NUM_POS_X{ 835 };
 constexpr int COMBO_NUM_POS_Y{ 340 };
 constexpr int COMBO_TEXT_SIZE{ 20 };
 constexpr int COMBO_NUM_SIZE{ 40 };
+
+// スコア値を表示する四角形の色
+constexpr s3d::Color SCORE_BG_COLOR{ 0x2d, 0x38, 0x59 };
 
 // クリアゲージの最大値と増加割合(判定ごとの割合)など
 constexpr double GAUGE_FULL{ 100.0 }; // この値÷fullcomboで1ノーツの増加量
@@ -236,10 +237,10 @@ void Game::Object::UI::Draw() const{
 void Game::Object::UI::DrawLaneSegment() const{
 	for( const auto &laneRect : laneRects ) {
 		if( Game::Util::LaneKeyPressed( static_cast< wchar_t >( laneRect.first ) ) ) {
-			laneRect.second.draw( BG_COLOR_PUSHED );
+			laneRect.second.draw( LANE_BG_COLOR_PUSHED );
 		}
 		else {
-			laneRect.second.draw( BG_COLOR );
+			laneRect.second.draw( LANE_BG_COLOR );
 		}
 		laneRect.second.drawFrame( LANE_FRAME_WIDTH, 0, FRAME_COLOR );
 	}
@@ -303,7 +304,8 @@ void Game::Object::UI::DrawJudgeSegment() const{
 
 void Game::Object::UI::DrawScoreSegment() const{
 	scoreText( L"SCORE" ).draw( SCORE_POS_X, SCORE_POS_Y );
-	scoreRect.draw( s3d::Palette::Midnightblue );
+	scoreRect.draw( SCORE_BG_COLOR );
+	scoreRect.drawFrame( 2, 0, s3d::Palette::Midnightblue );
 	scoreNumText.Draw( s3d::Format( score ) );
 }
 

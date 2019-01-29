@@ -14,7 +14,7 @@ Title::Title():
 	bgm( L"Resource/bgm_title.mp3" ),
 	isMusicPlaying( true ){
 	if( !bgm ){
-		throw std::runtime_error( "sound file read error" );
+		throw std::runtime_error( "[Scene::Title] sound file read error" );
 	}
 	bgm.setLoop( true );
 	bgm.play();

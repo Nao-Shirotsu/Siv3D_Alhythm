@@ -56,6 +56,8 @@ private:
 	// クリア後に表示する文字を更新
 	void UpdateClearInfo();
 
+	// 小節線の位置などを更新
+
 	// 各Noteに渡すために保管
 	std::shared_ptr<Track> track;
 

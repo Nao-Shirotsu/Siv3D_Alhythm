@@ -2,21 +2,33 @@
 
 namespace{
 
+// ゲージの角丸の半径
+constexpr int GAUGE_EDGE_RADIUS{ 30 };
+
+// ゲージの枠の幅
+constexpr int FRAME_WIDTH{ 5 };
+
 // 増減ゲージの左上座標の初期位置
 constexpr int POS_X{ 394 };
-constexpr int POS_Y{ 105 };
+constexpr int POS_Y{ 50 };
 
 // 増減ゲージの幅と最大の高さ
 constexpr int WIDTH{ 45 };
 constexpr int MAX_HEIGHT{ 590 };
+
+// クリアと判定するパーセント値
+constexpr double CLEAR_PERSENT{ 0.7 };
+
+// ゲージのクリアボーダーラインの高さ
+constexpr int CLEAR_LINE_POS{ POS_Y + static_cast<int>( MAX_HEIGHT * ( 1.0 - CLEAR_PERSENT + 0.01 ) ) }; // 0.01はゲージの見た目のための補正
 
 // ゲージ枠の枠の色と背景色
 constexpr s3d::Color FRAME_COLOR{ s3d::Palette::Black };
 constexpr s3d::Color FRAME_BG_COLOR{ 50, 50, 50, 192 };
 
 // 増減ゲージがクリアパーセント未満と以上の時の色
-constexpr s3d::Color UNDER_COLOR{ 64, 128, 64 };
-constexpr s3d::Color OVER_COLOR{ 156, 40, 96 };
+constexpr s3d::Color UNDER_COLOR{ 0x38, 0x84, 0x7f };
+constexpr s3d::Color OVER_COLOR{ 0x9c, 0x28, 0x60 };
 
 }
 
@@ -26,9 +38,9 @@ Game::Object::Gauge::Gauge():
 	persentage( 0.0 ),
 	persentText( 25 ),
 	persentStr( L"" ),
-	clearLine( POS_X, POS_Y + MAX_HEIGHT * 0.31, POS_X + WIDTH, POS_Y + MAX_HEIGHT * 0.31 ),
-	backGaugeRect( POS_X - 5, POS_Y - 5, 55, 600, 35 ),
-	frontGaugeRect( POS_X, POS_Y + MAX_HEIGHT, WIDTH, 0, 5 ),
+	clearLine( POS_X, CLEAR_LINE_POS, POS_X + WIDTH, CLEAR_LINE_POS ),
+	backGaugeRect( POS_X - FRAME_WIDTH, POS_Y - FRAME_WIDTH, WIDTH + FRAME_WIDTH * 2, MAX_HEIGHT + FRAME_WIDTH * 2, GAUGE_EDGE_RADIUS ),
+	frontGaugeRect( POS_X, POS_Y + MAX_HEIGHT, WIDTH, 0, GAUGE_EDGE_RADIUS ),
 	frontColor( UNDER_COLOR ){}
 
 void Game::Object::Gauge::Update( double persentDiff ){
@@ -66,5 +78,5 @@ void Game::Object::Gauge::Draw() const{
 }
 
 bool Game::Object::Gauge::IsOverClearPersent() const noexcept{
-	return persentage >= 70.0;
+	return persentage >= CLEAR_PERSENT * 100.0;
 }

@@ -26,8 +26,8 @@ constexpr int POS_Smcl{ 1125 };
 // ノーツの色
 constexpr s3d::Color NOTE_COLOR{ 200, 200, 200 };
 
-// ノーツがレーン上に表示される時間
-constexpr double INDICATE_TIME{ 1.2 };
+// ノーツがレーン上に表示される秒数
+constexpr double INDICATE_TIME{ 1.5 };
 
 }
 
