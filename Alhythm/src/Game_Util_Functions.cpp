@@ -20,18 +20,36 @@ bool Game::Util::LaneKeyPressed( wchar_t keycode ){
 	return false;
 }
 
-s3d::String Game::Util::FullTrackName( const s3d::String& trackName ){
-	if( trackName == L"senkou" ){
+s3d::String Game::Util::FullTrackName( const Game::BinFileID id ){
+	int num = static_cast<int>( id );
+	if( num < 3000 || 4000 <= num ){
+		return L"";
+	}
+
+	using ID = Game::BinFileID;
+	switch( id ){
+	case ID::Senkou:
 		return L"閃光の足跡";
-	}
 
-	if( trackName == L"orion" ){
-		return L"Orion";
-	}
-
-	if( trackName == L"cassi" ){
+	case ID::Cassi:
 		return L"Cassiopeia";
-	}
 
-	return L"";
+	case ID::Orion:
+		return L"Orion";
+
+	default:
+		return L"";
+	}
+}
+
+s3d::String Game::Util::EmbededFilePath( const Game::BinFileID id ){
+	return L"/" + s3d::Format( static_cast<int>( id ) );
+}
+
+s3d::String Game::Util::EmbededNotesInfoPath( const Game::BinFileID id ){
+	int num = static_cast<int>( id );
+	if( 3000 <= num && num < 4000 ){
+		return L"/" + s3d::Format( ( num + 1000 ) );
+	}
+	return L"/";
 }

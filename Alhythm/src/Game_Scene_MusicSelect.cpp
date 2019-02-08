@@ -3,6 +3,7 @@
 #include "Game_Scene_MusicSelect.h"
 #include "Game_Scene_Settings.h"
 #include "Game_Scene_Gameplay.h"
+#include "Game_Util_Functions.h"
 
 namespace Game{
 namespace Scene{
@@ -13,9 +14,8 @@ namespace Scene{
 MusicSelect::MusicSelect():
 	returnToTitle( 1050, 700, L"タイトルへ戻る", 20 ),
 	goToSettings( 600, 700, L"ゲームプレイ設定", 20 ),
-	trackName( L""),
 	goToSenkou( 650, 200, L"閃光の足跡          ", 40 ), // 長さ自動調節したいね
-	bgm( L"Resource/bgm_select.mp3" ),
+	bgm( Util::EmbededFilePath( BinFileID::MusicSelectBGM ) ),
 	isMusicPlaying( true ),
 	nextSceneID( SceneID::Gameplay ){
 	if( !bgm ){
@@ -47,7 +47,7 @@ bool MusicSelect::NeedsTransition(){
 
 	if( goToSenkou.WasClicked() ){
 		nextSceneID = SceneID::Gameplay;
-		trackName = L"senkou";
+		trackID = BinFileID::Senkou;
 		trackBPM = 210;
 		trackMaxBar = 134;
 		return true;
@@ -68,7 +68,7 @@ std::unique_ptr<Base> MusicSelect::TransitionToNext(){
 	case SceneID::Gameplay:
 		bgm.stop();
 		isMusicPlaying = false;
-		return std::make_unique<Gameplay>( trackName, trackBPM, trackMaxBar );
+		return std::make_unique<Gameplay>( trackID, trackBPM, trackMaxBar );
 
 	default: // ここエラーハンドリングした方がいい
 		bgm.stop();

@@ -293,6 +293,7 @@
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Game_BinFileID.h" />
     <ClInclude Include="src\Game_Core.h" />
     <ClInclude Include="src\Game_Object_ClickButton.h" />
     <ClInclude Include="src\Game_Object_Constant.h" />

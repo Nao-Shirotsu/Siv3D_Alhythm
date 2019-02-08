@@ -1,11 +1,12 @@
 ﻿#include "Game_Object_Track.h"
+#include "Game_Util_Functions.h"
 
 Game::Object::Track::Track( const s3d::String& filename, int bpm, int maxBar_ ) noexcept( false ):
 	beatSec( 60.0 / static_cast<double>( bpm ) ),
 	//curBar( 0 ),
 	//curBaet( 0 ),
 	file( filename ),
-	tapSound( L"Resource/note_sound.mp3" ),
+	tapSound( Util::EmbededFilePath( BinFileID::NoteTapSound ) ),
 	maxBar( maxBar_ ){
 	if( !file ){
 		throw std::runtime_error( "sound file read error" );

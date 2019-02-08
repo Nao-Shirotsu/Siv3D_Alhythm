@@ -5,6 +5,7 @@
 #include <Siv3D.hpp>
 
 #include "Game_Object_ClickButton.h"
+#include "Game_Util_Functions.h"
 
 namespace Game{
 namespace Object{
@@ -17,8 +18,10 @@ ClickButton::ClickButton( int x_, int y_, const s3d::wchar* text_, const int fon
 	rectColor( 20, 20, 40 ),
 	text( fontsize_, s3d::Typeface::Medium, s3d::FontStyle::Outline ),
 	textStr( text_ ),
-	decideSound( L"Resource/decide.mp3" ){
-
+	decideSound( Util::EmbededFilePath( BinFileID::DecideSound ) ){
+	//test
+	auto str = Util::EmbededFilePath( BinFileID::DecideSound );
+	//----
 	using namespace s3d;
 	if( !decideSound ){
 		throw std::runtime_error( "[Game::Object::ClickButton::ClickButton()] sound file read error" );

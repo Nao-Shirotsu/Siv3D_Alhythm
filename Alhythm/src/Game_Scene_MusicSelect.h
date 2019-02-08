@@ -6,6 +6,7 @@
 
 #include "Game_Scene_Base.h"
 #include "Game_Object_ClickButton.h"
+#include "Game_BinFileID.h"
 
 namespace Game{
 namespace Scene{
@@ -35,7 +36,7 @@ private:
 	Game::Object::ClickButton goToSettings;
 
 	// プレイしたい楽曲の情報
-	const s3d::wchar* trackName; // senkou.mp3ならsenkou 拡張子を外す
+	BinFileID trackID;
 	int trackBPM;
 	int trackMaxBar; // 一番最後の小説番号
 
