@@ -3,20 +3,17 @@
 
 #include "Game_Object_Note.h"
 #include "Game_Util_Functions.h"
+#include "Game_Object_Constant.h"
 
 namespace{
 
-// ノーツを叩いた時の判定用
+// ノーツを叩いた時の判定秒数 1/60 = 0.01666
 constexpr double MISS_TIME{ 0.125 };    // 0b0.001
 constexpr double GOOD_TIME{ 0.09375 };  // 0b0.00011
 constexpr double FINE_TIME{ 0.046875 }; // 0b0.000011
 constexpr double JUST_TIME{ 0.0234375 };// 0b0.0000011
 
-// ノーツの見た目の幅
-constexpr int NOTE_WIDTH{ 70 };
-constexpr int NOTE_HEIGHT{ 22 };
-
-// ノーツがどのレーンかによって位置を変えるため
+// レーンごとのノーツの左上頂点のX座標
 constexpr int POS_A{ 475 };
 constexpr int POS_S{ 550 };
 constexpr int POS_D{ 625 };
@@ -29,11 +26,8 @@ constexpr int POS_Smcl{ 1125 };
 // ノーツの色
 constexpr s3d::Color NOTE_COLOR{ 200, 200, 200 };
 
-// ノーツがレーン上に表示される時間
-constexpr double INDICATE_TIME{ 1.3 };
-
-constexpr int LANE_HEIGHT{ 800 };
-constexpr int JUDGELINE_HEGHT{ 680 };
+// ノーツがレーン上に表示される秒数
+constexpr double INDICATE_TIME{ 1.5 };
 
 }
 
@@ -121,7 +115,7 @@ void Game::Object::Note::Update(){
 			}
 		}
 	}
-	else if( isPushable && timeDiff < -0.25 ){ // ノーツが押されなかったが通り過ぎた
+	else if( isPushable && timeDiff < -MISS_TIME ){ // ノーツが押されなかったが通り過ぎた
 		tapResult = NoteJudge::Miss;
 	}
 }

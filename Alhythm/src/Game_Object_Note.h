@@ -56,5 +56,5 @@ private:
 	bool isPushable;
 };
 
-}
-}
+}// namespace Object
+}// namespace Game

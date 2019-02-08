@@ -21,7 +21,7 @@ ClickButton::ClickButton( int x_, int y_, const s3d::wchar* text_, const int fon
 
 	using namespace s3d;
 	if( !decideSound ){
-		throw std::runtime_error( "sound file read error" );
+		throw std::runtime_error( "[Game::Object::ClickButton::ClickButton()] sound file read error" );
 	}
 	text.changeOutlineStyle( TextOutlineStyle( TextOutlineStyle( Color( 80, 80, 130 ), Color( 100, 100, 150 ), 2.0 ) ) );
 	Rect tmp = text( text_ ).region( x, y );

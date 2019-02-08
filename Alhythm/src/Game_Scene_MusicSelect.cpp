@@ -7,6 +7,9 @@
 namespace Game{
 namespace Scene{
 
+//cassiはたぶん89小節
+//senkouはたぶん134小節
+
 MusicSelect::MusicSelect():
 	returnToTitle( 1050, 700, L"タイトルへ戻る", 20 ),
 	goToSettings( 600, 700, L"ゲームプレイ設定", 20 ),
@@ -46,7 +49,7 @@ bool MusicSelect::NeedsTransition(){
 		nextSceneID = SceneID::Gameplay;
 		trackName = L"senkou";
 		trackBPM = 210;
-		trackMaxBar = 133;
+		trackMaxBar = 134;
 		return true;
 	}
 	if( returnToTitle.WasClicked() ){
