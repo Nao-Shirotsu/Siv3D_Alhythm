@@ -78,9 +78,9 @@ constexpr s3d::Color SCORE_BG_COLOR{ 0x2d, 0x38, 0x59 };
 
 // クリアゲージの最大値と増加割合(判定ごとの割合)など
 constexpr double GAUGE_FULL{ 100.0 }; // この値÷fullcomboで1ノーツの増加量
-constexpr double GAUGE_JUST_FACTOR{ 2.0 };
-constexpr double GAUGE_FINE_FACTOR{ 1.0 };
-constexpr double GAUGE_GOOD_FACTOR{ 0.5 };
+constexpr double GAUGE_JUST_FACTOR{ 4.0 };
+constexpr double GAUGE_FINE_FACTOR{ 2.0 };
+constexpr double GAUGE_GOOD_FACTOR{ 1.0 };
 constexpr double GAUGE_MISS_NUM{ -3.0 }; // ミスは定数でゲージ減少
 
 // スコアの最大値と増加割合 fullcomboで満点にするのでJUSTは無し MISSも0にするので無し

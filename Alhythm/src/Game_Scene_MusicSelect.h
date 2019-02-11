@@ -7,15 +7,10 @@
 #include "Game_Scene_Base.h"
 #include "Game_Object_ClickButton.h"
 #include "Game_BinFileID.h"
+#include "Game_SceneID.h"
 
 namespace Game{
 namespace Scene{
-
-enum class SceneID{
-	Title,
-	Settings,
-	Gameplay,
-};
 
 // シーン：楽曲選択画面
 class MusicSelect: public Base{

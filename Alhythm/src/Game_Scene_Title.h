@@ -6,6 +6,7 @@
 
 #include "Game_Scene_Base.h"
 #include "Game_Object_ClickButton.h"
+#include "Game_SceneID.h"
 
 namespace Game{
 namespace Scene{
@@ -29,9 +30,15 @@ private:
 	Game::Object::ClickButton gamestart;
 	Game::Object::ClickButton gameend;
 
+	// クレジット表記
+	Game::Object::ClickButton goToCredit;
+
 	// 音声ファイルオブジェクト
 	const s3d::Sound bgm;
 	bool isMusicPlaying;
+
+	// 次のシーンが何のシーンか判定
+	SceneID nextSceneID;
 };
 
 }// namespace Scene

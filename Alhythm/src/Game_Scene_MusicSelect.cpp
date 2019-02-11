@@ -13,7 +13,7 @@ namespace Scene{
 
 MusicSelect::MusicSelect():
 	returnToTitle( 1050, 700, L"タイトルへ戻る", 20 ),
-	goToSettings( 600, 700, L"ゲームプレイ設定", 20 ),
+	goToSettings( 50, 700, L"ゲームプレイ設定", 20 ),
 	goToSenkou( 650, 200, L"閃光の足跡          ", 40 ), // 長さ自動調節したいね
 	bgm( Util::EmbededFilePath( BinFileID::MusicSelectBGM ) ),
 	isMusicPlaying( true ),
