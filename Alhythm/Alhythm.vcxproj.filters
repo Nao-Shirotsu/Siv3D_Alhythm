@@ -433,6 +433,9 @@
     <ClCompile Include="src\Game_Object_RightAlignedFont.cpp">
       <Filter>Game\Object</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game_Scene_Credit.cpp">
+      <Filter>Game\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -489,6 +492,12 @@
       <Filter>Game\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\Game_BinFileID.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Scene_Credit.h">
+      <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_SceneID.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>

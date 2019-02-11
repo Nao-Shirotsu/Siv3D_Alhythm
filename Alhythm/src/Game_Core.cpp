@@ -37,6 +37,7 @@ void Core::Update(){
 		else{
 			sceneStack.pop();
 		}
+		return;
 	}
 	sceneStack.top()->Update();
 }

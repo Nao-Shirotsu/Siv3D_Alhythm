@@ -3,6 +3,7 @@
 
 #include "Game_Scene_Title.h"
 #include "Game_Scene_MusicSelect.h"
+#include "Game_Scene_Credit.h"
 #include "Game_Util_Functions.h"
 
 namespace Game{
@@ -11,6 +12,7 @@ namespace Scene{
 Title::Title():
 	gamestart( 765, 600, L"Game Start", 60 ),
 	gameend( 50, 700, L"ゲーム終了", 20 ),
+	goToCredit( 300, 700, L"クレジット", 20 ),
 	titleStr( Util::EmbededFilePath( BinFileID::TitleStringImage ) ),
 	bgm( Util::EmbededFilePath( BinFileID::TitleBGM ) ),
 	isMusicPlaying( true ){
@@ -36,16 +38,37 @@ void Title::Draw() const{
 	titleStr.draw( 20, 20 );
 	gamestart.Draw();
 	gameend.Draw();
+	goToCredit.Draw();
 }
 
 bool Title::NeedsTransition(){
-	return gamestart.WasClicked();
+	if( goToCredit.WasClicked() ){
+		nextSceneID = SceneID::Credit;
+		return true;
+	}
+
+	if( gamestart.WasClicked() ){
+		nextSceneID = SceneID::MusicSelect;
+		return true;
+	}
+
+	return false;
 }
 
 std::unique_ptr<Base> Title::TransitionToNext(){
-	bgm.stop();
-	isMusicPlaying = false;
-	return std::make_unique<MusicSelect>();
+	switch( nextSceneID ){
+	case SceneID::Credit:
+		return std::make_unique<Credit>();
+
+	case SceneID::MusicSelect:
+		bgm.stop();
+		isMusicPlaying = false;
+		return std::make_unique<MusicSelect>();
+
+	default: // ここエラーハンドリングした方がいい
+		bgm.stop();
+		return nullptr;
+	}
 }
 
 }// namespace Scene
