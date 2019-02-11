@@ -3,6 +3,7 @@
 
 #include "Game_Scene_Title.h"
 #include "Game_Scene_MusicSelect.h"
+#include "Game_Util_Functions.h"
 
 namespace Game{
 namespace Scene{
@@ -10,8 +11,8 @@ namespace Scene{
 Title::Title():
 	gamestart( 765, 600, L"Game Start", 60 ),
 	gameend( 50, 700, L"ゲーム終了", 20 ),
-	titleStr( L"Resource/Title_string.png" ),
-	bgm( L"Resource/bgm_title.mp3" ),
+	titleStr( Util::EmbededFilePath( BinFileID::TitleStringImage ) ),
+	bgm( Util::EmbededFilePath( BinFileID::TitleBGM ) ),
 	isMusicPlaying( true ){
 	if( !bgm ){
 		throw std::runtime_error( "[Scene::Title] sound file read error" );

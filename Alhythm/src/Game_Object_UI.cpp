@@ -90,7 +90,7 @@ constexpr double SCORE_GOOD_FACTOR{ 0.25 };
 
 }
 
-Game::Object::UI::UI( std::shared_ptr<Track>& track_, const s3d::String& trackName ):
+Game::Object::UI::UI( std::shared_ptr<Track>& track_, const BinFileID trackID ):
 	track( track_ ),
 	judgeLineL( LANE_A_POS_X + 5, JUDGELINE_HEGHT - NOTE_HEIGHT / 2, LANE_WIDTH * 4 - 25, NOTE_HEIGHT ), // +5とか-25は枠の分
 	judgeLineR( LANE_J_POS_X + 5, JUDGELINE_HEGHT - NOTE_HEIGHT / 2, LANE_WIDTH * 4 - 25, NOTE_HEIGHT ),
@@ -138,7 +138,7 @@ Game::Object::UI::UI( std::shared_ptr<Track>& track_, const s3d::String& trackNa
 	laneRects[LaneID::L] = s3d::Rect( LANE_L_POS_X, LANE_POS_Y, LANE_WIDTH, LANE_HEIGHT );
 	laneRects[LaneID::Smcl] = s3d::Rect( LANE_Smcl_POS_X, LANE_POS_Y, LANE_WIDTH, LANE_HEIGHT );
 
-	LoadNotesInfoFile( trackName );
+	LoadNotesInfoFile( trackID );
 
 	scorePerNote = SCORE_FULL / static_cast<double>( fullCombo );
 	gaugeValPerNote = GAUGE_FULL / static_cast<double>( fullCombo );
@@ -319,8 +319,8 @@ void Game::Object::UI::AddNoteToLane( LaneID laneID, int bar, int beat ){
 	notesLanes[laneID].emplace_back( bar, beat, laneID, track );
 }
 
-void Game::Object::UI::LoadNotesInfoFile( const s3d::String& trackName ) noexcept( false ){
-	const s3d::CSVReader csv( L"NotesInfo/" + trackName + L".csv" );
+void Game::Object::UI::LoadNotesInfoFile( const BinFileID trackID ) noexcept( false ){
+	const s3d::CSVReader csv( Util::EmbededNotesInfoPath( trackID ) );
 	if( !csv || csv.isEmpty() ){
 		throw std::runtime_error( "notesinfo file read error" );
 	}

@@ -6,11 +6,13 @@
 
 #include "Game_Core.h"
 #include "Game_Scene_Title.h"
+#include "Game_BinFileID.h"
+#include "Game_Util_Functions.h"
 
 namespace Game{
 
 Core::Core():
-	background( L"Resource/Title_resized.jpg" ){
+	background( Util::EmbededFilePath( BinFileID::BackgroundImage ) ){
 	sceneStack.push( std::make_unique<Scene::Title>() );
 	s3d::Window::SetTitle( L"Alhythm" );
 	s3d::Window::Resize( 1280, 800 );

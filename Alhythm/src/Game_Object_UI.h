@@ -13,6 +13,7 @@
 #include "Game_Object_Gauge.h"
 #include "Game_Util_TimeDuration.h"
 #include "Game_Object_RightAlignedFont.h"
+#include "Game_BinFileID.h"
 
 namespace Game{
 namespace Object{
@@ -20,7 +21,7 @@ namespace Object{
 // 音ゲープレイ画面に出るUIとそのための処理をするクラス
 class UI{
 public:
-	explicit UI( std::shared_ptr<Track>& track_, const s3d::String& trackName );
+	explicit UI( std::shared_ptr<Track>& track_, const BinFileID trackID );
 
 	// 何もしない
 	UI();
@@ -45,7 +46,7 @@ private:
 	void AddNoteToLane( LaneID laneID, int bar, int beat );
 
 	// トラックの譜面情報(ノーツ配置)が載ったファイルを読みこむ 
-	void LoadNotesInfoFile( const s3d::String& trackName ) noexcept(false);
+	void LoadNotesInfoFile( const BinFileID trackID ) noexcept(false);
 
 	// Noteから受け取った判定値をクリアゲージ加算値に変換
 	double JudgeToGaugeVal( NoteJudge judgeVal );
