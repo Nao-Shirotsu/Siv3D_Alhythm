@@ -418,9 +418,6 @@
     <ClCompile Include="src\Game_Object_Gauge.cpp">
       <Filter>Game\Object</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game_Object_UI.cpp">
-      <Filter>Game\Object</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game_Util_Functions.cpp">
       <Filter>Game\Util</Filter>
     </ClCompile>
@@ -474,9 +471,6 @@
       <Filter>Game\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\Game_Object_Gauge.h">
-      <Filter>Game\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Game_Object_UI.h">
       <Filter>Game\Object</Filter>
     </ClInclude>
     <ClInclude Include="src\Game_Util_Functions.h">

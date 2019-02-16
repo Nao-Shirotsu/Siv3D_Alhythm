@@ -281,7 +281,6 @@
     <ClCompile Include="src\Game_Object_Gauge.cpp" />
     <ClCompile Include="src\Game_Object_Lane.cpp" />
     <ClCompile Include="src\Game_Object_RightAlignedFont.cpp" />
-    <ClCompile Include="src\Game_Object_UI.cpp" />
     <ClCompile Include="src\Game_Object_Note.cpp" />
     <ClCompile Include="src\Game_Object_Track.cpp" />
     <ClCompile Include="src\Game_Scene_Base.cpp" />
@@ -303,7 +302,6 @@
     <ClInclude Include="src\Game_Object_Gauge.h" />
     <ClInclude Include="src\Game_Object_Lane.h" />
     <ClInclude Include="src\Game_Object_RightAlignedFont.h" />
-    <ClInclude Include="src\Game_Object_UI.h" />
     <ClInclude Include="src\Game_Object_Note.h" />
     <ClInclude Include="src\Game_Object_Track.h" />
     <ClInclude Include="src\Game_SceneID.h" />
