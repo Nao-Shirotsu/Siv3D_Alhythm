@@ -1,19 +1,19 @@
 ﻿#include "Game_Object_Track.h"
 #include "Game_Util_Functions.h"
 
-Game::Object::Track::Track( const s3d::String& filename, int bpm, int maxBar_ ) noexcept( false ):
+Game::Object::Track::Track( const TrackFileID trackID_, int bpm, int maxBar_ ) noexcept( false ):
+	trackID( trackID_ ),
 	beatSec( 60.0 / static_cast<double>( bpm ) ),
-	//curBar( 0 ),
-	//curBaet( 0 ),
-	file( filename ),
-	tapSound( Util::EmbededFilePath( BinFileID::NoteTapSound ) ),
+	file( Util::EmbeddedFilePath( trackID_ ) ),
+	tapSound( Util::EmbeddedFilePath( SEBGMFileID::NoteTapSound ) ),
 	maxBar( maxBar_ ){
 	if( !file ){
 		throw std::runtime_error( "sound file read error" );
 	}
 }
 
-Game::Object::Track::Track() = default;
+Game::Object::Track::Track():
+	trackID( TrackFileID::Senkou ){}
 
 Game::Object::Track::~Track(){
 	file.stop();

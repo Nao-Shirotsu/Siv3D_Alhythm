@@ -20,13 +20,13 @@ bool Game::Util::LaneKeyPressed( wchar_t keycode ){
 	return false;
 }
 
-s3d::String Game::Util::FullTrackName( const Game::BinFileID id ){
+s3d::String Game::Util::FullTrackName( const Game::TrackFileID id ){
 	int num = static_cast<int>( id );
 	if( num < 3000 || 4000 <= num ){
 		return L"";
 	}
 
-	using ID = Game::BinFileID;
+	using ID = Game::TrackFileID;
 	switch( id ){
 	case ID::Senkou:
 		return L"閃光の足跡";
@@ -42,14 +42,22 @@ s3d::String Game::Util::FullTrackName( const Game::BinFileID id ){
 	}
 }
 
-s3d::String Game::Util::EmbededFilePath( const Game::BinFileID id ){
+s3d::String Game::Util::EmbeddedFilePath( const Game::SEBGMFileID id ){
 	return L"/" + s3d::Format( static_cast<int>( id ) );
 }
 
-s3d::String Game::Util::EmbededNotesInfoPath( const Game::BinFileID id ){
-	int num = static_cast<int>( id );
-	if( 3000 <= num && num < 4000 ){
-		return L"/" + s3d::Format( ( num + 1000 ) );
+s3d::String Game::Util::EmbeddedFilePath( const Game::TrackFileID id ){
+	return L"/" + s3d::Format( static_cast<int>( id ) );
+}
+
+s3d::String Game::Util::EmbeddedFilePath( const Game::ImageFileID id ){
+	return L"/" + s3d::Format( static_cast<int>( id ) );
+}
+
+s3d::String Game::Util::EmbeddedNotesInfoFilePath( const Game::TrackFileID id ){
+	int num = static_cast< int >( id );
+	if( num < 3000 || 4000 <= num ){
+		return L"";
 	}
-	return L"/";
+	return L"/" + s3d::Format( ( num + 1000 ) );
 }

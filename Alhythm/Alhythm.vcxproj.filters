@@ -418,9 +418,6 @@
     <ClCompile Include="src\Game_Object_Gauge.cpp">
       <Filter>Game\Object</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game_Object_UI.cpp">
-      <Filter>Game\Object</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game_Util_Functions.cpp">
       <Filter>Game\Util</Filter>
     </ClCompile>
@@ -435,6 +432,9 @@
     </ClCompile>
     <ClCompile Include="src\Game_Scene_Credit.cpp">
       <Filter>Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game_Object_Lane.cpp">
+      <Filter>Game\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -473,9 +473,6 @@
     <ClInclude Include="src\Game_Object_Gauge.h">
       <Filter>Game\Object</Filter>
     </ClInclude>
-    <ClInclude Include="src\Game_Object_UI.h">
-      <Filter>Game\Object</Filter>
-    </ClInclude>
     <ClInclude Include="src\Game_Util_Functions.h">
       <Filter>Game\Util</Filter>
     </ClInclude>
@@ -491,13 +488,16 @@
     <ClInclude Include="src\Game_Object_Constant.h">
       <Filter>Game\Object</Filter>
     </ClInclude>
-    <ClInclude Include="src\Game_BinFileID.h">
-      <Filter>Game</Filter>
-    </ClInclude>
     <ClInclude Include="src\Game_Scene_Credit.h">
       <Filter>Game\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Game_SceneID.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Object_Lane.h">
+      <Filter>Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_FileID.h">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>

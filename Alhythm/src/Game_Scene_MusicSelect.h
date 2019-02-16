@@ -6,7 +6,7 @@
 
 #include "Game_Scene_Base.h"
 #include "Game_Object_ClickButton.h"
-#include "Game_BinFileID.h"
+#include "Game_FileID.h"
 #include "Game_SceneID.h"
 
 namespace Game{
@@ -31,7 +31,7 @@ private:
 	Game::Object::ClickButton goToSettings;
 
 	// プレイしたい楽曲の情報
-	BinFileID trackID;
+	TrackFileID trackID;
 	int trackBPM;
 	int trackMaxBar; // 一番最後の小説番号
 

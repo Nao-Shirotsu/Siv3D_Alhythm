@@ -1,8 +1,11 @@
 ﻿#pragma once
+#pragma once
 
 #define NO_S3D_USING
 
-#include <Siv3D.hpp>//beat*N=113.428571  whole*N/134=
+#include <Siv3D.hpp>
+
+#include "Game_FileID.h"
 
 namespace Game{
 namespace Object{
@@ -11,7 +14,7 @@ namespace Object{
 // 小節数や拍数などを保持して処理する
 class Track{
 public:
-	explicit Track( const s3d::String& filename, int bpm, int maxBar_ ) noexcept(false);
+	explicit Track( const TrackFileID trackID_, int bpm, int maxBar_ ) noexcept(false);
 
 	// 何もしない STLコンテナのため用意
 	Track();
@@ -32,14 +35,10 @@ public:
 	// 曲が終わったかどうか
 	bool IsEnd();
 
+	const TrackFileID trackID;
+
 private:
-	/*
-	秒数でのノーツ判定につき、intだと大量にキャストすることになるため、初めからdoubleで保持して処理を軽くする。
-	このクラスのインスタンスの個数は非常に少なくなるはずなので、メモリリソースはdoubleでも問題にならない。
-	*/
-	double beatSec; // 1拍で経過する秒数 = 60/BPM
-	//double curBar;  // 現在の小節数 1-origin
-	//double curBaet; // 現在の小節内の拍数 1-origin 32分音符で表現 5/32など
+	double beatSec; // 1拍で経過する秒数 = 60/BPM  (小数点な秒数でのノーツ判定につき多量キャスト防止のためdoubleで保持)
 	s3d::Sound file; // 楽曲
 	s3d::Sound tapSound; // タップ音
 	int maxBar; // このトラックの最終小節番号
