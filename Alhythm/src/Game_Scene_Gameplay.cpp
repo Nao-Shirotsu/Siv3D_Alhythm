@@ -8,15 +8,15 @@
 namespace Game{
 namespace Scene{
 
-Gameplay::Gameplay( const BinFileID trackID, int bpm, int maxBar ):
+Gameplay::Gameplay( const TrackFileID trackID, int bpm, int maxBar ):
 	returnToSelect( 20, 380, L"選曲へ", 20 ),
-	track( std::make_shared<Game::Object::Track>( Util::EmbededFilePath( trackID ), bpm, maxBar ) ),
+	track( std::make_shared<Game::Object::Track>( trackID, bpm, maxBar ) ),
 	trackNameText( 60, s3d::Typeface::Default, s3d::FontStyle::Italic ),
 	trackNameStr( Util::FullTrackName( trackID ) ),
 	musicPlaying( false ),
 	isReady( false ),
 	stopwatch(),
-	ui( track, trackID ){
+	ui( track ){
 	stopwatch.Start();
 }
 

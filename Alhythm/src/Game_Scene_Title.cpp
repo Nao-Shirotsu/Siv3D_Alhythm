@@ -10,11 +10,11 @@ namespace Game{
 namespace Scene{
 
 Title::Title():
-	gamestart( 765, 600, L"Game Start", 60 ),
+	gamestart( 855, 650, L"Game Start", 45 ),
 	gameend( 50, 700, L"ゲーム終了", 20 ),
 	goToCredit( 300, 700, L"クレジット", 20 ),
-	titleStr( Util::EmbededFilePath( BinFileID::TitleStringImage ) ),
-	bgm( Util::EmbededFilePath( BinFileID::TitleBGM ) ),
+	titleStr( Util::EmbeddedFilePath( ImageFileID::TitleStringImage ) ),
+	bgm( Util::EmbeddedFilePath( SEBGMFileID::TitleBGM ) ),
 	isMusicPlaying( true ){
 	if( !bgm ){
 		throw std::runtime_error( "[Scene::Title] sound file read error" );
@@ -35,7 +35,7 @@ void Title::Update(){
 }
 
 void Title::Draw() const{
-	titleStr.draw( 20, 20 );
+	titleStr.draw( 70, 70 );
 	gamestart.Draw();
 	gameend.Draw();
 	goToCredit.Draw();

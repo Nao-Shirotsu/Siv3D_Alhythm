@@ -12,7 +12,7 @@
 #include "Game_Object_Track.h"
 #include "Game_Object_UI.h"
 #include "Game_Util_TimeDuration.h"
-#include "Game_BinFileID.h"
+#include "Game_FileID.h"
 
 namespace Game{
 namespace Scene{
@@ -20,7 +20,7 @@ namespace Scene{
 // シーン：楽曲プレイ画面
 class Gameplay: public Base{
 public:
-	Gameplay( const BinFileID trackID, int bpm, int maxBar );
+	Gameplay( const TrackFileID trackID, int bpm, int maxBar );
 
 	Gameplay();
 	~Gameplay();

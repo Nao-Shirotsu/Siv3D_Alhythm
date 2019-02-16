@@ -18,9 +18,9 @@ ClickButton::ClickButton( int x_, int y_, const s3d::wchar* text_, const int fon
 	rectColor( 20, 20, 40 ),
 	text( fontsize_, s3d::Typeface::Medium, s3d::FontStyle::Outline ),
 	textStr( text_ ),
-	decideSound( Util::EmbededFilePath( BinFileID::DecideSound ) ){
+	decideSound( Util::EmbeddedFilePath( SEBGMFileID::DecideSound ) ){
 	//test
-	auto str = Util::EmbededFilePath( BinFileID::DecideSound );
+	auto str = Util::EmbeddedFilePath( SEBGMFileID::DecideSound );
 	//----
 	using namespace s3d;
 	if( !decideSound ){
