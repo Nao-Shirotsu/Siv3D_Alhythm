@@ -31,9 +31,10 @@ constexpr double INDICATE_TIME{ 1.5 };
 
 }
 
-Game::Object::Note::Note( int barNum_, int beatNum_, LaneID lane_, const std::shared_ptr<Track>& track_ ):
+Game::Object::Note::Note( int barNum_, int beatNum_, LaneID lane_, const std::shared_ptr<Track>& track_, const std::shared_ptr<NoteSound>& noteSound_ ):
 	lane( static_cast<s3d::wchar>( lane_ ) ),
 	track( track_ ),
+	noteSound( noteSound_ ),
 	tapResult( NoteJudge::Undone ),
 	isPushable( false ){
 	secOnMusic = track->SecOnBarBeat( barNum_, beatNum_ );
@@ -96,23 +97,21 @@ void Game::Object::Note::Update(){
 		// 判定が有効な時
 		if( Game::Util::LaneKeyClicked( static_cast<wchar_t>( lane ) ) ){
 			// timeDiffによって判定結果を算出してtapResultに格納
-			track->PlayNote();
-			if( std::fabs( timeDiff ) < JUST_TIME ){
+			double judgeTime = std::fabs( timeDiff );
+			if( judgeTime < JUST_TIME ){
 				tapResult = NoteJudge::Just;
-				return;
 			}
-			else if( std::fabs( timeDiff ) < FINE_TIME ){
+			else if( judgeTime < FINE_TIME ){
 				tapResult = NoteJudge::Fine;
-				return;
 			}
-			else if( std::fabs( timeDiff ) < GOOD_TIME ){
+			else if( judgeTime < GOOD_TIME ){
 				tapResult = NoteJudge::Good;
-				return;
 			}
 			else{
 				tapResult = NoteJudge::Miss;
-				return;
 			}
+			noteSound->Play( tapResult );
+			return;
 		}
 	}
 	else if( isPushable && timeDiff < -MISS_TIME ){ // ノーツが押されなかったが通り過ぎた

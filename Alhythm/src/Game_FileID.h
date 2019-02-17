@@ -12,7 +12,9 @@ enum class ImageFileID{
 enum class SEBGMFileID{
 	// SoundEffects
 	NoteTapSound = 2000,
-	DecideSound = 2001,
+	NoteTapSoundJust = 2001,
+	NoteTapSoundMiss = 2002,
+	DecideSound = 2003,
 
 	// BGM
 	MusicSelectBGM = 2500,

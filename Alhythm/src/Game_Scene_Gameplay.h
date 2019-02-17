@@ -11,7 +11,10 @@
 #include "Game_Scene_Base.h"
 #include "Game_Object_ClickButton.h"
 #include "Game_Object_Track.h"
-#include "Game_Object_UI.h"
+#include "Game_Object_NoteSound.h"
+#include "Game_Object_RightAlignedFont.h"
+#include "Game_Object_Lane.h"
+#include "Game_Object_Gauge.h"
 #include "Game_Util_TimeDuration.h"
 #include "Game_FileID.h"
 
@@ -52,6 +55,9 @@ private:
 
 	// プレイ楽曲オブジェクト
 	std::shared_ptr<Game::Object::Track> track;
+
+	// タップ音オブジェクト
+	std::shared_ptr<Game::Object::NoteSound> noteSound;
 
 	// 楽曲名表示用フォントとString
 	s3d::Font trackNameText;

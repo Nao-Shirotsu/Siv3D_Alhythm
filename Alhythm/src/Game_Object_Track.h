@@ -29,9 +29,6 @@ public:
 	// 楽曲再生
 	void Play();
 
-	// ノーツタップ音再生
-	void PlayNote();
-
 	// 曲が終わったかどうか
 	bool IsEnd();
 
@@ -40,7 +37,6 @@ public:
 private:
 	double beatSec; // 1拍で経過する秒数 = 60/BPM  (小数点な秒数でのノーツ判定につき多量キャスト防止のためdoubleで保持)
 	s3d::Sound file; // 楽曲
-	s3d::Sound tapSound; // タップ音
 	int maxBar; // このトラックの最終小節番号
 };
 
