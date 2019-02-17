@@ -65,6 +65,7 @@ namespace Scene{
 Gameplay::Gameplay( const TrackFileID trackID, int bpm, int maxBar ):
 	returnToSelect( 20, 380, L"選曲へ", 20 ),
 	track( std::make_shared<Game::Object::Track>( trackID, bpm, maxBar ) ),
+	noteSound( std::make_shared<Game::Object::NoteSound>() ),
 	trackNameText( 60, s3d::Typeface::Default, s3d::FontStyle::Italic ),
 	trackNameStr( Util::FullTrackName( trackID ) ),
 	musicPlaying( false ),
@@ -80,7 +81,7 @@ Gameplay::Gameplay( const TrackFileID trackID, int bpm, int maxBar ):
 	noteJudgeText( JUDGE_TEXT_SIZE, s3d::Typeface::Heavy, s3d::FontStyle::Outline ),
 	noteJudgeStr( L"" ),
 	noteJudge( Game::Object::NoteJudge::Undone ),
-	lane( track ),
+	lane( track, noteSound ),
 	stopwatchJudgeState(),
 	cleared( false ),
 	clearText( CLEAR_TEXT_SIZE, s3d::Typeface::Bold, s3d::FontStyle::Outline ),

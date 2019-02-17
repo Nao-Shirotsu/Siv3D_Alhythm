@@ -19,7 +19,7 @@ namespace Object{
 // 音ゲープレイ画面に出るノーツが流れるレーンのクラス
 class Lane{
 public:
-	explicit Lane( std::shared_ptr<Track>& track_ );
+	explicit Lane( std::shared_ptr<Track>& track_, std::shared_ptr<NoteSound>& noteSound_ );
 
 	// 何もしない
 	Lane();
@@ -31,7 +31,6 @@ public:
 	int FullCombo() const;
 	
 private:
-	// とりあえずおいてる
 	void DrawNotesSegment() const;
 	void DrawLaneSegment() const;
 
@@ -46,6 +45,7 @@ private:
 
 	// 各Noteに渡すために保管
 	std::shared_ptr<Track> track;
+	std::shared_ptr<NoteSound> noteSound;
 
 	// 8レーンの矩形、判定ライン、レーンID文字
 	std::unordered_map<LaneID, s3d::Rect> laneRects;

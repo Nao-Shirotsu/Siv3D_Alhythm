@@ -5,7 +5,6 @@ Game::Object::Track::Track( const TrackFileID trackID_, int bpm, int maxBar_ ) n
 	trackID( trackID_ ),
 	beatSec( 60.0 / static_cast<double>( bpm ) ),
 	file( Util::EmbeddedFilePath( trackID_ ) ),
-	tapSound( Util::EmbeddedFilePath( SEBGMFileID::NoteTapSound ) ),
 	maxBar( maxBar_ ){
 	if( !file ){
 		throw std::runtime_error( "sound file read error" );
@@ -33,10 +32,6 @@ double Game::Object::Track::CurSec() const noexcept{
 
 void Game::Object::Track::Play(){
 	file.play();
-}
-
-void Game::Object::Track::PlayNote(){
-	tapSound.playMulti();
 }
 
 bool Game::Object::Track::IsEnd(){

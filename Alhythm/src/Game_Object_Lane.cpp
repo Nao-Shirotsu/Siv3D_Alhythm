@@ -39,8 +39,9 @@ constexpr s3d::Color LANE_LETTER_COLOR{ 85, 85, 85, 224 };
 
 }
 
-Game::Object::Lane::Lane( std::shared_ptr<Track>& track_ ):
+Game::Object::Lane::Lane( std::shared_ptr<Track>& track_, std::shared_ptr<NoteSound>& noteSound_ ):
 	track( track_ ),
+	noteSound( noteSound_ ),
 	judgeLineL( LANE_A_POS_X + 5, JUDGELINE_HEGHT - NOTE_HEIGHT / 2, LANE_WIDTH * 4 - 25, NOTE_HEIGHT ), // +5とか-25は枠の分
 	judgeLineR( LANE_J_POS_X + 5, JUDGELINE_HEGHT - NOTE_HEIGHT / 2, LANE_WIDTH * 4 - 25, NOTE_HEIGHT ),
 	letterA( LANE_LETTER_SIZE ),
@@ -113,7 +114,7 @@ int Game::Object::Lane::FullCombo() const{
 
 
 void Game::Object::Lane::AddNoteToLane( LaneID laneID, int bar, int beat ){
-	noteLines[laneID].emplace_back( bar, beat, laneID, track );
+	noteLines[laneID].emplace_back( bar, beat, laneID, track, noteSound );
 }
 
 void Game::Object::Lane::LoadNotesInfoFile(){

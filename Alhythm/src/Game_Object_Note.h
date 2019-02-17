@@ -8,6 +8,7 @@
 
 #include "Game_Object_Track.h"
 #include "Game_Object_Enum.h"
+#include "Game_Object_NoteSound.h"
 
 namespace Game{
 namespace Object{
@@ -15,7 +16,7 @@ namespace Object{
 // 音ゲープレイ画面で使うノーツオブジェクトの構造体
 class Note{
 public:
-	explicit Note( int barNum_, int beatNum_, LaneID lane_, const std::shared_ptr<Track>& track_ );
+	explicit Note( int barNum_, int beatNum_, LaneID lane_, const std::shared_ptr<Track>& track_, const std::shared_ptr<NoteSound>& noteSound_ );
 
 	// 何もしない STLコンテナのため用意
 	Note();
@@ -43,6 +44,9 @@ private:
 
 	// 色々とトラックの情報を使うためDIで得て格納
 	std::shared_ptr<Track> track;
+
+	// タップ音クラスの実体をDIで得て格納
+	std::shared_ptr<NoteSound> noteSound;
 
 	// 本当はLaneIDのままがよいが、そうすると何度もキャストする必要があるためs3d::wchar
 	s3d::wchar lane;
