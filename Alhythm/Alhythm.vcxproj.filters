@@ -79,6 +79,9 @@
     <Filter Include="Game\Util">
       <UniqueIdentifier>{412c72ce-d1f5-4fee-bf26-4bc14562c4dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Singleton">
+      <UniqueIdentifier>{e7f88645-74e1-489a-aafe-7bdc2a132cc2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Engine\Splash.png">
@@ -439,6 +442,9 @@
     <ClCompile Include="src\Game_Object_NoteSound.cpp">
       <Filter>Game\Object</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game_Singleton_ClickSound.cpp">
+      <Filter>Game\Singleton</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -505,6 +511,9 @@
     </ClInclude>
     <ClInclude Include="src\Game_Object_NoteSound.h">
       <Filter>Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Singleton_ClickSound.h">
+      <Filter>Game\Singleton</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

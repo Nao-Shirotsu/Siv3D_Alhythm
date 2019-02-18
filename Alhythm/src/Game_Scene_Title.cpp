@@ -10,7 +10,7 @@ namespace Game{
 namespace Scene{
 
 Title::Title():
-	gamestart( 855, 650, L"Game Start", 45 ),
+	gamestart( 855, 650, L"Game Start", 45, 3 ),
 	gameend( 50, 700, L"ゲーム終了", 20 ),
 	goToCredit( 300, 700, L"クレジット", 20 ),
 	titleStr( Util::EmbeddedFilePath( ImageFileID::TitleStringImage ) ),

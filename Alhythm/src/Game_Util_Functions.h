@@ -1,6 +1,5 @@
 ﻿#pragma once
 #pragma once
-#pragma once
 
 #define NO_S3D_USING
 
