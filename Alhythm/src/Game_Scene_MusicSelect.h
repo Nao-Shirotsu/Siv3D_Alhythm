@@ -30,13 +30,10 @@ private:
 	// 設定画面へ遷移するボタン
 	Game::Object::ClickButton goToSettings;
 
-	// プレイしたい楽曲の情報
-	TrackFileID trackID;
-	int trackBPM;
-	int trackMaxBar; // 一番最後の小説番号
-
 	// 楽曲プレイ画面に遷移するボタン 後々曲増えるから拡張しよう
 	Game::Object::ClickButton goToSenkou;
+	Game::Object::ClickButton goToCassi;
+	Game::Object::ClickButton goToOrion;
 
 	// 音声ファイルオブジェクト
 	const s3d::Sound bgm;
@@ -44,6 +41,14 @@ private:
 
 	// 次のシーンが何のシーンか判定
 	SceneID nextSceneID;
+
+	// 左上に表示するMusicSelectの文字
+	s3d::Font musicSelectText;
+
+	// プレイしたい楽曲の情報
+	TrackFileID trackID;
+	int trackBPM;
+	int trackMaxBar; // 一番最後の小説番号
 };
 
 }// namespace Scene
