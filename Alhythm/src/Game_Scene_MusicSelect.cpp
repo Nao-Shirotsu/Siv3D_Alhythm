@@ -14,7 +14,7 @@ namespace Scene{
 MusicSelect::MusicSelect():
 	returnToTitle( 1050, 700, L"タイトルへ戻る", 20 ),
 	goToSettings( 50, 700, L"ゲームプレイ設定", 20 ),
-	goToSenkou( 650, 200, L"閃光の足跡          ", 40 ), // 長さ自動調節したいね
+	goToSenkou( 650, 200, L"閃光の足跡", 40, 550, 3 ),
 	bgm( Util::EmbeddedFilePath( SEBGMFileID::MusicSelectBGM ) ),
 	isMusicPlaying( true ),
 	nextSceneID( SceneID::Gameplay ){
