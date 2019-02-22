@@ -27,7 +27,7 @@ constexpr int POS_Smcl{ 1125 };
 constexpr s3d::Color NOTE_COLOR{ 200, 200, 200 };
 
 // ノーツがレーン上に表示される秒数
-constexpr double INDICATE_TIME{ 1.5 };
+constexpr double NOTE_INDICATE_TIME{ 1.5 };
 
 }
 
@@ -87,8 +87,8 @@ Game::Object::Note::~Note(){}
 void Game::Object::Note::Update(){
 	// ノーツの位置更新
 	timeDiff = secOnMusic - track->CurSec();
-	if( 0.0 < timeDiff && timeDiff < INDICATE_TIME + 1.0 ){
-		noteRect.setPos( { rectPosX, JUDGELINE_HEGHT - static_cast<int>( ( timeDiff / INDICATE_TIME ) * JUDGELINE_HEGHT ) } );
+	if( 0.0 < timeDiff && timeDiff < NOTE_INDICATE_TIME ){
+		noteRect.setPos( { rectPosX, JUDGELINE_HEGHT - static_cast<int>( ( timeDiff / NOTE_INDICATE_TIME ) * JUDGELINE_HEGHT ) } );
 	}
 
 	// このノーツが通り過ぎてない&&判定される秒数内ならば
@@ -120,7 +120,7 @@ void Game::Object::Note::Update(){
 }
 
 void Game::Object::Note::Draw() const{
-	if( 0.0 < timeDiff && timeDiff < INDICATE_TIME ){
+	if( 0.0 < timeDiff && timeDiff < NOTE_INDICATE_TIME ){
 		noteRect.draw( NOTE_COLOR );
 		noteRect.drawFrame( 1, 0, s3d::Palette::Black );
 	}
@@ -130,6 +130,6 @@ Game::Object::NoteJudge Game::Object::Note::Result(){
 	return tapResult;
 }
 
-bool Game::Object::Note::IsValidtoIndicate() const noexcept{
-	return secOnMusic - track->CurSec() < INDICATE_TIME;
+bool Game::Object::Note::IsValidToIndicate() const noexcept{
+	return secOnMusic - track->CurSec() < NOTE_INDICATE_TIME;
 }

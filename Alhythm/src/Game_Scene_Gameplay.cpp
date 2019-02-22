@@ -81,7 +81,7 @@ Gameplay::Gameplay( const TrackFileID trackID, int bpm, int maxBar ):
 	noteJudgeText( JUDGE_TEXT_SIZE, s3d::Typeface::Heavy, s3d::FontStyle::Outline ),
 	noteJudgeStr( L"" ),
 	noteJudge( Game::Object::NoteJudge::Undone ),
-	lane( track, noteSound ),
+	lane( track, noteSound, maxBar ),
 	stopwatchJudgeState(),
 	cleared( false ),
 	clearText( CLEAR_TEXT_SIZE, s3d::Typeface::Bold, s3d::FontStyle::Outline ),

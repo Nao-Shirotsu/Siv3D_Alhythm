@@ -445,6 +445,9 @@
     <ClCompile Include="src\Game_Singleton_ClickSound.cpp">
       <Filter>Game\Singleton</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game_Object_BarLine.cpp">
+      <Filter>Game\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -514,6 +517,9 @@
     </ClInclude>
     <ClInclude Include="src\Game_Singleton_ClickSound.h">
       <Filter>Game\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Object_BarLine.h">
+      <Filter>Game\Object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
