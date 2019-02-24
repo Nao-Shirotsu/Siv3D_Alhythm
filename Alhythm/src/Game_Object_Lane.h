@@ -1,6 +1,4 @@
 ﻿#pragma once
-#pragma once
-#pragma once
 
 #define NO_S3D_USING
 
@@ -11,6 +9,7 @@
 
 #include "Game_Object_Enum.h"
 #include "Game_Object_Note.h"
+#include "Game_Object_BarLine.h"
 #include "Game_FileID.h"
 
 namespace Game{
@@ -19,7 +18,7 @@ namespace Object{
 // 音ゲープレイ画面に出るノーツが流れるレーンのクラス
 class Lane{
 public:
-	explicit Lane( std::shared_ptr<Track>& track_, std::shared_ptr<NoteSound>& noteSound_ );
+	explicit Lane( std::shared_ptr<Track>& track_, std::shared_ptr<NoteSound>& noteSound_, int maxbar );
 
 	// 何もしない
 	Lane();
@@ -33,10 +32,14 @@ public:
 private:
 	void DrawNotesSegment() const;
 	void DrawLaneSegment() const;
+	void DrawBarLineSegment() const;
 
 	// 楽曲のノーツデータを追加する( LoadNotesInfoFile内で使用 )
 	// どのレーンの何小節何拍目かを指定
 	void AddNoteToLane( LaneID laneID, int bar, int beat );
+
+	// 小節線を全て追加
+	void AddAllBarLineToLane( const int maxbar ); // コンストラクタでmaxbarを渡してここで受け取っているのはクソ, 変えるべき
 
 	// トラックの譜面情報(ノーツ配置)が載ったファイルを読みこむ 
 	void LoadNotesInfoFile();
@@ -62,6 +65,9 @@ private:
 
 	// 1曲中各レーンに流れてくるノーツを全て格納する
 	std::unordered_map<LaneID, std::deque<Note>> noteLines;
+
+	// 上同様、小節線を全て格納する
+	std::deque<BarLine> barLines;
 };
 
 }// namespace Object

@@ -277,6 +277,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game_Core.cpp" />
+    <ClCompile Include="src\Game_Object_BarLine.cpp" />
     <ClCompile Include="src\Game_Object_ClickButton.cpp" />
     <ClCompile Include="src\Game_Object_Gauge.cpp" />
     <ClCompile Include="src\Game_Object_Lane.cpp" />
@@ -298,6 +299,7 @@
   <ItemGroup>
     <ClInclude Include="src\Game_FileID.h" />
     <ClInclude Include="src\Game_Core.h" />
+    <ClInclude Include="src\Game_Object_BarLine.h" />
     <ClInclude Include="src\Game_Object_ClickButton.h" />
     <ClInclude Include="src\Game_Object_Constant.h" />
     <ClInclude Include="src\Game_Object_Enum.h" />

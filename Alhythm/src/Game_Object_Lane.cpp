@@ -2,31 +2,22 @@
 #include "Game_Util_Functions.h"
 #include "Game_Object_Constant.h"
 
+namespace Game{
+namespace Object{
+
 namespace{
 
 // レーン枠の色など
 constexpr s3d::Color LANE_BG_COLOR{ 64, 64, 64, 224 };
 constexpr s3d::Color LANE_BG_COLOR_PUSHED{ 96, 96, 96, 224 };
 constexpr s3d::Color FRAME_COLOR{ 128, 128, 128 };
-constexpr s3d::Color JUDGELINE_COLOR{ 224, 224, 224, 128 };
-
-// レーン枠の左上頂点の位置
-constexpr int LANE_A_POS_X{ 470 };
-constexpr int LANE_S_POS_X{ 545 };
-constexpr int LANE_D_POS_X{ 620 };
-constexpr int LANE_F_POS_X{ 695 };
-constexpr int LANE_J_POS_X{ 895 };
-constexpr int LANE_K_POS_X{ 970 };
-constexpr int LANE_L_POS_X{ 1045 };
-constexpr int LANE_Smcl_POS_X{ 1120 };
-constexpr int LANE_POS_Y{ 0 };
 
 // レーン枠の幅
 constexpr int LANE_FRAME_WIDTH{ 5 };
 
 // レーン下部に表示するASDFなどの値
 constexpr int LANE_LETTER_SIZE{ 35 };
-constexpr int LANE_LETTER_POS_Y{ Game::Object::LANE_HEIGHT - 90 };
+constexpr int LANE_LETTER_POS_Y{ LANE_HEIGHT - 90 };
 constexpr int LANE_LETTER_A_POS_X{ LANE_A_POS_X + 25 };
 constexpr int LANE_LETTER_S_POS_X{ LANE_S_POS_X + 30 };
 constexpr int LANE_LETTER_D_POS_X{ LANE_D_POS_X + 30 };
@@ -39,11 +30,11 @@ constexpr s3d::Color LANE_LETTER_COLOR{ 85, 85, 85, 224 };
 
 }
 
-Game::Object::Lane::Lane( std::shared_ptr<Track>& track_, std::shared_ptr<NoteSound>& noteSound_ ):
+Lane::Lane( std::shared_ptr<Track>& track_, std::shared_ptr<NoteSound>& noteSound_, int maxbar ):
 	track( track_ ),
 	noteSound( noteSound_ ),
-	judgeLineL( LANE_A_POS_X + 5, JUDGELINE_HEGHT - NOTE_HEIGHT / 2, LANE_WIDTH * 4 - 25, NOTE_HEIGHT ), // +5とか-25は枠の分
-	judgeLineR( LANE_J_POS_X + 5, JUDGELINE_HEGHT - NOTE_HEIGHT / 2, LANE_WIDTH * 4 - 25, NOTE_HEIGHT ),
+	judgeLineL( L_JUDGELINE_POS_X, JUDGELINE_HEGHT - NOTE_HEIGHT / 2, JUDGELINE_LENGTH, NOTE_HEIGHT ), // +5とか-25は枠の分
+	judgeLineR( R_JUDGELINE_POS_X, JUDGELINE_HEGHT - NOTE_HEIGHT / 2, JUDGELINE_LENGTH, NOTE_HEIGHT ),
 	letterA( LANE_LETTER_SIZE ),
 	letterS( LANE_LETTER_SIZE ),
 	letterD( LANE_LETTER_SIZE ),
@@ -72,13 +63,14 @@ Game::Object::Lane::Lane( std::shared_ptr<Track>& track_, std::shared_ptr<NoteSo
 	laneRects[LaneID::Smcl] = s3d::Rect( LANE_Smcl_POS_X, LANE_POS_Y, LANE_WIDTH, LANE_HEIGHT );
 
 	LoadNotesInfoFile();
+	AddAllBarLineToLane( maxbar );
 }
 
-Game::Object::Lane::Lane(){}
+Lane::Lane(){}
 
-Game::Object::Lane::~Lane(){}
+Lane::~Lane(){}
 
-std::deque<Game::Object::NoteJudge> Game::Object::Lane::Update(){
+std::deque<NoteJudge> Lane::Update(){
 	std::deque<NoteJudge> judgeVal;
 	for( auto& line : noteLines ){
 		if( line.second.empty() ){ // ノーツのdequeが空なら何もしない
@@ -86,7 +78,7 @@ std::deque<Game::Object::NoteJudge> Game::Object::Lane::Update(){
 		}
 
 		for( auto& note : line.second ){
-			if( !note.IsValidtoIndicate() ){
+			if( !note.IsValidToIndicate() ){
 				break;
 			}
 			note.Update();
@@ -99,25 +91,44 @@ std::deque<Game::Object::NoteJudge> Game::Object::Lane::Update(){
 			judgeVal.emplace_back( res );
 		}
 	}
+
+	for( auto& barline : barLines ){
+		if( !barline.IsValidToIndicate() ){
+			break;
+		}
+		barline.Update();
+	}
+
+	if( !barLines.front().IsValidToIndicate() ){
+		barLines.pop_front();
+	}
+
 	return judgeVal;
 }
 
-void Game::Object::Lane::Draw() const{
+void Lane::Draw() const{
 	DrawLaneSegment();
+	DrawBarLineSegment();
 	DrawNotesSegment();
 }
 
-int Game::Object::Lane::FullCombo() const{
+int Lane::FullCombo() const{
 	return fullCombo;
 }
 
 
 
-void Game::Object::Lane::AddNoteToLane( LaneID laneID, int bar, int beat ){
+void Lane::AddNoteToLane( LaneID laneID, int bar, int beat ){
 	noteLines[laneID].emplace_back( bar, beat, laneID, track, noteSound );
 }
 
-void Game::Object::Lane::LoadNotesInfoFile(){
+void Lane::AddAllBarLineToLane( const int maxbar ){
+	for( int i = 0; i < maxbar; ++i ){
+		barLines.emplace_back( i, track );
+	}
+}
+
+void Lane::LoadNotesInfoFile(){
 	const s3d::CSVReader csv( Util::EmbeddedNotesInfoFilePath( track->trackID ) );
 	if( !csv || csv.isEmpty() ){
 		throw std::runtime_error( "notesinfo file read error" );
@@ -129,13 +140,13 @@ void Game::Object::Lane::LoadNotesInfoFile(){
 	}
 }
 
-void Game::Object::Lane::DrawNotesSegment() const{
+void Lane::DrawNotesSegment() const{
 	for( const auto &lane : noteLines ) {
 		if( lane.second.empty() ) {
 			continue;
 		}
 		for( const auto &note : lane.second ) {
-			if( !note.IsValidtoIndicate() ) {
+			if( !note.IsValidToIndicate() ) {
 				break;
 			}
 			note.Draw();
@@ -143,7 +154,7 @@ void Game::Object::Lane::DrawNotesSegment() const{
 	}
 }
 
-void Game::Object::Lane::DrawLaneSegment() const {
+void Lane::DrawLaneSegment() const {
 	for( const auto &laneRect : laneRects ) {
 		if( Game::Util::LaneKeyPressed( static_cast< wchar_t >( laneRect.first ) ) ) {
 			laneRect.second.draw( LANE_BG_COLOR_PUSHED );
@@ -164,3 +175,15 @@ void Game::Object::Lane::DrawLaneSegment() const {
 	letterL( L'L' ).draw( LANE_LETTER_L_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
 	letterSmcl( L';' ).draw( LANE_LETTER_Smcl_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
 }
+
+void Lane::DrawBarLineSegment() const{
+	for( const auto& barline : barLines ) {
+		if( !barline.IsValidToIndicate() ) {
+			break;
+		}
+		barline.Draw();
+	}
+}
+
+}// namespace Object
+}// namespace Game

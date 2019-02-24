@@ -29,10 +29,10 @@ public:
 	NoteJudge Result();
 
 	// レーンに表示される期間内か否か返す
-	bool IsValidtoIndicate() const noexcept;
+	bool IsValidToIndicate() const noexcept;
 
 private:
-	// このノートが曲中で有効になる秒数(位置)
+	// 判定ラインと重なる瞬間
 	double secOnMusic;
 
 	// ノートの表示時間の計算に利用
