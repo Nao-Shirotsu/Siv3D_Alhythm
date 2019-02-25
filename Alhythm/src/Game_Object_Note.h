@@ -1,4 +1,5 @@
 ﻿#pragma once
+#pragma once
 
 #define NO_S3D_USING
 
@@ -22,7 +23,8 @@ public:
 	Note();
 	~Note();
 
-	void Update();
+	void UpdateJudging();
+	void UpdatePos();
 	void Draw() const;
 
 	// ノーツの判定を返す

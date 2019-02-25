@@ -81,10 +81,11 @@ std::deque<NoteJudge> Lane::Update(){
 			if( !note.IsValidToIndicate() ){
 				break;
 			}
-			note.Update();
+			note.UpdatePos();
 		}
 
 		// 処理終わったノーツをポップ
+		line.second.front().UpdateJudging();
 		NoteJudge res = line.second.front().Result();
 		if( res != NoteJudge::Undone ){
 			line.second.pop_front();
