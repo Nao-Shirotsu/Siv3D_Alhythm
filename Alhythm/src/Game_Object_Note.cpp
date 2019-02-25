@@ -84,13 +84,7 @@ Game::Object::Note::Note(){}
 
 Game::Object::Note::~Note(){}
 
-void Game::Object::Note::Update(){
-	// ノーツの位置更新
-	timeDiff = secOnMusic - track->CurSec();
-	if( 0.0 < timeDiff && timeDiff < NOTE_INDICATE_TIME ){
-		noteRect.setPos( { rectPosX, JUDGELINE_HEGHT - static_cast<int>( ( timeDiff / NOTE_INDICATE_TIME ) * JUDGELINE_HEGHT ) } );
-	}
-
+void Game::Object::Note::UpdateJudging(){
 	// このノーツが通り過ぎてない&&判定される秒数内ならば
 	if( tapResult == NoteJudge::Undone && secOnMusic - MISS_TIME < track->CurSec() && track->CurSec() < secOnMusic + MISS_TIME ){
 		isPushable = true;
@@ -116,6 +110,13 @@ void Game::Object::Note::Update(){
 	}
 	else if( isPushable && timeDiff < -MISS_TIME ){ // ノーツが押されなかったが通り過ぎた
 		tapResult = NoteJudge::Miss;
+	}
+}
+
+void Game::Object::Note::UpdatePos(){
+	timeDiff = secOnMusic - track->CurSec();
+	if( 0.0 < timeDiff && timeDiff < NOTE_INDICATE_TIME ){
+		noteRect.setPos( { rectPosX, JUDGELINE_HEGHT - static_cast< int >( ( timeDiff / NOTE_INDICATE_TIME ) * JUDGELINE_HEGHT ) } );
 	}
 }
 
