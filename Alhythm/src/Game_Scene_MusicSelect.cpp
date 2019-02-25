@@ -10,6 +10,15 @@ namespace{
 constexpr s3d::Color TRACK_BG_COLOR{ 30, 30, 60 };
 constexpr s3d::Color TRACK_FRAME_COLOR{ 50, 50, 100 };
 
+constexpr s3d::Color EASY_BG_COLOR{ 160, 200, 60 };
+constexpr s3d::Color EASY_FRAME_COLOR{ 130, 160, 50 };
+
+constexpr s3d::Color MEDIUM_BG_COLOR{ 200, 120, 50 };
+constexpr s3d::Color MEDIUM_FRAME_COLOR{ 160, 160, 0 };
+
+constexpr s3d::Color EXTREME_BG_COLOR{ 185, 30, 40 };
+constexpr s3d::Color EXTREME_FRAME_COLOR{ 150, 20, 35 };
+
 }
 
 namespace Game{
@@ -22,8 +31,11 @@ MusicSelect::MusicSelect():
 	returnToTitle( 1050, 700, L"タイトルへ戻る", 20 ),
 	goToSettings( 50, 700, L"ゲームプレイ設定", 20 ),
 	goToSenkou( 650, 200, L"閃光の足跡", 40, 550, 3, TRACK_BG_COLOR, TRACK_FRAME_COLOR ),
+	senkouMedium( 1000, 250, L"Medium", 25, 190, 2, MEDIUM_BG_COLOR, MEDIUM_FRAME_COLOR ),
 	goToCassi( 650, 330, L"Cassiopeia", 40, 550, 3, TRACK_BG_COLOR, TRACK_FRAME_COLOR ),
+	cassiExtreme( 1000, 380, L"Extreme", 25, 190, 2, EXTREME_BG_COLOR, EXTREME_FRAME_COLOR ),
 	goToOrion( 650, 460, L"Orion", 40, 550, 3, TRACK_BG_COLOR, TRACK_FRAME_COLOR ),
+	orionEasy( 1000, 510, L"Easy", 25, 190, 2, EASY_BG_COLOR, EASY_FRAME_COLOR ),
 	bgm( Util::EmbeddedFilePath( SEBGMFileID::MusicSelectBGM ) ),
 	isMusicPlaying( true ),
 	nextSceneID( SceneID::Gameplay ),
@@ -51,6 +63,9 @@ void MusicSelect::Draw() const{
 	goToSenkou.Draw();
 	goToCassi.Draw();
 	goToOrion.Draw();
+	senkouMedium.Draw();
+	cassiExtreme.Draw();
+	orionEasy.Draw();
 	musicSelectText( L"Music Select" ).draw( 60, 30 );
 }
 

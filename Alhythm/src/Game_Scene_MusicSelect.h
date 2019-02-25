@@ -32,8 +32,13 @@ private:
 
 	// 楽曲プレイ画面に遷移するボタン 後々曲増えるから拡張しよう
 	Game::Object::ClickButton goToSenkou;
+	Game::Object::ClickButton senkouMedium;
+
 	Game::Object::ClickButton goToCassi;
+	Game::Object::ClickButton cassiExtreme;
+
 	Game::Object::ClickButton goToOrion;
+	Game::Object::ClickButton orionEasy;
 
 	// 音声ファイルオブジェクト
 	const s3d::Sound bgm;
