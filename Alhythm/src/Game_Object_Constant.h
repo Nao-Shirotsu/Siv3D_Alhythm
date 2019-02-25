@@ -36,7 +36,7 @@ constexpr int JUDGELINE_HEGHT{ LANE_HEIGHT - NOTE_HEIGHT / 2 - 5 };
 constexpr s3d::Color JUDGELINE_COLOR{ 224, 224, 224, 128 };
 
 // ノーツ, 小節線がレーン上に表示される秒数
-constexpr double NOTE_INDICATE_TIME{ 2.0 };
+constexpr double NOTE_INDICATE_TIME{ 1.2 };
 
 }// namespace Object
 }// namespace Game
