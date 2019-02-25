@@ -8,10 +8,10 @@
 namespace{
 
 // ノーツを叩いた時の判定秒数 1/60 = 0.01666
-constexpr double MISS_TIME{ 0.125 };    // 0b0.001
-constexpr double GOOD_TIME{ 0.09375 };  // 0b0.00011
-constexpr double FINE_TIME{ 0.046875 }; // 0b0.000011
-constexpr double JUST_TIME{ 0.0234375 };// 0b0.0000011
+constexpr double MISS_TIME{ 0.1875 };    // 0b0.0011
+constexpr double GOOD_TIME{ 0.09375 };  //  0b0.00011
+constexpr double FINE_TIME{ 0.046875 }; //  0b0.000011
+constexpr double JUST_TIME{ 0.0234375 };//  0b0.0000011
 
 // レーンごとのノーツの左上頂点のX座標
 constexpr int POS_A{ 475 };

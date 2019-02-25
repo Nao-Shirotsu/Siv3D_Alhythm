@@ -55,9 +55,25 @@ s3d::String Game::Util::EmbeddedFilePath( const Game::ImageFileID id ){
 }
 
 s3d::String Game::Util::EmbeddedNotesInfoFilePath( const Game::TrackFileID id ){
+#ifndef NOTESINFODEBUG
 	int num = static_cast< int >( id );
 	if( num < 3000 || 4000 <= num ){
 		return L"";
 	}
 	return L"/" + s3d::Format( ( num + 1000 ) );
+#else
+	switch( id ){
+	case Game::TrackFileID::Senkou:
+		return L"NotesInfo/senkou.csv";
+
+	case Game::TrackFileID::Cassi:
+		return L"NotesInfo/cassi.csv";
+
+	case Game::TrackFileID::Orion:
+		return L"NotesInfo/orion.csv";
+
+	default:
+		return L"";
+}
+#endif
 }
