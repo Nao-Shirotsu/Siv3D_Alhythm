@@ -34,12 +34,19 @@ private:
 	// 表示時間の計算に利用
 	double timeDiff;
 
+	// 色々とトラックの情報を使うためDIで得て格納
+	std::shared_ptr<Track> track;
+
+	// 実体の位置(高さ)
+	int posY;
+
 	// 表示する実体
 	s3d::Line lineL;
 	s3d::Line lineR;
 
-	// 色々とトラックの情報を使うためDIで得て格納
-	std::shared_ptr<Track> track;
+	// 小節番号
+	s3d::Font barNumFont;
+	s3d::String barNumStr;
 };
 
 }// namespace Object

@@ -16,8 +16,11 @@ constexpr int BARLINE_VALID_BEAT{ 1 };
 
 Game::Object::BarLine::BarLine( int barNum_, const std::shared_ptr<Track>& track_ ):
 	track( track_ ),
+	posY( 0 ),
 	lineL( L_JUDGELINE_POS_X, 0, L_JUDGELINE_POS_X + JUDGELINE_LENGTH, 0 ),
-	lineR( R_JUDGELINE_POS_X, 0, R_JUDGELINE_POS_X + JUDGELINE_LENGTH, 0 ){
+	lineR( R_JUDGELINE_POS_X, 0, R_JUDGELINE_POS_X + JUDGELINE_LENGTH, 0 ),
+	barNumFont( 10 ),
+	barNumStr( s3d::Format( barNum_ ) ){
 	secOnMusic = track->SecOnBarBeat( barNum_, BARLINE_VALID_BEAT );
 	timeDiff = secOnMusic - track->CurSec();
 }
@@ -32,7 +35,7 @@ void Game::Object::BarLine::Update(){
 
 	// この小節線が判定される秒数内ならば
 	if( 0.0 < timeDiff && timeDiff < NOTE_INDICATE_TIME ){
-		int posY = JUDGELINE_HEGHT - static_cast<int>( ( timeDiff / NOTE_INDICATE_TIME ) * JUDGELINE_HEGHT ) + NOTE_HEIGHT;
+		posY = JUDGELINE_HEGHT - static_cast<int>( ( timeDiff / NOTE_INDICATE_TIME ) * JUDGELINE_HEGHT ) + NOTE_HEIGHT;
 		lineL.set( L_JUDGELINE_POS_X, posY, L_JUDGELINE_POS_X + JUDGELINE_LENGTH, posY );
 		lineR.set( R_JUDGELINE_POS_X, posY, R_JUDGELINE_POS_X + JUDGELINE_LENGTH, posY );
 	}
@@ -40,6 +43,9 @@ void Game::Object::BarLine::Update(){
 
 void Game::Object::BarLine::Draw() const{
 	if( 0.0 < timeDiff && timeDiff < NOTE_INDICATE_TIME ){
+	#ifdef NOTESINFODEBUG
+		barNumFont( barNumStr ).draw( L_JUDGELINE_POS_X - 30, posY );
+	#endif
 		lineL.draw();
 		lineR.draw();
 	}

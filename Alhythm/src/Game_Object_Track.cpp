@@ -22,7 +22,6 @@ double Game::Object::Track::SecOnBarBeat( int bar, int beat ) const noexcept{
 	if( bar > maxBar ){
 		return -1; // 不正値として、ノーツを無効にするために-1を返す  クソなのでoptionalにしろ
 	}
-	//return file.lengthSec() * static_cast<double>( bar - 1 ) / ( maxBar - 1 ) + beatSec * static_cast<double>( beat - 1 );
 	return beatSec * static_cast<double>( 4 * ( bar - 1 ) + beat / 8.0 );
 }
 
