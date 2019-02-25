@@ -10,6 +10,7 @@
 #include "Game_Object_Track.h"
 #include "Game_Object_Enum.h"
 #include "Game_Object_NoteSound.h"
+#include "Game_Singleton_SettingState.h"
 
 namespace Game{
 namespace Object{
@@ -60,6 +61,12 @@ private:
 	// これがtrueならば判定ラインに近づいた後であり、
 	// ボタンを押さなくても時間経過で消さなければならないため個の変数を使う
 	bool isPushable;
+
+	// ハイスピなどの設定の値を取得するために持つ
+	Singleton::SettingState settingState;
+
+	// ハイスピ倍率 x NOTE_INDICATE_TIME
+	double noteIndicateTime;
 };
 
 }// namespace Object

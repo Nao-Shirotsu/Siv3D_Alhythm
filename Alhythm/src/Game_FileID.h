@@ -8,6 +8,10 @@ enum class ImageFileID{
 	TitleStringImage = 1001,
 };
 
+enum class SettingFileID{
+	GamePlay = 1500,
+};
+
 // Resource.rcに記述する埋め込みファイルの識別番号(トラック以外のSEやBGMなどのサウンド)
 enum class SEBGMFileID{
 	// SoundEffects

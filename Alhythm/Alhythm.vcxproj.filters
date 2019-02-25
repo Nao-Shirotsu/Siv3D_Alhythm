@@ -448,6 +448,9 @@
     <ClCompile Include="src\Game_Object_BarLine.cpp">
       <Filter>Game\Object</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game_Singleton_SettingState.cpp">
+      <Filter>Game\Singleton</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc">
@@ -520,6 +523,9 @@
     </ClInclude>
     <ClInclude Include="src\Game_Object_BarLine.h">
       <Filter>Game\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game_Singleton_SettingState.h">
+      <Filter>Game\Singleton</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
