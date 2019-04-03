@@ -114,6 +114,7 @@ void Game::Object::Note::UpdateJudging(){
 
 void Game::Object::Note::UpdatePos(){
 	timeDiff = secOnMusic - track->CurSec();
+	noteIndicateTime = NOTE_INDICATE_TIME / settingState.HispeedRate();
 	if( 0.0 < timeDiff && timeDiff < noteIndicateTime ){
 		noteRect.setPos( { rectPosX, JUDGELINE_HEGHT - static_cast< int >( ( timeDiff / noteIndicateTime ) * JUDGELINE_HEGHT ) } );
 	}

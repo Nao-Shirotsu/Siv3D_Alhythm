@@ -59,9 +59,6 @@ s3d::String Game::Util::EmbeddedFilePath( const Game::ImageFileID id ){
 
 s3d::String Game::Util::EmbeddedNotesInfoFilePath( const Game::TrackFileID id ){
 #ifndef NOTESINFODEBUG
-	if( id == TrackFileID::CassiEmp ){
-		return L"/3001";
-	}
 	int num = static_cast< int >( id );
 	if( num < 3000 || 4000 <= num ){
 		return L"";
