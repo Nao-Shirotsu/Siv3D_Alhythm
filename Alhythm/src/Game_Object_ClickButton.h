@@ -39,7 +39,10 @@ public:
 	bool WasClicked() const;
 
 private:
-	// はボックスの左上座標
+	// マウスオーバーで色変わるか否か
+	bool colorChangeable;
+
+	// ボックスの左上座標
 	int x, y;
 
 	// ボックスの矩形
