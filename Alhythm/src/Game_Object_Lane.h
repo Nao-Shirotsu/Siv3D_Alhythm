@@ -11,6 +11,7 @@
 #include "Game_Object_Note.h"
 #include "Game_Object_BarLine.h"
 #include "Game_FileID.h"
+#include "Game_Util_TimeDuration.h"
 
 namespace Game{
 namespace Object{
@@ -20,8 +21,10 @@ class Lane{
 public:
 	explicit Lane( std::shared_ptr<Track>& track_, std::shared_ptr<NoteSound>& noteSound_, int maxbar );
 
-	// 何もしない
+	// 設定画面で使う時のコンストラクタ
 	Lane();
+
+	// 何もしない
 	~Lane();
 
 	std::deque<NoteJudge> Update();
@@ -44,6 +47,10 @@ private:
 	// トラックの譜面情報(ノーツ配置)が載ったファイルを読みこむ 
 	void LoadNotesInfoFile();
 
+	// 設定画面で使われているか否か
+	bool isSettingLane;
+
+	// フルコンボ時のノーツ数
 	int fullCombo;
 
 	// 各Noteに渡すために保管

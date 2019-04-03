@@ -7,6 +7,7 @@
 #include <Siv3D.hpp>
 
 #include "Game_Object_Track.h"
+#include "Game_Singleton_SettingState.h"
 
 namespace Game{
 namespace Object{
@@ -46,6 +47,12 @@ private:
 	// 小節番号
 	s3d::Font barNumFont;
 	s3d::String barNumStr;
+
+	// ハイスピなどの設定の値を取得するために持つ
+	Singleton::SettingState settingState;
+
+	// ハイスピ倍率 x NOTE_INDICATE_TIME
+	double noteIndicateTime;
 };
 
 }// namespace Object

@@ -31,6 +31,7 @@ constexpr s3d::Color LANE_LETTER_COLOR{ 85, 85, 85, 224 };
 }
 
 Lane::Lane( std::shared_ptr<Track>& track_, std::shared_ptr<NoteSound>& noteSound_, int maxbar ):
+	isSettingLane( false ),
 	track( track_ ),
 	noteSound( noteSound_ ),
 	judgeLineL( L_JUDGELINE_POS_X, JUDGELINE_HEGHT - NOTE_HEIGHT / 2, JUDGELINE_LENGTH, NOTE_HEIGHT ), // +5とか-25は枠の分
@@ -66,11 +67,47 @@ Lane::Lane( std::shared_ptr<Track>& track_, std::shared_ptr<NoteSound>& noteSoun
 	AddAllBarLineToLane( maxbar );
 }
 
-Lane::Lane(){}
+
+
+Lane::Lane():
+	isSettingLane( true ),
+	track( std::make_shared<Game::Object::Track>( TrackFileID::CassiEmp, 152, 90 ) ),
+	noteSound( nullptr ),
+	judgeLineL( L_JUDGELINE_POS_X, JUDGELINE_HEGHT - NOTE_HEIGHT / 2, JUDGELINE_LENGTH, NOTE_HEIGHT ), // +5とか-25は枠の分
+	judgeLineR( R_JUDGELINE_POS_X, JUDGELINE_HEGHT - NOTE_HEIGHT / 2, JUDGELINE_LENGTH, NOTE_HEIGHT ),
+	letterA( LANE_LETTER_SIZE ),
+	letterS( LANE_LETTER_SIZE ),
+	letterD( LANE_LETTER_SIZE ),
+	letterF( LANE_LETTER_SIZE ),
+	letterJ( LANE_LETTER_SIZE ),
+	letterK( LANE_LETTER_SIZE ),
+	letterL( LANE_LETTER_SIZE ),
+	letterSmcl( LANE_LETTER_SIZE ){
+	using namespace Game::Object;
+	noteLines[LaneID::J];
+	noteLines[LaneID::K];
+	noteLines[LaneID::L];
+	noteLines[LaneID::Smcl];
+
+	laneRects[LaneID::J] = s3d::Rect( LANE_J_POS_X, LANE_POS_Y, LANE_WIDTH, LANE_HEIGHT );
+	laneRects[LaneID::K] = s3d::Rect( LANE_K_POS_X, LANE_POS_Y, LANE_WIDTH, LANE_HEIGHT );
+	laneRects[LaneID::L] = s3d::Rect( LANE_L_POS_X, LANE_POS_Y, LANE_WIDTH, LANE_HEIGHT );
+	laneRects[LaneID::Smcl] = s3d::Rect( LANE_Smcl_POS_X, LANE_POS_Y, LANE_WIDTH, LANE_HEIGHT );
+
+	LoadNotesInfoFile();
+	track->PlayZeroSound();
+}
+
 
 Lane::~Lane(){}
 
 std::deque<NoteJudge> Lane::Update(){
+	using namespace Game::Object;
+	if( track->IsEnd() ){
+		LoadNotesInfoFile();
+		track->PlayZeroSound();
+	}
+
 	std::deque<NoteJudge> judgeVal;
 	for( auto& line : noteLines ){
 		if( line.second.empty() ){ // ノーツのdequeが空なら何もしない
@@ -91,6 +128,10 @@ std::deque<NoteJudge> Lane::Update(){
 			line.second.pop_front();
 			judgeVal.emplace_back( res );
 		}
+	}
+
+	if( isSettingLane ){
+		return judgeVal;
 	}
 
 	for( auto& barline : barLines ){
@@ -137,17 +178,17 @@ void Lane::LoadNotesInfoFile(){
 
 	fullCombo = static_cast< int >( csv._get_rows() );
 	for( int i = 0; i < fullCombo; ++i ){
-		AddNoteToLane( static_cast<LaneID>( csv.get<wchar_t>( i, 0 ) ), csv.get<int>( i, 1 ), csv.get<int>( i, 2 ) );
+		AddNoteToLane( static_cast< LaneID >( csv.get<wchar_t>( i, 0 ) ), csv.get<int>( i, 1 ), csv.get<int>( i, 2 ) );
 	}
 }
 
 void Lane::DrawNotesSegment() const{
-	for( const auto &lane : noteLines ) {
-		if( lane.second.empty() ) {
+	for( const auto &lane : noteLines ){
+		if( lane.second.empty() ){
 			continue;
 		}
-		for( const auto &note : lane.second ) {
-			if( !note.IsValidToIndicate() ) {
+		for( const auto &note : lane.second ){
+			if( !note.IsValidToIndicate() ){
 				break;
 			}
 			note.Draw();
@@ -155,31 +196,41 @@ void Lane::DrawNotesSegment() const{
 	}
 }
 
-void Lane::DrawLaneSegment() const {
-	for( const auto &laneRect : laneRects ) {
-		if( Game::Util::LaneKeyPressed( static_cast< wchar_t >( laneRect.first ) ) ) {
+void Lane::DrawLaneSegment() const{
+	for( const auto &laneRect : laneRects ){
+		if( Game::Util::LaneKeyPressed( static_cast< wchar_t >( laneRect.first ) ) ){
 			laneRect.second.draw( LANE_BG_COLOR_PUSHED );
 		}
-		else {
+		else{
 			laneRect.second.draw( LANE_BG_COLOR );
 		}
 		laneRect.second.drawFrame( LANE_FRAME_WIDTH, 0, FRAME_COLOR );
 	}
-	judgeLineL.draw( JUDGELINE_COLOR );
+	if( isSettingLane ){
+		judgeLineR.draw( JUDGELINE_COLOR );
+		letterA( L'J' ).draw( LANE_LETTER_J_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
+		letterS( L'K' ).draw( LANE_LETTER_K_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
+		letterD( L'L' ).draw( LANE_LETTER_L_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
+		letterF( L';' ).draw( LANE_LETTER_Smcl_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
+	}
+	else{
+		judgeLineL.draw( JUDGELINE_COLOR );
+		judgeLineR.draw( JUDGELINE_COLOR );
+		letterA( L'A' ).draw( LANE_LETTER_A_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
+		letterS( L'S' ).draw( LANE_LETTER_S_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
+		letterD( L'D' ).draw( LANE_LETTER_D_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
+		letterF( L'F' ).draw( LANE_LETTER_F_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
+		letterJ( L'J' ).draw( LANE_LETTER_J_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
+		letterK( L'K' ).draw( LANE_LETTER_K_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
+		letterL( L'L' ).draw( LANE_LETTER_L_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
+		letterSmcl( L';' ).draw( LANE_LETTER_Smcl_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
+	}
 	judgeLineR.draw( JUDGELINE_COLOR );
-	letterA( L'A' ).draw( LANE_LETTER_A_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
-	letterS( L'S' ).draw( LANE_LETTER_S_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
-	letterD( L'D' ).draw( LANE_LETTER_D_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
-	letterF( L'F' ).draw( LANE_LETTER_F_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
-	letterJ( L'J' ).draw( LANE_LETTER_J_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
-	letterK( L'K' ).draw( LANE_LETTER_K_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
-	letterL( L'L' ).draw( LANE_LETTER_L_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
-	letterSmcl( L';' ).draw( LANE_LETTER_Smcl_POS_X, LANE_LETTER_POS_Y, LANE_LETTER_COLOR );
 }
 
 void Lane::DrawBarLineSegment() const{
-	for( const auto& barline : barLines ) {
-		if( !barline.IsValidToIndicate() ) {
+	for( const auto& barline : barLines ){
+		if( !barline.IsValidToIndicate() ){
 			break;
 		}
 		barline.Draw();

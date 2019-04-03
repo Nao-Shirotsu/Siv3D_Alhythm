@@ -47,6 +47,9 @@ s3d::String Game::Util::EmbeddedFilePath( const Game::SEBGMFileID id ){
 }
 
 s3d::String Game::Util::EmbeddedFilePath( const Game::TrackFileID id ){
+	if( id == TrackFileID::CassiEmp ){
+		return L"/" + s3d::Format( static_cast<int>( TrackFileID::Cassi ) );
+	}
 	return L"/" + s3d::Format( static_cast<int>( id ) );
 }
 
@@ -71,6 +74,9 @@ s3d::String Game::Util::EmbeddedNotesInfoFilePath( const Game::TrackFileID id ){
 
 	case Game::TrackFileID::Orion:
 		return L"NotesInfo/orion.csv";
+
+	case Game::TrackFileID::CassiEmp:
+		return L"NotesInfo/cassi_emp.csv";
 
 	default:
 		return L"";

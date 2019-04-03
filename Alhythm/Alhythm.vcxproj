@@ -294,6 +294,7 @@
     <ClCompile Include="src\Game_Scene_Settings.cpp" />
     <ClCompile Include="src\Game_Scene_Title.cpp" />
     <ClCompile Include="src\Game_Singleton_ClickSound.cpp" />
+    <ClCompile Include="src\Game_Singleton_SettingState.cpp" />
     <ClCompile Include="src\Game_Util_Functions.cpp" />
     <ClCompile Include="src\Game_Util_TimeDuration.cpp" />
     <ClCompile Include="src\Main.cpp" />
@@ -319,6 +320,7 @@
     <ClInclude Include="src\Game_Scene_Settings.h" />
     <ClInclude Include="src\Game_Scene_Title.h" />
     <ClInclude Include="src\Game_Singleton_ClickSound.h" />
+    <ClInclude Include="src\Game_Singleton_SettingState.h" />
     <ClInclude Include="src\Game_Util_Functions.h" />
     <ClInclude Include="src\Game_Util_TimeDuration.h" />
   </ItemGroup>

@@ -26,9 +26,6 @@ constexpr int POS_Smcl{ 1125 };
 // ノーツの色
 constexpr s3d::Color NOTE_COLOR{ 200, 200, 200 };
 
-// ノーツがレーン上に表示される秒数
-constexpr double NOTE_INDICATE_TIME{ 1.5 };
-
 }
 
 Game::Object::Note::Note( int barNum_, int beatNum_, LaneID lane_, const std::shared_ptr<Track>& track_, const std::shared_ptr<NoteSound>& noteSound_ ):
@@ -36,7 +33,9 @@ Game::Object::Note::Note( int barNum_, int beatNum_, LaneID lane_, const std::sh
 	track( track_ ),
 	noteSound( noteSound_ ),
 	tapResult( NoteJudge::Undone ),
-	isPushable( false ){
+	isPushable( false ),
+	settingState(){
+	noteIndicateTime = NOTE_INDICATE_TIME / settingState.HispeedRate();
 	secOnMusic = track->SecOnBarBeat( barNum_, beatNum_ );
 
 	// ノーツの位置決め処理 流石にクソコードなので変更すべき
@@ -115,13 +114,14 @@ void Game::Object::Note::UpdateJudging(){
 
 void Game::Object::Note::UpdatePos(){
 	timeDiff = secOnMusic - track->CurSec();
-	if( 0.0 < timeDiff && timeDiff < NOTE_INDICATE_TIME ){
-		noteRect.setPos( { rectPosX, JUDGELINE_HEGHT - static_cast< int >( ( timeDiff / NOTE_INDICATE_TIME ) * JUDGELINE_HEGHT ) } );
+	noteIndicateTime = NOTE_INDICATE_TIME / settingState.HispeedRate();
+	if( 0.0 < timeDiff && timeDiff < noteIndicateTime ){
+		noteRect.setPos( { rectPosX, JUDGELINE_HEGHT - static_cast< int >( ( timeDiff / noteIndicateTime ) * JUDGELINE_HEGHT ) } );
 	}
 }
 
 void Game::Object::Note::Draw() const{
-	if( 0.0 < timeDiff && timeDiff < NOTE_INDICATE_TIME ){
+	if( 0.0 < timeDiff && timeDiff < noteIndicateTime ){
 		noteRect.draw( NOTE_COLOR );
 		noteRect.drawFrame( 1, 0, s3d::Palette::Black );
 	}
@@ -132,5 +132,5 @@ Game::Object::NoteJudge Game::Object::Note::Result(){
 }
 
 bool Game::Object::Note::IsValidToIndicate() const noexcept{
-	return secOnMusic - track->CurSec() < NOTE_INDICATE_TIME;
+	return secOnMusic - track->CurSec() < noteIndicateTime;
 }
