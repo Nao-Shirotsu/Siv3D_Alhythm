@@ -29,7 +29,7 @@ namespace Scene{
 
 MusicSelect::MusicSelect():
 	returnToTitle( 1050, 700, L"タイトルへ戻る", 20 ),
-	goToSettings( 50, 700, L"ゲームプレイ設定", 20 ),
+	goToSettings( 50, 700, L"ハイスピード設定", 20 ),
 	goToSenkou( 650, 200, L"閃光の足跡", 40, 550, 3, TRACK_BG_COLOR, TRACK_FRAME_COLOR ),
 	senkouMedium( 1000, 250, L"Medium", 25, 190, 2, MEDIUM_BG_COLOR, MEDIUM_FRAME_COLOR ),
 	goToCassi( 650, 330, L"Cassiopeia", 40, 550, 3, TRACK_BG_COLOR, TRACK_FRAME_COLOR ),
