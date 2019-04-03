@@ -9,7 +9,8 @@
 
 namespace{
 
-constexpr s3d::Color RECT_BG_COLOR{ 20, 20, 40 };
+constexpr s3d::Color RECT_BG_COLOR_DEFAULT{ 20, 20, 40 };
+constexpr s3d::Color RECT_BG_COLOR_MOUSEOVER{ 50, 50, 100 };
 constexpr s3d::Color RECT_FRAME_COLOR{ 50, 50, 100 };
 
 constexpr s3d::Color TEXT_BG_COLOR{ 80, 80, 130 };
@@ -23,6 +24,7 @@ namespace Object{
 ClickButton::ClickButton(){}
 
 ClickButton::ClickButton( int x_, int y_, const s3d::wchar * text_, const int fontsize, const int frameWidth_, s3d::Color rectColor_, s3d::Color frameColor_ ):
+	colorChangeable( true ),
 	x( x_ ),
 	y( y_ ),
 	rectColor( rectColor_ ),
@@ -38,10 +40,14 @@ ClickButton::ClickButton( int x_, int y_, const s3d::wchar * text_, const int fo
 }
 
 ClickButton::ClickButton( int x_, int y_, const s3d::wchar* text_, const int fontsize ):
-	ClickButton( x_, y_, text_, fontsize, 2, RECT_BG_COLOR, RECT_FRAME_COLOR ){}
+	ClickButton( x_, y_, text_, fontsize, 2, RECT_BG_COLOR_DEFAULT, RECT_FRAME_COLOR ){
+	colorChangeable = true;
+}
 
 ClickButton::ClickButton( int x_, int y_, const s3d::wchar* text_, const int fontsize, const int frameWidth_ ):
-	ClickButton( x_, y_, text_, fontsize, frameWidth_, RECT_BG_COLOR, RECT_FRAME_COLOR ){}
+	ClickButton( x_, y_, text_, fontsize, frameWidth_, RECT_BG_COLOR_DEFAULT, RECT_FRAME_COLOR ){
+	colorChangeable = true;
+}
 
 ClickButton::ClickButton( int x_, int y_, const s3d::wchar* text_, const int fontsize, s3d::Color rectColor_, s3d::Color frameColor_ ) :
 	ClickButton( x_, y_, text_, fontsize, 2, rectColor_, frameColor_ ){}
@@ -63,11 +69,18 @@ ClickButton::ClickButton( int x_, int y_, const s3d::wchar* text_, const int fon
 }
 
 ClickButton::ClickButton( int x_, int y_, const s3d::wchar * text_, const int fontsize, const int rectWidth, const int frameWidth_ ):
-	ClickButton( x_, y_, text_, fontsize, rectWidth, frameWidth_, RECT_BG_COLOR, RECT_FRAME_COLOR ){}
+	ClickButton( x_, y_, text_, fontsize, rectWidth, frameWidth_, RECT_BG_COLOR_DEFAULT, RECT_FRAME_COLOR ){
+	colorChangeable = true;
+}
 
 void ClickButton::Draw() const{
 	rect.drawShadow( { 6, 4 }, 13, 7 );
-	rect.draw( rectColor );
+	if( rect.mouseOver && colorChangeable ){
+		rect.draw( RECT_BG_COLOR_MOUSEOVER );
+	}
+	else{
+		rect.draw( rectColor );
+	}
 	rect.drawFrame( frameWidth, 0, frameColor );
 	text( textStr ).draw( x, y );
 }
