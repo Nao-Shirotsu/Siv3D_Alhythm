@@ -36,3 +36,8 @@ void Game::Object::Track::Play(){
 bool Game::Object::Track::IsEnd(){
 	return !file.isPlaying();
 }
+
+void Game::Object::Track::PlayZeroSound(){
+	file.setVolume( 0.0 );
+	file.play();
+}

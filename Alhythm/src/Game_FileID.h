@@ -26,6 +26,7 @@ enum class TrackFileID{
 	Senkou = 3000,
 	Cassi = 3001,
 	Orion = 3002,
+	CassiEmp = 3003,
 };
 
 }// namespace Game

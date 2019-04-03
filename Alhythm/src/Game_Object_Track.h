@@ -1,4 +1,5 @@
 ﻿#pragma once
+#pragma once
 
 #define NO_S3D_USING
 
@@ -27,6 +28,9 @@ public:
 
 	// 楽曲再生
 	void Play();
+
+	// 無音で再生
+	void PlayZeroSound();
 
 	// 曲が終わったかどうか
 	bool IsEnd();

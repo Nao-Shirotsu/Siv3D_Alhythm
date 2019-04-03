@@ -2,6 +2,7 @@
 
 #include "Game_Scene_Base.h"
 #include "Game_Object_ClickButton.h"
+#include "Game_Object_Lane.h"
 #include "Game_Singleton_SettingState.h"
 
 namespace Game{
@@ -24,6 +25,9 @@ private:
 
 	// 選曲画面へもどる
 	Game::Object::ClickButton returnToSelect;
+
+	// ノーツを流すレーン
+	Game::Object::Lane lane;
 
 	// 設定の各値を取得
 	Game::Singleton::SettingState settingState;

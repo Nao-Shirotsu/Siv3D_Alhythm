@@ -72,6 +72,7 @@ void MusicSelect::Draw() const{
 bool MusicSelect::NeedsTransition(){
 	if( goToSettings.WasClicked() ){
 		nextSceneID = SceneID::Settings;
+		trackID = TrackFileID::CassiEmp;
 		return true;
 	}
 
