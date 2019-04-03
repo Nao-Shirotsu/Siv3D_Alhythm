@@ -1,5 +1,4 @@
 ﻿#pragma once
-#pragma once
 
 #define NO_S3D_USING
 
@@ -11,7 +10,6 @@ namespace Singleton{
 // ゲーム内設定の各値を管理するシングルトンクラス(設定の値はiniファイルに保存してロードする)
 class SettingState{
 public:
-	// 何もしない
 	SettingState();
 	~SettingState();
 

@@ -9,31 +9,40 @@ namespace Singleton{
 double SettingState::hispeedRate;
 s3d::INIReader SettingState::ini;
 
-SettingState::SettingState() = default;
+SettingState::SettingState(){
+	if( !ini ){
+		Init();
+	}
+}
 
-SettingState::~SettingState(){
-	s3d::INIWriter iniWriter( L"/1500" );
-	iniWriter.write( L"Hispeed", L"rate", hispeedRate );
+SettingState::~SettingState(){ // ここでclearとwriteすんのはまずいから iniの寿命尽きるときにしといて
+	//s3d::TextWriter textfile( L"./Engine/SystemData.ini" );
+	//textfile.clear(); // TextWriter::closeではなくFileSystem::Removeで一旦消去するのがよい
+	//textfile.close();
+
+	//s3d::INIWriter iniWriter( L"./Engine/SystemData.ini" );
+	//iniWriter.write( L"Hispeed", L"rate", hispeedRate );
+	//iniWriter.close();
 }
 
 void SettingState::WriteHispeedRate( const double rate ){
 	hispeedRate = rate;
+	s3d::INIWriter iniWriter( L"./Engine/SystemData.ini" );
+	iniWriter.write( L"Hispeed", L"rate", hispeedRate );
+	iniWriter.close();
 }
 
 double Game::Singleton::SettingState::HispeedRate() const{
-	if( !ini ){
-		Init();
-	}
 	return hispeedRate;
 }
 
 
 void SettingState::Init(){
-	ini = s3d::INIReader( L"/1500" );
+	ini = s3d::INIReader( L"./Engine/SystemData.ini" );
 	if( !ini ){
 		throw std::runtime_error( "[Game::Singleton::SettingState::Init()] setting file read error" );
 	}
-	hispeedRate = ini.get<double>( L"Hispeed.rate" );
+	hispeedRate = ini.getOr<double>( L"Hispeed.rate", 1.0 );
 }
 
 }// namespace Singleton

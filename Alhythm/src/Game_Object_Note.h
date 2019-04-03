@@ -1,5 +1,4 @@
 ﻿#pragma once
-#pragma once
 
 #define NO_S3D_USING
 
@@ -65,7 +64,7 @@ private:
 	// ハイスピなどの設定の値を取得するために持つ
 	Singleton::SettingState settingState;
 
-	// ハイスピ倍率 x NOTE_INDICATE_TIME
+	// NOTE_INDICATE_TIME / ハイスピ倍率
 	double noteIndicateTime;
 };
 

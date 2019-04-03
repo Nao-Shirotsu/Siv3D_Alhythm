@@ -57,4 +57,4 @@ private:
 };
 
 }// namespace Scene
-}// namespace Game#pragma once
+}// namespace Game
