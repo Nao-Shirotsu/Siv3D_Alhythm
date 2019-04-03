@@ -6,7 +6,7 @@ Development repository for Windows10 rhythm game "Alhythm".
 ### Release
 バージョン0.2 α版 を公開しました。     
 ダウンロードは[こちら](https://github.com/Nao-Shirotsu/Siv3D_Alhythm/releases/tag/v0.2)。    
-Published version 0.2 alpha, visit [here](https://github.com/Nao-Shirotsu/Siv3D_Alhythm/releases/tag/v0.2) to download. 
+Published version 0.2 alpha, visit [here](https://github.com/Nao-Shirotsu/Siv3D_Alhythm/releases/tag/v0.2) to download. (Japanese only)
 
 ### Playmovie
 [youtube link](https://youtu.be/IdYA4AkEBio)
