@@ -15,15 +15,7 @@ SettingState::SettingState(){
 	}
 }
 
-SettingState::~SettingState(){ // ここでclearとwriteすんのはまずいから iniの寿命尽きるときにしといて
-	//s3d::TextWriter textfile( L"./Engine/SystemData.ini" );
-	//textfile.clear(); // TextWriter::closeではなくFileSystem::Removeで一旦消去するのがよい
-	//textfile.close();
-
-	//s3d::INIWriter iniWriter( L"./Engine/SystemData.ini" );
-	//iniWriter.write( L"Hispeed", L"rate", hispeedRate );
-	//iniWriter.close();
-}
+SettingState::~SettingState(){}
 
 void SettingState::WriteHispeedRate( const double rate ){
 	hispeedRate = rate;

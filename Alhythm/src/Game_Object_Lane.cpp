@@ -69,10 +69,10 @@ Lane::Lane( std::shared_ptr<Track>& track_, std::shared_ptr<NoteSound>& noteSoun
 
 
 
-Lane::Lane():
+Lane::Lane( std::shared_ptr<NoteSound>& noteSound_ ):
 	isSettingLane( true ),
 	track( std::make_shared<Game::Object::Track>( TrackFileID::CassiEmp, 152, 90 ) ),
-	noteSound( nullptr ),
+	noteSound( noteSound_ ),
 	judgeLineL( L_JUDGELINE_POS_X, JUDGELINE_HEGHT - NOTE_HEIGHT / 2, JUDGELINE_LENGTH, NOTE_HEIGHT ), // +5とか-25は枠の分
 	judgeLineR( R_JUDGELINE_POS_X, JUDGELINE_HEGHT - NOTE_HEIGHT / 2, JUDGELINE_LENGTH, NOTE_HEIGHT ),
 	letterA( LANE_LETTER_SIZE ),
@@ -98,15 +98,12 @@ Lane::Lane():
 	track->PlayZeroSound();
 }
 
+Lane::Lane(){}
 
 Lane::~Lane(){}
 
 std::deque<NoteJudge> Lane::Update(){
 	using namespace Game::Object;
-	if( track->IsEnd() ){
-		LoadNotesInfoFile();
-		track->PlayZeroSound();
-	}
 
 	std::deque<NoteJudge> judgeVal;
 	for( auto& line : noteLines ){

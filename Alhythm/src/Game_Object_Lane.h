@@ -22,9 +22,10 @@ public:
 	explicit Lane( std::shared_ptr<Track>& track_, std::shared_ptr<NoteSound>& noteSound_, int maxbar );
 
 	// 設定画面で使う時のコンストラクタ
-	Lane();
+	Lane( std::shared_ptr<NoteSound>& noteSound_ );
 
 	// 何もしない
+    Lane();
 	~Lane();
 
 	std::deque<NoteJudge> Update();

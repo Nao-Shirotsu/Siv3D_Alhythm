@@ -4,6 +4,7 @@
 #include "Game_Object_ClickButton.h"
 #include "Game_Object_Lane.h"
 #include "Game_Singleton_SettingState.h"
+#include "Game_Object_NoteSound.h"
 
 namespace Game{
 namespace Scene{
