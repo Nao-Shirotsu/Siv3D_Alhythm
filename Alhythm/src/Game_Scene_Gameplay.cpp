@@ -98,7 +98,7 @@ Gameplay::Gameplay(){}
 
 Gameplay::~Gameplay(){}
 
-void Gameplay::Update(){
+void Gameplay::Update(){ 
 	if( !isReady && stopwatchTrackName.MilliDur() > 3000 ){
 		isReady = true;
 		trackNameStr = L"Ready?";
@@ -109,9 +109,9 @@ void Gameplay::Update(){
 		track->Play();
 	}
 
-	if( !musicPlaying ){
-		return;
-	}
+    if( !musicPlaying ){
+        return;
+    }
 
 	using namespace Game::Object;
 	for( const auto& res : lane.Update() ){

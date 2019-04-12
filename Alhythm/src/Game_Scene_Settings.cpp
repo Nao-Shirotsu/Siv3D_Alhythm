@@ -9,7 +9,7 @@ namespace Scene{
 Settings::Settings():
 	gui( s3d::GUIStyle::Default ),
 	returnToSelect( 50, 700, L"もどる", 20 ),
-	lane(),
+	lane( std::make_shared<Object::NoteSound>() ),
 	settingState(){
 	gui.setTitle( L"ハイスピード設定" );
 	gui.addln( L"hispeedRate", s3d::GUIText::Create( L"" ) );
